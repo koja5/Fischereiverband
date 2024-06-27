@@ -1,13 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 
-import { AuthenticationService } from 'app/auth/service';
-import { User } from 'app/auth/models';
+import { AuthenticationService } from "app/auth/services";
+import { User } from "app/auth/models";
+import { StorageService } from "app/services/storage.service";
+import { UserTypes } from "app/main/enums/user-types";
+import { HelpService } from "app/services/help.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CoreMenuService {
   currentUser: User;
@@ -20,6 +23,7 @@ export class CoreMenuService {
   private _onMenuChanged: BehaviorSubject<any>;
   private _currentMenuKey: string;
   private _registry: { [key: string]: any } = {};
+  private _registryLocal: { [key: string]: any } = {};
 
   /**
    * Constructor
@@ -27,8 +31,15 @@ export class CoreMenuService {
    * @param {Router} _router
    * @param {AuthenticationService} _authenticationService
    */
-  constructor(private _router: Router, private _authenticationService: AuthenticationService) {
-    this._authenticationService.currentUser.subscribe(x => (this.currentUser = x));
+  constructor(
+    private _router: Router,
+    private _authenticationService: AuthenticationService,
+    private _storageService: StorageService,
+    private _helpService: HelpService
+  ) {
+    this._authenticationService.currentUser.subscribe(
+      (x) => (this.currentUser = x)
+    );
 
     // Set defaults
     this.onItemCollapsed = new Subject();
@@ -83,7 +94,9 @@ export class CoreMenuService {
   register(key, menu): void {
     // Confirm if the key already used
     if (this._registry[key]) {
-      console.error(`Menu with the key '${key}' already exists. Either unregister it first or use a unique key.`);
+      console.error(
+        `Menu with the key '${key}' already exists. Either unregister it first or use a unique key.`
+      );
 
       return;
     }
@@ -127,8 +140,14 @@ export class CoreMenuService {
       return;
     }
 
+    this._registryLocal[key] = this._helpService.copyObject(
+      this._registry[key]
+    );
+
+    this.checkMenuForDifferentUser(key);
+
     // Return sidebar
-    return this._registry[key];
+    return this._registryLocal[key];
   }
 
   /**
@@ -164,5 +183,27 @@ export class CoreMenuService {
 
     // Notify subject
     this._onMenuChanged.next(key);
+  }
+
+  checkMenuForDifferentUser(key) {
+    const user = this._storageService.getDecodeToken();
+    for (let i = 0; i < this._registryLocal[key].length; i++) {
+      if (
+        this._registryLocal[key][i].users &&
+        this.checkUserType(this._registryLocal[key][i].users, user.type)
+      ) {
+        this._registryLocal[key].splice(i, 1);
+        i--;
+      }
+    }
+  }
+
+  checkUserType(users: any, type: any) {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i] === UserTypes[type]) {
+        return false;
+      }
+    }
+    return true;
   }
 }

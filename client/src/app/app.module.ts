@@ -1,38 +1,53 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { RouterModule, Routes } from "@angular/router";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 
-import 'hammerjs';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { ToastrModule } from 'ngx-toastr'; // For auth after login toast
+import "hammerjs";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { ToastrModule } from "ngx-toastr"; // For auth after login toast
 
-import { CoreModule } from '@core/core.module';
-import { CoreCommonModule } from '@core/common.module';
-import { CoreSidebarModule, CoreThemeCustomizerModule } from '@core/components';
+import { CoreModule } from "@core/core.module";
+import { CoreCommonModule } from "@core/common.module";
+import { CoreSidebarModule, CoreThemeCustomizerModule } from "@core/components";
 
-import { coreConfig } from 'app/app-config';
+import { coreConfig } from "app/app-config";
 
-import { AppComponent } from 'app/app.component';
-import { LayoutModule } from 'app/layout/layout.module';
-import { SampleModule } from 'app/main/sample/sample.module';
+import { AppComponent } from "app/app.component";
+import { LayoutModule } from "app/layout/layout.module";
+import { SampleModule } from "app/main/sample/sample.module";
+import { LoginComponent } from "./auth/components/login/login.component";
+import { CookieModule } from "ngx-cookie";
+import { HttpLoaderFactory } from "./services/httpLoaderFactory";
 
 const appRoutes: Routes = [
   {
-    path: 'pages',
-    loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
+    path: "",
+    redirectTo: "/auth/login",
+    pathMatch: "full",
   },
   {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
+    path: "auth",
+    loadChildren: () => import("./auth/auth.module").then((m) => m.AuthModule),
   },
   {
-    path: '**',
-    redirectTo: '/pages/miscellaneous/error' //Error 404 - Page not found
-  }
+    path: "dashboard",
+    loadChildren: () =>
+      import("./main/dashboard/dashboard.module").then(
+        (m) => m.DashboardModule
+      ),
+  },
+  {
+    path: "dashboard1",
+    redirectTo: "/home",
+    pathMatch: "full",
+  },
+  {
+    path: "**",
+    redirectTo: "/pages/miscellaneous/error", //Error 404 - Page not found
+  },
 ];
 
 @NgModule({
@@ -42,8 +57,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes, {
-    scrollPositionRestoration: 'enabled'
-}),
+      scrollPositionRestoration: "enabled",
+    }),
     TranslateModule.forRoot(),
 
     //NgBootstrap
@@ -58,9 +73,19 @@ const appRoutes: Routes = [
 
     // App modules
     LayoutModule,
-    SampleModule
+    SampleModule,
+    CookieModule.withOptions(),
+    TranslateModule.forRoot({
+      defaultLanguage: "de",
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+      isolate: false,
+    }),
   ],
 
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
