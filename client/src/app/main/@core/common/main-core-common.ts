@@ -5,6 +5,7 @@ import { ToastrComponent } from "./toastr/toastr.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
 import { DialogConfirmTemplateComponent } from "./discard-changes-template/discard-changes-template.component";
+import { LoaderComponent } from "./loader/loader.component";
 
 const appRoutes: Routes = [];
 
@@ -13,6 +14,7 @@ const appRoutes: Routes = [];
     DialogConfirmComponent,
     ToastrComponent,
     DialogConfirmTemplateComponent,
+    LoaderComponent
   ],
   imports: [CommonModule, TranslateModule],
   providers: [],
@@ -21,6 +23,7 @@ const appRoutes: Routes = [];
     DialogConfirmComponent,
     ToastrComponent,
     DialogConfirmTemplateComponent,
+    LoaderComponent
   ],
 })
 export class MainCoreCommon {}

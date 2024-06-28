@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { StorageService } from "../storage.service";
-import { UserTypes } from "app/enums/user-types";
+import { UserTypes } from "app/main/enums/user-types";
 
 @Injectable({
   providedIn: "root",
@@ -13,6 +13,7 @@ export class LoggedGuard {
   ) {}
 
   canActivate() {
+    console.log(this._storageService.getToken());
     if (!this._storageService.getToken()) {
       return true;
     } else {
@@ -21,13 +22,10 @@ export class LoggedGuard {
       if (previousLink) {
         this._router.navigate([previousLink]);
         this._storageService.removeLocalStorage("previousLink");
-      } else if (token.type === UserTypes.superadmin) {
-        this._router.navigate(["/dashboard/superadmin/all-users"]);
-      } else if (
-        token.type === UserTypes.admin ||
-        token.type === UserTypes.employee
-      ) {
-        this._router.navigate(["/dashboard/admin/my-calendar"]);
+      } else if (token.type === UserTypes.admin) {
+        this._router.navigate(["/dashboard/admin/all-users"]);
+      } else if (token.type === UserTypes.owner) {
+        this._router.navigate(["/dashboard/owner/my-calendar"]);
       }
       return false;
     }

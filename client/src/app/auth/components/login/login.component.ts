@@ -97,9 +97,9 @@ export class LoginComponent {
 
           const type = this._storageService.getDecodeToken().type as UserTypes;
           if (type === UserTypes.admin) {
-            this._router.navigate(["/dashboard/admin/all-users"]);
+            window.open("/dashboard/admin/all-users", "_self");
           } else {
-            this._router.navigate(["/dashboard/owner/all-users"]);
+            window.open("/dashboard/owner/report-sales", "_self");
           }
           // const user = this._storageService.getDecodeToken();
           // if (!user.firstname || !user.lastname) {

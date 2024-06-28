@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { StorageService } from "../storage.service";
 import { HelpService } from "../help.service";
-import { UserTypes } from "app/enums/user-types";
+import { UserTypes } from "app/main/enums/user-types";
 
 @Injectable({
   providedIn: "root",

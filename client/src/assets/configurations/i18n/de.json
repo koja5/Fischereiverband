@@ -101,19 +101,12 @@
       "signInWithMicrosoft": "Über Microsoft anmelden"
    },
    "navigations": {
-      "home": "Startseite",
-      "settings": "Einstellungen",
-      "adminSettings": "Admin settings",
-      "allUsers": "All users",
-      "myLocations": "Meine Standorte",
-      "myServices": "Meine Dienstleistungen",
-      "myCalendar": "Mein Kalender",
-      "myEmployees": "Meine Mitarbeiter",
-      "myClients": "Meine Kunden",
-      "recommended": "Empfehlung",
-      "smsPackages": "SMS Paket",
-      "gatewayCountryPrefix": "Länder-Vorwahl",
-      "licenses": "Lizenzen"
+      "allUsers": "Alle Nutzer",
+      "allFishes": "Alle Fische",
+      "allOrigins": "Alle Ursprünge",
+      "allWaters": "Alle Gewässer",
+      "ageOfFishes": "Zeitalter der Fische",
+      "reportSales": "Verkäufe melden"
    },
    "navBar": {
       "profile": "Profil",

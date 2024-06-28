@@ -2,7 +2,7 @@ import { TestBed } from "@angular/core/testing";
 
 import { AdminGuardService } from "./admin-guard.service";
 
-describe("AdminService", () => {
+describe("SuperadminGuardService", () => {
   let service: AdminGuardService;
 
   beforeEach(() => {

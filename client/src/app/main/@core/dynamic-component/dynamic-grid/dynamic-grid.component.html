@@ -120,7 +120,7 @@
                         [height]="innerWidth > 992 ? '75vh' : '80vh'"
                         [columnMode]="innerWidth > 1250 ? 'flex' : 'force'" class="{{item.class}}"
                         [className]="item.className" [headerClass]="item.className" [cellClass]="item.className"
-                        [rowHeight]="'auto'" [minWidth]="200">
+                        [rowHeight]="'auto'">
 
                         <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
                             <span class="{{item.class}}">{{column.name}}</span>

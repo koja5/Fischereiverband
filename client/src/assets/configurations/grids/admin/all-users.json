@@ -50,21 +50,7 @@
     "editSettingsRequest": {
         "add": {
             "type": "POST",
-            "api": "/api/setEmployee",
-            "parameters": [],
-            "fields": "",
-            "root": ""
-        },
-        "edit": {
-            "type": "POST",
-            "api": "/api/updateEmployee",
-            "parameters": [],
-            "fields": "",
-            "root": ""
-        },
-        "delete": {
-            "type": "POST",
-            "api": "/api/deleteEmployee",
+            "api": "/api/admin/setUser",
             "parameters": [],
             "fields": "",
             "root": ""
@@ -95,7 +81,7 @@
                             "executeAction": {
                                 "request": {
                                     "type": "POST",
-                                    "api": "/api/deleteEmployee",
+                                    "api": "/api/admin/deleteUser",
                                     "parameters": [],
                                     "fields": "",
                                     "root": ""
@@ -187,8 +173,16 @@
             "class": "e-outline",
             "name": "id",
             "title": "ID",
-            "field": "id",
-            "readonly": true
+            "field": "id"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "personal_id",
+            "title": "ID",
+            "field": "personal_id",
+            "required": true
         },
         {
             "type": "textbox",

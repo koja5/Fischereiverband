@@ -136,18 +136,12 @@
         "successfulyChangedPassword": "Successfully changed your password"
     },
     "navigations": {
-        "home": "Home",
-        "settings": "Settings",
-        "adminSettings": "Admin settings",
         "allUsers": "All users",
-        "myLocations": "My locations",
-        "myServices": "My services",
-        "myCalendar": "My calendar",
-        "myEmployees": "My employees",
-        "recommended": "Recommended",
-        "smsPackages": "Sms packages",
-        "gatewayCountryPrefix": "Country prefix",
-        "licenses": "Licenses"
+        "allFishes": "All fishes",
+        "allOrigins": "All origins",
+        "allWaters": "All waters",
+        "ageOfFishes": "Age of fishes",
+        "reportSales": "Report sales"
     },
     "navBar": {
         "profile": "Profile",

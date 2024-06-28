@@ -21,6 +21,8 @@ import { SampleModule } from "app/main/sample/sample.module";
 import { LoginComponent } from "./auth/components/login/login.component";
 import { CookieModule } from "ngx-cookie";
 import { HttpLoaderFactory } from "./services/httpLoaderFactory";
+import { LoggedGuard } from "./services/login-guard/logged-guard.service";
+import { LoginGuardService } from "./services/login-guard/login-guard.service";
 
 const appRoutes: Routes = [
   {
@@ -30,10 +32,12 @@ const appRoutes: Routes = [
   },
   {
     path: "auth",
+    canActivate: [LoggedGuard],
     loadChildren: () => import("./auth/auth.module").then((m) => m.AuthModule),
   },
   {
     path: "dashboard",
+    canActivate: [LoginGuardService],
     loadChildren: () =>
       import("./main/dashboard/dashboard.module").then(
         (m) => m.DashboardModule
