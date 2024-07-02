@@ -101,7 +101,7 @@
             "field": "allow_online"
         },
         {
-            "title": "commonFields.firstname",
+            "title": "commonFields.name",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -127,7 +127,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "name",
-            "title": "fish.name",
+            "title": "commonFields.name",
             "field": "name",
             "required": true
         },

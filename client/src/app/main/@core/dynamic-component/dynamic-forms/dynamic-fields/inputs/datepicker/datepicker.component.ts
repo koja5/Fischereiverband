@@ -15,22 +15,16 @@ export class DatepickerComponent {
   public group: FormGroup;
   public language: any;
   // Private
-  private _unsubscribeAll: Subject<any>;
 
-  constructor(private _helpService: HelpService) {
+  constructor() {
     this.config = new FieldConfig();
     this.group = new FormGroup({});
-
-    // this.group.valueChanges
-    //   .pipe(takeUntil(this._unsubscribeAll))
-    //   .subscribe((value) => {
-    //     console.log(value);
-    //   });
   }
 
   ngOnInit(): void {}
 
   ngModelChange(event) {
+    console.log(event);
     console.log(this.group);
   }
 }

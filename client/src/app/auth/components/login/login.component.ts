@@ -99,7 +99,7 @@ export class LoginComponent {
           if (type === UserTypes.admin) {
             window.open("/dashboard/admin/all-users", "_self");
           } else {
-            window.open("/dashboard/owner/report-sales", "_self");
+            window.open("/dashboard/owner/fish-stocking", "_self");
           }
           // const user = this._storageService.getDecodeToken();
           // if (!user.firstname || !user.lastname) {

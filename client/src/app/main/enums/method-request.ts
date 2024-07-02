@@ -1,3 +1,3 @@
 export enum MethodRequest {
-  setClientToGoogle = "setClientToGoogle",
+  EMIT = "EMIT",
 }

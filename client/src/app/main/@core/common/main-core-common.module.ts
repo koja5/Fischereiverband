@@ -6,6 +6,7 @@ import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
 import { DialogConfirmTemplateComponent } from "./discard-changes-template/discard-changes-template.component";
 import { LoaderComponent } from "./loader/loader.component";
+import { NoDataComponent } from "./no-data/no-data.component";
 
 const appRoutes: Routes = [];
 
@@ -14,7 +15,8 @@ const appRoutes: Routes = [];
     DialogConfirmComponent,
     ToastrComponent,
     DialogConfirmTemplateComponent,
-    LoaderComponent
+    LoaderComponent,
+    NoDataComponent
   ],
   imports: [CommonModule, TranslateModule],
   providers: [],
@@ -23,7 +25,8 @@ const appRoutes: Routes = [];
     DialogConfirmComponent,
     ToastrComponent,
     DialogConfirmTemplateComponent,
-    LoaderComponent
+    LoaderComponent,
+    NoDataComponent
   ],
 })
-export class MainCoreCommon {}
+export class MainCoreCommonModule {}

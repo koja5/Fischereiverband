@@ -8,6 +8,7 @@ import { AllFishesComponent } from "./all-fishes/all-fishes.component";
 import { AgeOfFishesComponent } from "./age-of-fishes/age-of-fishes.component";
 import { AllOriginsComponent } from "./all-origins/all-origins.component";
 import { AllWatersComponent } from "./all-waters/all-waters.component";
+import { ManagementRegistersComponent } from "./management-registers/management-registers.component";
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
     component: AgeOfFishesComponent,
     canDeactivate: [DirtycheckGuard],
   },
+  {
+    path: "management-registers",
+    component: ManagementRegistersComponent,
+    canDeactivate: [DirtycheckGuard],
+  },
 ];
 
 @NgModule({
@@ -44,6 +50,7 @@ const routes = [
     AgeOfFishesComponent,
     AllOriginsComponent,
     AllWatersComponent,
+    ManagementRegistersComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes), DynamicModule],
 

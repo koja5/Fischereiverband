@@ -19,6 +19,14 @@ const routes = [
     loadChildren: () =>
       import("./admin/admin.module").then((m) => m.AdminModule),
   },
+  {
+    path: "settings",
+    canActivate: [AdminGuardService],
+    loadChildren: () =>
+      import("./general/settings/settings.module").then(
+        (m) => m.SettingsModule
+      ),
+  },
 ];
 
 @NgModule({

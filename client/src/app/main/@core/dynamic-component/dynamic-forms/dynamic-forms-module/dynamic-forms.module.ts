@@ -26,7 +26,7 @@ import { InternationalPhoneModule } from "ng4-intl-phone";
 import { DatetimepickerComponent } from "../dynamic-fields/inputs/datetimepicker/datetimepicker.component";
 import { NumericTextboxComponent } from "../dynamic-fields/inputs/numeric-textbox/numeric-textbox.component";
 import { CoreCommonModule } from "@core/common.module";
-import { MainCoreCommon } from "app/main/@core/common/main-core-common";
+import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.module";
 
 @NgModule({
   declarations: [
@@ -75,7 +75,7 @@ import { MainCoreCommon } from "app/main/@core/common/main-core-common";
     DatePickerModule,
     DateTimePickerModule,
     InternationalPhoneModule,
-    MainCoreCommon,
+    MainCoreCommonModule,
   ],
   entryComponents: [
     DynamicFieldsDirective,

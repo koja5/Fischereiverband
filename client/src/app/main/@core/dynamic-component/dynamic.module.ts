@@ -18,7 +18,7 @@ import { DynamicTabsComponent } from "./dynamic-tabs/dynamic-tabs.component";
 import { ContentHeaderModule } from "app/layout/components/content-header/content-header.module";
 import { ExplanationMarkComponent } from "./dynamic-forms/dynamic-fields/common/explanation-mark/explanation-mark.component";
 import { DynamicGridComponent } from "./dynamic-grid/dynamic-grid.component";
-import { MainCoreCommon } from "../common/main-core-common";
+import { MainCoreCommonModule } from "../common/main-core-common.module";
 
 @NgModule({
   declarations: [
@@ -40,7 +40,7 @@ import { MainCoreCommon } from "../common/main-core-common";
     TranslateModule,
     RouterModule,
     ContentHeaderModule,
-    MainCoreCommon,
+    MainCoreCommonModule,
   ],
   providers: [ToastrComponent],
   exports: [

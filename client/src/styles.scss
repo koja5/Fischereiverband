@@ -232,6 +232,10 @@
   color: var(--primary) !important;
 }
 
+.e-input-group.e-control-wrapper .e-input-group-icon {
+  color: var(--primary) !important;
+}
+
 .e-calendar .e-content td.e-today.e-selected span.e-day,
 .e-bigger.e-small .e-calendar .e-content td.e-today.e-selected span.e-day {
   background-color: var(--primary) !important;

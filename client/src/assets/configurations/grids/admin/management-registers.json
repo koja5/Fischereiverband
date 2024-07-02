@@ -2,7 +2,7 @@
     "pageSize": 10,
     "request": {
         "type": "GET",
-        "api": "/api/owner/getAllReportSales",
+        "api": "/api/admin/getManagementRegisters",
         "parameters": [],
         "fields": "",
         "root": ""
@@ -50,7 +50,7 @@
     "editSettingsRequest": {
         "add": {
             "type": "POST",
-            "api": "/api/owner/setReportSale",
+            "api": "/api/admin/setManagementRegister",
             "parameters": [],
             "fields": "",
             "root": ""
@@ -81,7 +81,7 @@
                             "executeAction": {
                                 "request": {
                                     "type": "POST",
-                                    "api": "/api/owner/deleteReportSale",
+                                    "api": "/api/admin/deleteManagementRegister",
                                     "parameters": [],
                                     "fields": "",
                                     "root": ""
@@ -101,86 +101,145 @@
             "field": "allow_online"
         },
         {
-            "title": "reportSales.date",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "date",
-            "format": "dd.MM.yyyy",
-            "class": "text-align-right",
-            "field": "date",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "reportSales.nameOfWater",
+            "title": "commonFields.name",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "water",
+            "field": "fbz",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "reportSales.nameOfFish",
+            "title": "commonFields.name",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "fish",
+            "field": "name_of_owner",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "reportSales.ageOfFish",
+            "title": "commonFields.name",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "age_of_fish",
+            "field": "name_of_deputy",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "reportSales.origin",
+            "title": "commonFields.name",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "origin",
+            "field": "year",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "reportSales.quantity",
+            "title": "commonFields.name",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "quantity",
+            "field": "fishing_book_id",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "reportSales.cost",
+            "title": "commonFields.name",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "costs",
+            "field": "g_status",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.name",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "occupancy_status",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.name",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "occupancy_status",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.name",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "catch_status",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.name",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "bird_status",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.name",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "count_status",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "commonFields.name",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "otter_status",
             "validation": {
                 "required": true
             }
@@ -196,11 +255,20 @@
             "field": "id"
         },
         {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "fbz",
+            "title": "commonFields.fbz",
+            "field": "fbz",
+            "required": true
+        },
+        {
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
             "name": "id_owner",
-            "title": "commonFields.type",
+            "title": "commonFields.ownerName",
             "field": {
                 "text": "firstname",
                 "value": "id_owner"
@@ -231,28 +299,30 @@
             "required": true
         },
         {
-            "type": "datepicker",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "date",
-            "title": "fish.name",
-            "field": "date",
-            "format": "dd.MM.yyyy",
-            "required": true
-        },
-        {
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_water",
-            "title": "commonFields.type",
+            "name": "id_deputy",
+            "title": "commonFields.deputyName",
             "field": {
-                "text": "name",
-                "value": "id_water"
+                "text": "firstname",
+                "value": "id_deputy"
+            },
+            "fieldTemplate": {
+                "fields": [
+                    {
+                        "type": "text",
+                        "values": [
+                            "firstname",
+                            "",
+                            "lastname"
+                        ]
+                    }
+                ]
             },
             "request": {
                 "type": "GET",
-                "api": "/api/admin/getAllWaters",
+                "api": "/api/admin/getAllUsers",
                 "parameters": [],
                 "fields": "",
                 "root": ""
@@ -264,90 +334,75 @@
             "required": true
         },
         {
-            "type": "combobox",
+            "type": "textbox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_fish",
-            "title": "commonFields.type",
-            "field": {
-                "text": "name",
-                "value": "id"
-            },
-            "request": {
-                "type": "GET",
-                "api": "/api/admin/getAllFishes",
-                "parameters": [],
-                "fields": "",
-                "root": ""
-            },
-            "fieldConfig": {
-                "ignoreAccent": false,
-                "filter": true
-            },
+            "name": "year",
+            "title": "commonFields.name",
+            "field": "year",
             "required": true
         },
         {
-            "type": "combobox",
+            "type": "textbox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_age_of_fish",
-            "title": "commonFields.type",
-            "field": {
-                "text": "name",
-                "value": "id"
-            },
-            "request": {
-                "type": "GET",
-                "api": "/api/admin/getAgeOfFishes",
-                "parameters": [],
-                "fields": "",
-                "root": ""
-            },
-            "fieldConfig": {
-                "ignoreAccent": false,
-                "filter": true
-            },
+            "name": "fishing_book_id",
+            "title": "commonFields.fishingBookId",
+            "field": "fishing_book_id",
             "required": true
         },
         {
-            "type": "combobox",
+            "type": "textbox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_origin",
-            "title": "commonFields.type",
-            "field": {
-                "text": "name",
-                "value": "id"
-            },
-            "request": {
-                "type": "GET",
-                "api": "/api/admin/getAllOrigins",
-                "parameters": [],
-                "fields": "",
-                "root": ""
-            },
-            "fieldConfig": {
-                "ignoreAccent": false,
-                "filter": true
-            },
+            "name": "g_status",
+            "title": "commonFields.gStatus",
+            "field": "g_status",
             "required": true
         },
         {
-            "type": "numeric",
+            "type": "textbox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "quantity",
-            "title": "fish.name",
-            "field": "quantity",
+            "name": "occupancy_status",
+            "title": "commonFields.occupancyStatus",
+            "field": "occupancy_status",
             "required": true
         },
         {
-            "type": "numeric",
+            "type": "textbox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "costs",
-            "title": "fish.name",
-            "field": "costs",
+            "name": "catch_status",
+            "title": "commonFields.catchStatus",
+            "field": "catch_status",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "bird_status",
+            "title": "commonFields.birdStatus",
+            "field": "bird_status",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "count_status",
+            "title": "commonFields.countStatus",
+            "field": "count_status",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "otter_status",
+            "title": "commonFields.otterStatus",
+            "field": "otter_status",
             "required": true
         },
         {

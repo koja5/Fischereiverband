@@ -29,8 +29,8 @@ router.post("/login", function (req, res, next) {
     console.log(sha1(req.body.password));
 
     conn.query(
-      "select * from users WHERE email=? AND password=?",
-      [req.body.email, sha1(req.body.password)],
+      "select * from users WHERE (email = ? or username = ?) AND password = ?",
+      [req.body.email, req.body.email, sha1(req.body.password)],
       function (err, rows, fields) {
         conn.release();
         if (err) {
@@ -70,7 +70,7 @@ function generateToken(data) {
   return jwt.sign(
     {
       user: {
-        id: data.id,
+        id: data.id_owner,
         firstname: data.firstname,
         lastname: data.lastname,
         type: data.type,

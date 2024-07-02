@@ -40,6 +40,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   @Input() public data: any;
   @Input() externalAccounts: any;
   @Input() disabledCreateNew: boolean = false;
+  @Input() additionalData: any;
   @Output() submit = new EventEmitter();
   @ViewChild("grid") grid: any;
   @ViewChild("modal") modal: TemplateRef<any>;
@@ -341,8 +342,9 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       this._helpService.checkUndefinedProperty(event) &&
       event.type != "submit"
     ) {
-      if (this.config.editSettingsRequest.add.method) {
-        this.callSpecificMethod(this.config.editSettingsRequest.add, event);
+      if (this.config.editSettingsRequest.add.type === MethodRequest.EMIT) {
+        this.closeEditForm();
+        this.submit.emit(event);
       } else if (this.config.editSettingsRequest.add.type) {
         this.callServerMethod(this.config.editSettingsRequest.add, event);
       }
@@ -367,11 +369,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
           if (!noResponseMessage) {
             this._toastr.showSuccess();
             this.closeEditForm();
-            if (request.additionalRequest) {
-              this.makeAdditionalRequest(request, data, event);
-            } else {
-              this.refreshDataFromServer();
-            }
+            this.refreshDataFromServer();
           }
         } else {
           this._toastr.showError();
@@ -381,16 +379,6 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       });
   }
 
-  callSpecificMethod(request: any, event) {
-    if (request.method === MethodRequest.setClientToGoogle) {
-      if (this.externalAccounts && this.externalAccounts.google) {
-        this.setClientToGoogle(event);
-      } else {
-        this.callServerMethod(this.config.editSettingsRequest.add, event);
-      }
-    }
-  }
-
   refreshDataFromServer() {
     this._service
       .callApi(this.config, this._activateRouter)
@@ -398,58 +386,6 @@ export class DynamicGridComponent implements CanComponentDeactivate {
         this.loader = false;
         this.setResponseData(data);
       });
-  }
-
-  makeAdditionalRequest(request: any, data: any, body) {
-    if (request.additionalRequest) {
-      for (let i = 0; i < request.additionalRequest.length; i++) {
-        if (request.additionalRequest[i].method === "setClientToGoogle") {
-          this.setClientToGoogle(data);
-        } else if (
-          request.additionalRequest[i].method === "deleteClientFromGoogle"
-        ) {
-          this.deleteClientFromGoogle(body);
-        }
-      }
-    }
-  }
-
-  setClientToGoogle(data: any) {
-    if (this.externalAccounts && this.externalAccounts.google) {
-      this.loader = true;
-      this.closeEditForm();
-      data.token = this.externalAccounts.google;
-      this._service
-        .callPostMethod("/api/google/setClient", data)
-        .subscribe((response: any) => {
-          if (response) {
-            // remove token from google - need to use token for Termmy to push changes in Termmy database
-            delete data.token;
-            data.resourceName = response.resourceName;
-            data.guuid = response.guuid;
-            this._service
-              .callPostMethod("api/setClient", data)
-              .subscribe((data) => {
-                this.refreshDataFromServer();
-              });
-          }
-        });
-    }
-  }
-
-  deleteClientFromGoogle(body: any) {
-    if (this.externalAccounts && this.externalAccounts.google) {
-      body.token = this.externalAccounts.google;
-      if (body.resourceName) {
-        this._service
-          .callPostMethod("api/google/deleteClient", body)
-          .subscribe((data) => {
-            this.refreshDataFromServer();
-          });
-      }
-    } else {
-      this.refreshDataFromServer();
-    }
   }
 
   setResponseData(data: any) {

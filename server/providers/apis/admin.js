@@ -55,9 +55,9 @@ router.post("/setUser", auth, function (req, res, next) {
       req.body.password = sha1(req.body.password);
     }
 
-    if (!req.body.id) {
-      req.body.id = uuid.v4();
-    }
+    // if (!req.body.id) {
+    //   req.body.id = uuid.v4();
+    // }
 
     conn.query(
       "INSERT INTO users set ? ON DUPLICATE KEY UPDATE ?",
@@ -411,6 +411,87 @@ router.post("/deleteWater", auth, function (req, res) {
 });
 
 //#endregion ALL WATERS
+
+//#region MANAGEMENT REGISTERS
+
+router.get("/getManagementRegisters", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select mr.*, CONCAT(u1.firstname, ' ', u1.lastname) as 'name_of_owner', CONCAT(u2.firstname, ' ', u2.lastname) as 'name_of_deputy' from management_registers mr join users u1 on mr.id_owner = u1.id_owner join users u2 on mr.id_deputy = u2.id_owner",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/setManagementRegister", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    if (!req.body.id) {
+      req.body.id = uuid.v4();
+    }
+
+    conn.query(
+      "INSERT INTO management_registers set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(req.body.id);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/deleteManagementRegister", auth, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "delete from management_registers where id = ?",
+      [req.body.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion MANAGEMENT REGISTERS
 
 //#region HELP FUNCTION
 
