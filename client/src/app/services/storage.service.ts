@@ -3,6 +3,7 @@ import { CookieService } from "ngx-cookie";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import * as CryptoJS from "crypto-js";
 import { environment } from "../../environments/environment.prod";
+import { ParameterType } from "./enums/parameter-type";
 
 @Injectable({
   providedIn: "root",
@@ -165,5 +166,18 @@ export class StorageService {
     user.avatar = avatar;
 
     this.setToken(this.encrypt(user));
+  }
+
+  getparametarsDateFromLocalStorageForApiRequest(params: any, body?: any) {
+    if (!body) {
+      body = {};
+    }
+    if (params.type === ParameterType.local_storage) {
+      const storage = this.getLocalStorage(params.key);
+      for (let i = 0; i < params.property.length; i++) {
+        body[params.property[i]] = storage[params.property[i]];
+      }
+    }
+    return body;
   }
 }

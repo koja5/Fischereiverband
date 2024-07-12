@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { StorageService } from "./storage.service";
 import { UserTypes } from "app/main/enums/user-types";
+import { ParameterType } from "./enums/parameter-type";
 
 @Injectable({
   providedIn: "root",
@@ -15,11 +16,26 @@ export class HelpService {
     return body;
   }
 
-  getRequestDataParameters(data: any, parameters: string[]) {
+  getRequestDataParameters(
+    data: any,
+    parameters: string[],
+    parameterType?: ParameterType
+  ) {
     let value = "";
     if (parameters) {
-      for (let i = 0; i < parameters.length; i++) {
-        value += data[parameters[i]] + "/";
+      if (!parameterType || parameterType === ParameterType.params) {
+        for (let i = 0; i < parameters.length; i++) {
+          value += data[parameters[i]] + "/";
+        }
+      } else {
+        value = "?";
+        for (let i = 0; i < parameters.length; i++) {
+          value += parameters[i] + "=" + data[parameters[i]];
+
+          if (i + 1 < parameters.length) {
+            value += "&";
+          }
+        }
       }
     }
     return value;

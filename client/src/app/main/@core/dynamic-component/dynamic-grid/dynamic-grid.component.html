@@ -41,10 +41,13 @@
             <div class="card">
                 <div class="p-1 d-flex align-items-center justify-content-between">
                     <div class="flex-grow-0">
-                        <button *ngIf="config.editSettingsRequest && config.editSettingsRequest.add"
-                            class="btn btn-primary" rippleEffect
+                        <button
+                            *ngIf="(config.editSettingsRequest && config.editSettingsRequest.add) && (!config.actionButtons || config.actionButtons.addButton)"
+                            class="btn btn-primary {{disableCRUD || disabledCreateNew ? 'cursor-not-allowed' : ''}}"
+                            title="{{disableCRUD || disabledCreateNew ? ('actionMessage.actionNotAllowed' | translate) : ''}}"
+                            rippleEffect
                             (click)="config.formDialog && config.formDialog.type === 'sidebar' ? toggleSidebar('sidebar') : showModalFormDialog(); createNewRecords = true; resetFormValue()"
-                            [disabled]="disabledCreateNew">
+                            [disabled]="disabledCreateNew || disableCRUD">
                             <i data-feather="plus" class="d-sm-none d-inline-block mr-0 mr-sm-1"></i><span
                                 class="d-none d-sm-inline-block">{{'general.addNew' | translate}}</span>
                         </button>
@@ -180,10 +183,12 @@
                                 </div>
                                 <div *ngIf="item.template.type === 'action'" ngbDropdown container="body">
                                     <div *ngIf="item.template.actionMode.type === 'menu'">
-                                        <button ngbDropdownToggle type="button" class="btn icon-btn btn-sm hide-arrow"
-                                            rippleEffect>
+                                        <button ngbDropdownToggle type="button"
+                                            class="btn icon-btn btn-sm hide-arrow {{disableCRUD ? 'cursor-not-allowed' : ''}}"
+                                            title="{{disableCRUD ? ('actionMessage.actionNotAllowed' | translate) : ''}}"
+                                            [disabled]="disableCRUD" rippleEffect>
                                             <span [data-feather]="item.template.actionMode.icon"
-                                                [class]="'cursor-pointer'"></span>
+                                                [class]="disableCRUD ? 'cursor-not-allowed' : 'cursor-pointer'"></span>
                                         </button>
                                         <div ngbDropdownMenu>
 

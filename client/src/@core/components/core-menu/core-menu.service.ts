@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 
 import { AuthenticationService } from "app/auth/services";
-import { User } from "app/auth/models";
+import { UserModel } from "app/auth/models";
 import { StorageService } from "app/services/storage.service";
 import { UserTypes } from "app/main/enums/user-types";
 import { HelpService } from "app/services/help.service";
@@ -13,7 +13,7 @@ import { HelpService } from "app/services/help.service";
   providedIn: "root",
 })
 export class CoreMenuService {
-  currentUser: User;
+  currentUser: UserModel;
   onItemCollapsed: Subject<any>;
   onItemCollapseToggled: Subject<any>;
 

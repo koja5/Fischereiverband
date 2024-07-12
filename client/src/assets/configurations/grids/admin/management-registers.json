@@ -101,7 +101,7 @@
             "field": "allow_online"
         },
         {
-            "title": "commonFields.name",
+            "title": "commonFields.fbz",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -125,7 +125,7 @@
             }
         },
         {
-            "title": "commonFields.name",
+            "title": "commonFields.deputyName",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -137,7 +137,7 @@
             }
         },
         {
-            "title": "commonFields.name",
+            "title": "commonFields.year",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -149,19 +149,19 @@
             }
         },
         {
-            "title": "commonFields.name",
+            "title": "commonFields.idFishingBook",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "fishing_book_id",
+            "field": "id_fishing_book",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "commonFields.name",
+            "title": "commonFields.gStatus",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -173,7 +173,7 @@
             }
         },
         {
-            "title": "commonFields.name",
+            "title": "commonFields.occupancyStatus",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -185,19 +185,7 @@
             }
         },
         {
-            "title": "commonFields.name",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "string",
-            "class": "text-align-right",
-            "field": "occupancy_status",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "commonFields.name",
+            "title": "commonFields.catchStatus",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -209,7 +197,7 @@
             }
         },
         {
-            "title": "commonFields.name",
+            "title": "commonFields.birdStatus",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -221,7 +209,7 @@
             }
         },
         {
-            "title": "commonFields.name",
+            "title": "commonFields.countStatus",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -233,7 +221,7 @@
             }
         },
         {
-            "title": "commonFields.name",
+            "title": "commonFields.otterStatus",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -346,9 +334,9 @@
             "type": "textbox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "fishing_book_id",
-            "title": "commonFields.fishingBookId",
-            "field": "fishing_book_id",
+            "name": "id_fishing_book",
+            "title": "commonFields.idFishingBook",
+            "field": "id_fishing_book",
             "required": true
         },
         {

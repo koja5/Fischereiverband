@@ -54,6 +54,15 @@ export const menu = [
     users: ["admin"],
   },
   {
+    id: "all-fish-stocking-reports",
+    title: "allFishStockingReports",
+    translate: "navigations.allFishStockingReports",
+    type: "item",
+    icon: "file-text",
+    url: "dashboard/admin/all-fish-stocking-reports",
+    users: ["admin"],
+  },
+  {
     id: "fish-stocking",
     title: "reportOccupation",
     translate: "navigations.reportOccupation",

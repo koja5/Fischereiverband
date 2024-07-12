@@ -41,7 +41,9 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   @Input() externalAccounts: any;
   @Input() disabledCreateNew: boolean = false;
   @Input() additionalData: any;
+  @Input() disableCRUD: boolean = false;
   @Output() submit = new EventEmitter();
+  @Output() refreshParentComponent = new EventEmitter();
   @ViewChild("grid") grid: any;
   @ViewChild("modal") modal: TemplateRef<any>;
   @ViewChild("modalForm") modalForm: TemplateRef<any>;
@@ -342,7 +344,10 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       this._helpService.checkUndefinedProperty(event) &&
       event.type != "submit"
     ) {
-      if (this.config.editSettingsRequest.add.type === MethodRequest.EMIT) {
+      if (
+        this.config.editSettingsRequest &&
+        this.config.editSettingsRequest.add.type === MethodRequest.EMIT
+      ) {
         this.closeEditForm();
         this.submit.emit(event);
       } else if (this.config.editSettingsRequest.add.type) {
@@ -380,12 +385,16 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   }
 
   refreshDataFromServer() {
-    this._service
-      .callApi(this.config, this._activateRouter)
-      .subscribe((data) => {
-        this.loader = false;
-        this.setResponseData(data);
-      });
+    if (this.config.request) {
+      this._service
+        .callApi(this.config, this._activateRouter)
+        .subscribe((data) => {
+          this.loader = false;
+          this.setResponseData(data);
+        });
+    } else {
+      this.refreshParentComponent.emit();
+    }
   }
 
   setResponseData(data: any) {
@@ -533,7 +542,11 @@ export class DynamicGridComponent implements CanComponentDeactivate {
         parametersInSessionStorage
       );
     }
-    this._router.navigate([generateLink]);
+    if (routerLink.newTab) {
+      window.open(generateLink);
+    } else {
+      this._router.navigate([generateLink]);
+    }
   }
 
   toggleExpandRow(row) {

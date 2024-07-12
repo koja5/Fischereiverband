@@ -5,6 +5,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { AdminGuardService } from "app/services/guards/admin-guard.service";
 import { OwnerGuardService } from "app/services/guards/owner-guard.service";
+import { SettingsComponent } from "./general/settings/settings.component";
 
 const routes = [
   {
@@ -21,7 +22,7 @@ const routes = [
   },
   {
     path: "settings",
-    canActivate: [AdminGuardService],
+    component: SettingsComponent,
     loadChildren: () =>
       import("./general/settings/settings.module").then(
         (m) => m.SettingsModule

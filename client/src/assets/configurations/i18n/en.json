@@ -32,12 +32,29 @@
         "discardChangesConfirm": "Discard changes",
         "discardChangesCancel": "Cancel"
     },
+    "action": {
+        "completeReport": "Complete report",
+        "backReportToOwner": "Back report to owner",
+        "reminderOwnerToCompleteReport": "Remiminder owner to complete report",
+        "requestAdminToChangeStatus": "Request for additional changes"
+    },
     "actionMessage": {
         "successExecuteActionTitleDefault": "Successfuly changed!",
         "successExecuteActionTextDefault": "Action is successfully executed!",
         "errorExecuteActionTitleDefault": "Something is happened",
         "errorExecuteActionTextDefault": "Please check again or try later",
-        "errorUpdateTermineOnGoogleCalendarRights": "Problem with rights when updating an appointment on the google calendar."
+        "errorUpdateTermineOnGoogleCalendarRights": "Problem with rights when updating an appointment on the google calendar.",
+        "actionNotAllowed": "Action not allowed",
+        "dialogCompleteReportQuestionTitle": "Are you sure?",
+        "dialogCompleteReportQuestionText": "Do you want to complete the report. Know that once you complete it, you cannot change the data afterwards.",
+        "reportCompletedNotYet": "The report is still under construction. You have not completed it.",
+        "reportCompleted": "This report is complited! Report completed at",
+        "dialogBackReportToOwnerTitle": "Are you sure?",
+        "dialogBackReportToOwnerText": "Do you want to back report to owner. If you back, owner than can change current report.",
+        "dialogReminderOwnerToCompleteReportTitle": "Are you sure?",
+        "dialogReminderOwnerToCompleteReportText": "Do you want to send notification via email to owner like reminder to complete report?",
+        "dialogRequestForAdditionalChangesTitle": "Are you sure?",
+        "dialogRequestForAdditionalChangesText": "Do you want to send request to superadmin to allow you to make additional changes?"
     },
     "commonFields": {
         "name": "Name",
@@ -83,19 +100,26 @@
         "ownerName": "Owner name",
         "deputyName": "Deputy name",
         "year": "Year",
-        "fishingBookId": "Fishing book ID",
+        "idFishingBook": "Fishing book ID",
         "gStatus": "G Status",
         "occupancyStatus": "Occupancy Status",
         "catchStatus": "Catch Status",
         "birdStatus": "Bird Status",
         "countStatus": "Count Status",
-        "otterStatus": "Otter Status"
+        "otterStatus": "Otter Status",
+        "status": "Status",
+        "preview": "Preview"
     },
     "userTypes": {
         "superadmin": "Superadmin",
         "admin": "Admin",
         "partner": "Partner",
         "employee": "Employee"
+    },
+    "status": {
+        "empty": "Empty",
+        "default": "Starting with request",
+        "completed": "Completed report"
     },
     "login": {
         "title": "Welcome to Termmy! 👋",
@@ -159,6 +183,7 @@
         "allWaters": "All waters",
         "ageOfFishes": "Age of fishes",
         "managementRegisters": "Management registers",
+        "allFishStockingReports": "Fish stocking reports",
         "reportOccupation": "Fish stocking",
         "observationSheet": "Observation sheet"
     },

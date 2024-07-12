@@ -101,54 +101,6 @@
             "field": "allow_online"
         },
         {
-            "title": "observationSheet.name",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "string",
-            "class": "text-align-right",
-            "field": "name",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "observationSheet.address",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "string",
-            "class": "text-align-right",
-            "field": "address",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "observationSheet.telephone",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "string",
-            "class": "text-align-right",
-            "field": "telephone",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "observationSheet.email",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "string",
-            "class": "text-align-right",
-            "field": "email",
-            "validation": {
-                "required": true
-            }
-        },
-        {
             "title": "observationSheet.dateAndTime",
             "filterable": true,
             "hideable": true,
@@ -326,43 +278,6 @@
             "name": "id",
             "title": "ID",
             "field": "id"
-        },
-        {
-            "type": "label",
-            "width": "col-md-12 border-bottom",
-            "text": "observationSheet.firstSection"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "name",
-            "title": "observationSheet.name",
-            "field": "name"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "address",
-            "title": "observationSheet.name",
-            "field": "address"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "telephone",
-            "title": "observationSheet.telephone",
-            "field": "telephone"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "email",
-            "title": "observationSheet.email",
-            "field": "email"
         },
         {
             "type": "label",

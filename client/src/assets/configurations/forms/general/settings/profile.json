@@ -29,6 +29,32 @@
             "type": "textbox",
             "width": "col-md-6",
             "class": "e-outline",
+            "name": "street",
+            "title": "commonFields.street",
+            "field": "street"
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "location",
+            "title": "commonFields.location",
+            "field": "location",
+            "required": true
+        },
+        {
+            "type": "datepicker",
+            "width": "col-md-6",
+            "class": "e-outline",
+            "name": "birthday",
+            "title": "commonFields.birthday",
+            "field": "birthday",
+            "required": true
+        },
+        {
+            "type": "textbox",
+            "width": "col-md-6",
+            "class": "e-outline",
             "name": "email",
             "title": "commonFields.email",
             "field": "email",
@@ -36,66 +62,22 @@
             "required": true
         },
         {
-            "type": "phoneprefix",
+            "type": "textbox",
             "width": "col-md-6",
             "class": "e-outline",
-            "name": "telephone",
-            "title": "commonFields.telephone",
-            "field": "telephone",
+            "name": "username",
+            "title": "commonFields.username",
+            "field": "username",
             "required": true
         },
         {
             "type": "textbox",
             "width": "col-md-6",
             "class": "e-outline",
-            "name": "position",
-            "title": "commonFields.position",
-            "field": "position"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "company",
-            "title": "commonFields.company",
-            "field": "company",
+            "name": "password",
+            "title": "commonFields.password",
+            "field": "password",
             "required": true
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "address",
-            "title": "commonFields.address",
-            "field": "address",
-            "required": true
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "zip",
-            "title": "commonFields.zip",
-            "field": "zip",
-            "required": true
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "city",
-            "title": "commonFields.city",
-            "field": "city",
-            "required": true
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "bio",
-            "title": "commonFields.biography",
-            "field": "bio",
-            "multiline": true
         },
         {
             "type": "button",

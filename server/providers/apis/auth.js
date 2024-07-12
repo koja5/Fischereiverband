@@ -8,7 +8,7 @@ const request = require("request");
 const fs = require("fs");
 const sha1 = require("sha1");
 const jwt = require("jsonwebtoken");
-const auth = require("../config/auth");
+const auth = require("../config/authentification/auth");
 const sql = require("../config/sql-database");
 
 module.exports = router;
@@ -20,13 +20,10 @@ connection.getConnection(function (err, conn) {});
 // #region AUTH
 router.post("/login", function (req, res, next) {
   connection.getConnection(function (err, conn) {
-    console.log(err);
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
       return res.json(err);
     }
-
-    console.log(sha1(req.body.password));
 
     conn.query(
       "select * from users WHERE (email = ? or username = ?) AND password = ?",
@@ -37,7 +34,6 @@ router.post("/login", function (req, res, next) {
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(err);
         }
-        console.log(rows);
 
         if (rows.length > 0) {
           if (rows[0].active) {

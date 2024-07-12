@@ -4,17 +4,18 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { environment } from "environments/environment";
-import { User, Role } from "app/auth/models";
+import { UserModel, Role } from "app/auth/models";
 import { ToastrService } from "ngx-toastr";
 import { StorageService } from "app/services/storage.service";
+import { UserTypes } from "app/main/enums/user-types";
 
 @Injectable({ providedIn: "root" })
 export class AuthenticationService {
   //public
-  public currentUser: Observable<User>;
+  public currentUser: Observable<UserModel>;
 
   //private
-  private currentUserSubject: BehaviorSubject<User>;
+  private currentUserSubject: BehaviorSubject<UserModel>;
 
   /**
    *
@@ -26,14 +27,14 @@ export class AuthenticationService {
     private _toastrService: ToastrService,
     private _storageService: StorageService
   ) {
-    this.currentUserSubject = new BehaviorSubject<User>(
+    this.currentUserSubject = new BehaviorSubject<UserModel>(
       JSON.parse(localStorage.getItem("currentUser"))
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
   // getter: currentUserValue
-  public get currentUserValue(): User {
+  public get currentUserValue(): UserModel {
     return this.currentUserSubject.value;
   }
 
@@ -42,7 +43,7 @@ export class AuthenticationService {
    */
   get isAdmin() {
     return (
-      this.currentUser && this.currentUserSubject.value.role === Role.Admin
+      this.currentUser && this.currentUserSubject.value.type === UserTypes.admin
     );
   }
 
@@ -51,7 +52,7 @@ export class AuthenticationService {
    */
   get isClient() {
     return (
-      this.currentUser && this.currentUserSubject.value.role === Role.Client
+      this.currentUser && this.currentUserSubject.value.type === UserTypes.owner
     );
   }
 

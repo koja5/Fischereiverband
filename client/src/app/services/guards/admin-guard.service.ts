@@ -20,7 +20,7 @@ export class AdminGuardService {
       return true;
     } else {
       this._helpService.setLocalStorage("previousLink", window.location.href);
-      this._router.navigate(["./dashboard/miscellaneous/not-authorized"]);
+      this._router.navigate(["./auth/login"]);
       return false;
     }
   }

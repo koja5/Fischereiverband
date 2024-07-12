@@ -8,9 +8,11 @@ const request = require("request");
 const fs = require("fs");
 const sha1 = require("sha1");
 const jwt = require("jsonwebtoken");
-const auth = require("../config/auth");
+const auth = require("../config/authentification/auth");
+const authAdmin = require("../config/authentification/auth-admin");
 const sql = require("../config/sql-database");
 const uuid = require("uuid");
+const makeRequest = require("./help-function/makeRequest");
 
 module.exports = router;
 
@@ -20,7 +22,7 @@ connection.getConnection(function (err, conn) {});
 
 //#region ALL USERS
 
-router.get("/getAllUsers", auth, async (req, res, next) => {
+router.get("/getAllUsers", authAdmin, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -44,7 +46,35 @@ router.get("/getAllUsers", auth, async (req, res, next) => {
   }
 });
 
-router.post("/setUser", auth, function (req, res, next) {
+router.get("/getUserProfile/:idOwner", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from users where id_owner = ?",
+          [req.params.idOwner],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows.length ? rows[0] : rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/setUser", authAdmin, function (req, res, next) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -65,7 +95,7 @@ router.post("/setUser", auth, function (req, res, next) {
       function (err, rows) {
         conn.release();
         if (!err) {
-          res.json(req.body.id);
+          res.json(true);
         } else {
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(false);
@@ -75,7 +105,7 @@ router.post("/setUser", auth, function (req, res, next) {
   });
 });
 
-router.post("/deleteUser", auth, function (req, res) {
+router.post("/deleteUser", authAdmin, function (req, res) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -102,7 +132,7 @@ router.post("/deleteUser", auth, function (req, res) {
 
 //#region ALL FISHES
 
-router.get("/getAllFishes", auth, async (req, res, next) => {
+router.get("/getAllFishes", authAdmin, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -126,7 +156,7 @@ router.get("/getAllFishes", auth, async (req, res, next) => {
   }
 });
 
-router.post("/setFish", auth, function (req, res, next) {
+router.post("/setFish", authAdmin, function (req, res, next) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -153,7 +183,7 @@ router.post("/setFish", auth, function (req, res, next) {
   });
 });
 
-router.post("/deleteFish", auth, function (req, res) {
+router.post("/deleteFish", authAdmin, function (req, res) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -180,7 +210,7 @@ router.post("/deleteFish", auth, function (req, res) {
 
 //#region AGE OF FISHES
 
-router.get("/getAgeOfFishes", auth, async (req, res, next) => {
+router.get("/getAgeOfFishes", authAdmin, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -204,7 +234,7 @@ router.get("/getAgeOfFishes", auth, async (req, res, next) => {
   }
 });
 
-router.post("/setAgeOfFish", auth, function (req, res, next) {
+router.post("/setAgeOfFish", authAdmin, function (req, res, next) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -231,7 +261,7 @@ router.post("/setAgeOfFish", auth, function (req, res, next) {
   });
 });
 
-router.post("/deleteAgeOfFish", auth, function (req, res) {
+router.post("/deleteAgeOfFish", authAdmin, function (req, res) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -336,7 +366,7 @@ router.post("/deleteOrigin", auth, function (req, res) {
 
 //#region ALL WATERS
 
-router.get("/getAllWaters", auth, async (req, res, next) => {
+router.get("/getAllWaters", authAdmin, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -360,7 +390,7 @@ router.get("/getAllWaters", auth, async (req, res, next) => {
   }
 });
 
-router.post("/setWater", auth, function (req, res, next) {
+router.post("/setWater", authAdmin, function (req, res, next) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -387,7 +417,7 @@ router.post("/setWater", auth, function (req, res, next) {
   });
 });
 
-router.post("/deleteWater", auth, function (req, res) {
+router.post("/deleteWater", authAdmin, function (req, res) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -414,7 +444,7 @@ router.post("/deleteWater", auth, function (req, res) {
 
 //#region MANAGEMENT REGISTERS
 
-router.get("/getManagementRegisters", auth, async (req, res, next) => {
+router.get("/getManagementRegisters", authAdmin, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -441,7 +471,7 @@ router.get("/getManagementRegisters", auth, async (req, res, next) => {
   }
 });
 
-router.post("/setManagementRegister", auth, function (req, res, next) {
+router.post("/setManagementRegister", authAdmin, function (req, res, next) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -468,7 +498,7 @@ router.post("/setManagementRegister", auth, function (req, res, next) {
   });
 });
 
-router.post("/deleteManagementRegister", auth, function (req, res) {
+router.post("/deleteManagementRegister", authAdmin, function (req, res) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -492,6 +522,178 @@ router.post("/deleteManagementRegister", auth, function (req, res) {
 });
 
 //#endregion MANAGEMENT REGISTERS
+
+//#region FISH STOCKING REPORTS
+
+router.get("/getAllFishStockingReports", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select fsr.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_stocking_reports fsr join users u on fsr.id_owner = u.id_owner order by fsr.date_completed desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/setManagementRegister", authAdmin, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    if (!req.body.id) {
+      req.body.id = uuid.v4();
+    }
+
+    conn.query(
+      "INSERT INTO management_registers set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(req.body.id);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/deleteManagementRegister", authAdmin, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "delete from management_registers where id = ?",
+      [req.body.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.get(
+  "/getFishStockingReportDetails",
+  authAdmin,
+  async (req, res, next) => {
+    try {
+      connection.getConnection(function (err, conn) {
+        if (err) {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(err);
+        } else {
+          conn.query(
+            "select fsd.*, w.name as 'water', f.name as 'fish', af.name as 'age_of_fish', o.name as 'origin', CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_stocking_details fsd join waters w on fsd.id_water = w.id_water join fishes f on fsd.id_fish = f.id join age_of_fishes af on fsd.id_age_of_fish = af.id join origins o on fsd.id_origin = o.id join users u on fsd.id_owner = u.id_owner where fsd.fbz = ? and fsd.year = ?",
+            [req.query.fbz, req.query.year],
+            function (err, rows, fields) {
+              conn.release();
+              if (err) {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(err);
+              } else {
+                res.json(rows);
+              }
+            }
+          );
+        }
+      });
+    } catch (ex) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(ex);
+    }
+  }
+);
+
+router.get("/getFishStockingReport", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select fsr.*, CONCAT(u.firstname, ' ', u.lastname) as 'owner_name' from fish_stocking_reports fsr join users u on fsr.id_owner = u.id_owner where fsr.fbz = ? and fsr.year = ?",
+          [req.query.fbz, req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows.length ? rows[0] : rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+//#endregion FISH STOCKING REPORTS
+
+//#region BACK FISH STOCKING REPORT TO OWNER
+
+router.post("/backFishStockingReportToOwner", authAdmin, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "update fish_stocking_reports set status = 1 where id = ?",
+      [req.body.fishStockingReport.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          makeRequest(
+            req.body,
+            "mail/sendNotificationToOwnerForBackFishStockingReport",
+            res
+          );
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
 
 //#region HELP FUNCTION
 

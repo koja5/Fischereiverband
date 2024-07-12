@@ -25,7 +25,7 @@ export class LoggedGuard {
       } else if (token.type === UserTypes.admin) {
         this._router.navigate(["/dashboard/admin/all-users"]);
       } else if (token.type === UserTypes.owner) {
-        this._router.navigate(["/dashboard/owner/my-calendar"]);
+        this._router.navigate(["/dashboard/owner/fish-stocking"]);
       }
       return false;
     }

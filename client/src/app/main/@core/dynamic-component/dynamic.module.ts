@@ -23,7 +23,6 @@ import { MainCoreCommonModule } from "../common/main-core-common.module";
 @NgModule({
   declarations: [
     DynamicGridComponent,
-    DynamicFormsComponent,
     DynamicTabsComponent,
   ],
   imports: [

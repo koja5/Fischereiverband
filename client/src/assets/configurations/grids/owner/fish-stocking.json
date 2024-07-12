@@ -43,7 +43,7 @@
     "editSettingsRequest": {
         "add": {
             "type": "EMIT",
-            "api": "/api/owner/setReportSale",
+            "api": "/api/owner/setFishStocking",
             "parameters": [],
             "fields": "",
             "root": ""
@@ -74,7 +74,7 @@
                             "executeAction": {
                                 "request": {
                                     "type": "POST",
-                                    "api": "/api/owner/deleteReportSale",
+                                    "api": "/api/owner/deleteFishStocking",
                                     "parameters": [],
                                     "fields": "",
                                     "root": ""
@@ -210,10 +210,48 @@
             },
             "request": {
                 "type": "GET",
-                "api": "/api/admin/getAllWaters",
+                "parameterType": "QUERY",
+                "api": "/api/owner/getWatersForSpecificFBZ",
                 "parameters": [],
                 "fields": "",
-                "root": ""
+                "root": "",
+                "parametarsDate": [
+                    {
+                        "type": "localStorage",
+                        "key": "selectedManagementRegistry",
+                        "property": [
+                            "fbz"
+                        ]
+                    }
+                ]
+            },
+            "addTag": {
+                "title": "",
+                "formConfig": {
+                    "path": "forms/owner",
+                    "file": "new-entrie-name-of-water.json"
+                },
+                "request": {
+                    "type": "POST",
+                    "api": "/api/owner/createNewWaterNameEntry",
+                    "parameters": [],
+                    "fields": [
+                        {
+                            "name": "name",
+                            "path": "name"
+                        }
+                    ],
+                    "root": "",
+                    "parametarsDate": [
+                        {
+                            "type": "localStorage",
+                            "key": "selectedManagementRegistry",
+                            "property": [
+                                "fbz"
+                            ]
+                        }
+                    ]
+                }
             },
             "fieldConfig": {
                 "ignoreAccent": false,
@@ -237,6 +275,34 @@
                 "parameters": [],
                 "fields": "",
                 "root": ""
+            },
+            "addTag": {
+                "title": "",
+                "formConfig": {
+                    "path": "forms/owner",
+                    "file": "new-entrie-name-of-fish.json"
+                },
+                "request": {
+                    "type": "POST",
+                    "api": "/api/owner/createNewFishNameEntry",
+                    "parameters": [],
+                    "fields": [
+                        {
+                            "name": "name",
+                            "path": "name"
+                        }
+                    ],
+                    "root": "",
+                    "parametarsDate": [
+                        {
+                            "type": "localStorage",
+                            "key": "selectedManagementRegistry",
+                            "property": [
+                                "fbz"
+                            ]
+                        }
+                    ]
+                }
             },
             "fieldConfig": {
                 "ignoreAccent": false,
@@ -283,6 +349,34 @@
                 "parameters": [],
                 "fields": "",
                 "root": ""
+            },
+            "addTag": {
+                "title": "",
+                "formConfig": {
+                    "path": "forms/owner",
+                    "file": "new-entrie-name-of-origin.json"
+                },
+                "request": {
+                    "type": "POST",
+                    "api": "/api/owner/createNewOriginNameEntry",
+                    "parameters": [],
+                    "fields": [
+                        {
+                            "name": "name",
+                            "path": "name"
+                        }
+                    ],
+                    "root": "",
+                    "parametarsDate": [
+                        {
+                            "type": "localStorage",
+                            "key": "selectedManagementRegistry",
+                            "property": [
+                                "fbz"
+                            ]
+                        }
+                    ]
+                }
             },
             "fieldConfig": {
                 "ignoreAccent": false,

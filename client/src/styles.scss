@@ -176,6 +176,14 @@
   background: #fff !important;
 }
 
+.ngx-datatable.scroll-horz .datatable-body {
+  height: calc(100vh - 40vh) !important;
+}
+
+.ngx-datatable.bootstrap.core-bootstrap .datatable-footer {
+  margin-bottom: 0px !important;
+}
+
 .e-treeview .e-list-item.e-active > .e-fullrow {
   height: 60px;
 }

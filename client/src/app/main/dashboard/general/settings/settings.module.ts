@@ -6,6 +6,7 @@ import { DynamicModule } from "app/main/@core/dynamic-component/dynamic.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { ProfileComponent } from "./profile/profile.component";
+import { SettingsComponent } from "./settings.component";
 
 const routes = [
   {
@@ -16,7 +17,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [ProfileComponent],
+  declarations: [ProfileComponent, SettingsComponent],
   imports: [CommonModule, RouterModule.forChild(routes), DynamicModule],
 
   providers: [],

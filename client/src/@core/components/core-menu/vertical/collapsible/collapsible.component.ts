@@ -7,14 +7,14 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { CoreMenuItem } from '@core/types';
 import { CoreMenuService } from '@core/components/core-menu/core-menu.service';
 
-import { User } from 'app/auth/models';
+import { UserModel } from 'app/auth/models';
 
 @Component({
   selector: '[core-menu-vertical-collapsible]',
   templateUrl: './collapsible.component.html'
 })
 export class CoreMenuVerticalCollapsibleComponent implements OnInit, OnDestroy {
-  currentUser: User;
+  currentUser: UserModel;
 
   @Input()
   item: CoreMenuItem;

@@ -32,12 +32,30 @@
       "discardChangesConfirm": "Änderungen verwerfen",
       "discardChangesCancel": "Abbrechen"
    },
+   "action": {
+      "completeReport": "Vollständiger Bericht",
+      "backReportToOwner": "Dem Besitzer Bericht erstatten",
+      "reminderOwnerToCompleteReport": "Eigentümer der Erinnerung",
+      "requestAdminToChangeStatus": "Bitte um weitere Änderungen"
+   },
    "actionMessage": {
       "successExecuteActionTitleDefault": "Erfolgreich geändert!",
       "successExecuteActionTextDefault": "Aktion erfolgreich ausgeführt!",
       "errorExecuteActionTitleDefault": "Etwas ist passiert",
       "errorExecuteActionTextDefault": "Bitte überprüfen Sie es noch einmal oder versuchen Sie es später",
-      "errorUpdateTermineOnGoogleCalendarRights": "Ein Problem mit den Rechten beim Aktualisieren eines Termins im Google-Kalender."
+      "errorUpdateTermineOnGoogleCalendarRights": "Ein Problem mit den Rechten beim Aktualisieren eines Termins im Google-Kalender.",
+      "dialogCompleteReportQuestionTitle": "Bist du sicher?",
+      "dialogCompleteReportQuestionText": "Möchten Sie den Bericht vervollständigen? Beachten Sie, dass Sie die Daten nach Abschluss nicht mehr ändern können.",
+      "dialogCompleteReportQuestionYes": "Ja, vollständiger Bericht!",
+      "dialogCompleteReportQuestionNo": "NEIN",
+      "reportCompletedNotYet": "Der Bericht befindet sich noch im Aufbau. Sie haben es nicht abgeschlossen.",
+      "reportCompleted": "Dieser Bericht ist fertig! Bericht abgeschlossen um",
+      "dialogBackReportToOwnerTitle": "Bist du sicher?",
+      "dialogBackReportToOwnerText": "Möchten Sie dem Eigentümer erneut Bericht erstatten? Wenn Sie zurückkehren, kann der Eigentümer den aktuellen Bericht ändern.",
+      "dialogReminderOwnerToCompleteReportTitle": "Bist du sicher?",
+      "dialogReminderOwnerToCompleteReportText": "Möchten Sie eine Benachrichtigung per E-Mail an den Eigentümer senden, z. B. eine Erinnerung zum Ausfüllen des Berichts?",
+      "dialogRequestForAdditionalChangesTitle": "Bist du sicher?",
+      "dialogRequestForAdditionalChangesText": "Möchten Sie eine Anfrage an den Superadmin senden, damit Sie weitere Änderungen vornehmen können?"
    },
    "commonFields": {
       "name": "Name",
@@ -70,8 +88,6 @@
       "confirmNewPassword": "Neues Passwort wiederholen",
       "fillRequredFields": "Bitte füllen Sie die erforderlichen Felder aus",
       "createNew": "Erstelle neu",
-      "createNewClient": "Neuen Client erstellen",
-      "createNewService": "Neuen Dienst erstellen",
       "noDataFoundFor": "Keine Daten gefunden für",
       "doYouWantToCreateNew": "Möchten Sie etwas Neues erstellen?",
       "date": "Datum",
@@ -85,19 +101,26 @@
       "ownerName": "Besitzername",
       "deputyName": "Stellvertretername",
       "year": "Jahr",
-      "fishingBookId": "Angelbuch-ID",
+      "idFishingBook": "Angelbuch-ID",
       "gStatus": "G-Status",
       "occupancyStatus": "Belegungsstatus",
       "catchStatus": "Fangstatus",
       "birdStatus": "Vogelstatus",
       "countStatus": "Zählstatus",
-      "otterStatus": "Otter-Status"
+      "otterStatus": "Otter-Status",
+      "status": "Status",
+      "preview": "Vorschau"
    },
    "userTypes": {
       "superadmin": "Superadmin",
       "admin": "Admin",
       "partner": "Partner",
       "employee": "Employee"
+   },
+   "status": {
+      "empty": "Leer",
+      "default": "Beginnend mit der Anfrage",
+      "completed": "Fertiger Bericht"
    },
    "login": {
       "title": "Willkommen bei Termmy! 👋",
@@ -125,6 +148,7 @@
       "allOrigins": "Alle Ursprünge",
       "allWaters": "Alle Gewässer",
       "ageOfFishes": "Zeitalter der Fische",
+      "allFishStockingReports": "Berichte über den Fischbesatz",
       "managementRegisters": "Verwaltungsregister",
       "reportOccupation": "Besatz melden",
       "observationSheet": "Beobachtungsblatt"

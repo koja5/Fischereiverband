@@ -3,11 +3,13 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { DirtycheckGuard } from "app/services/guards/dirtycheck.guard";
 import { DynamicModule } from "app/main/@core/dynamic-component/dynamic.module";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectModule } from "@ng-select/ng-select";
-import { ObservationSheetComponent } from "./observation-sheet/observation-sheet.component";
-import { FishStockingComponent } from "./fish-stocking/fish-stocking.component";
+import { ObservationSheetComponent } from "./components/observation-sheet/observation-sheet.component";
+import { FishStockingComponent } from "./components/fish-stocking/fish-stocking.component";
 import { FormsModule } from "@angular/forms";
+import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.module";
+import { TranslateModule } from "@ngx-translate/core";
+import { NgbAlert, NgbAlertModule } from "@ng-bootstrap/ng-bootstrap";
 
 const routes = [
   {
@@ -30,6 +32,9 @@ const routes = [
     RouterModule.forChild(routes),
     DynamicModule,
     NgSelectModule,
+    MainCoreCommonModule,
+    TranslateModule,
+    NgbAlertModule,
   ],
 
   providers: [],

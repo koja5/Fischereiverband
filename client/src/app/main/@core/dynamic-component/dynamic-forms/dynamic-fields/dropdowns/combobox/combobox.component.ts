@@ -7,6 +7,8 @@ import { HelpService } from "app/services/help.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DynamicFormsComponent } from "../../../dynamic-forms.component";
 import { ConfigurationService } from "app/services/configuration.service";
+import { CoreSidebarService } from "@core/components/core-sidebar/core-sidebar.service";
+import { StorageService } from "app/services/storage.service";
 
 @Component({
   selector: "app-combobox",
@@ -18,18 +20,21 @@ export class ComboboxComponent implements OnInit {
   public group: FormGroup;
   @ViewChild("modalForm") modalForm: TemplateRef<any>;
   @ViewChild(DynamicFormsComponent) form!: DynamicFormsComponent;
+  @ViewChild("modalNewEntrie") modal: TemplateRef<any>;
+  public modalDialog: any;
 
   public data: any;
   public language: any;
   public loading = false;
-  public modalDialog: any;
   public configForm: any;
 
   constructor(
-    private service: CallApiService,
+    private _service: CallApiService,
     private _helpService: HelpService,
     private _configurationService: ConfigurationService,
-    private _modalService: NgbModal
+    private _modalService: NgbModal,
+    private _coreSidebarService: CoreSidebarService,
+    private _storageService: StorageService
   ) {
     this.config = new FieldConfig();
     this.group = new FormGroup({});
@@ -42,6 +47,8 @@ export class ComboboxComponent implements OnInit {
     } else {
       this.initialization();
     }
+    console.log(this.config);
+    console.log(this.group);
   }
 
   initialization() {
@@ -56,9 +63,9 @@ export class ComboboxComponent implements OnInit {
   }
 
   postApiRequest() {
-    this.service.callPostMethod(
+    this._service.callPostMethod(
       this.config.request!.api,
-      this.service.packParametarPost(
+      this._service.packParametarPost(
         this.config.data,
         this.config.request!.fields
       )
@@ -67,27 +74,19 @@ export class ComboboxComponent implements OnInit {
 
   getApiRequest() {
     this.loading = true;
-    this.service
-      .callGetMethod(
-        this.config.request!.api,
-        this.service.packParametarGet(
-          this.config.data,
-          this.config.request!.fields
-        )
-      )
-      .subscribe(
-        (data) => {
-          if (this.config.request!.root) {
-            // this.data = data[this.config.request!.root];
-          } else {
-            this.data = data;
-            this.loading = false;
-          }
-        },
-        (error) => {
+    this._service.callApi(this.config, this.config.request!.fields).subscribe(
+      (data) => {
+        if (this.config.request!.root) {
+          // this.data = data[this.config.request!.root];
+        } else {
+          this.data = data;
           this.loading = false;
         }
-      );
+      },
+      (error) => {
+        this.loading = false;
+      }
+    );
   }
 
   getLocalData(localDataRequest: ConfigurationFile) {
@@ -145,5 +144,66 @@ export class ComboboxComponent implements OnInit {
 
   submitEmitter(event: any) {
     this.config.value = event.firstname + " " + event.lastname;
+  }
+
+  openModalNewEntrie() {
+    setTimeout(() => {
+      this.modalDialog = this._modalService.open(this.modal, {
+        centered: true,
+        windowClass: "modal modal-danger",
+      });
+    }, 20);
+  }
+
+  toggleSidebar(name): void {
+    this._coreSidebarService.getSidebarRegistry(name).toggleOpen();
+  }
+
+  createNewEntries(event) {}
+
+  submitNewEntriesEmitter(event) {
+    console.log(this.config);
+    console.log(event);
+
+    let body = {};
+
+    if (this.config.addTag) {
+      if (this.config.addTag.request) {
+        body = this._service.buildParameterDate(
+          this.config.addTag.request,
+          event
+        );
+      }
+    }
+
+    // const selectedManagementRegistry = this._storageService.getLocalStorage(
+    //   "selectedManagementRegistry"
+    // );
+    // let data = {
+    //   fbz: selectedManagementRegistry.fbz,
+    //   name: event.name_of_water,
+    // };
+    this._service
+      .callPostMethod(this.config.addTag.request.api, body)
+      .subscribe((entryId) => {
+        this.loading = true;
+        this._service
+          .callApi(this.config, this.config.request!.fields)
+          .subscribe(
+            (data) => {
+              if (this.config.request!.root) {
+                // this.data = data[this.config.request!.root];
+              } else {
+                this.data = data;
+                this.group.controls[this.config.name].setValue(entryId);
+                this.modalDialog.close();
+                this.loading = false;
+              }
+            },
+            (error) => {
+              this.loading = false;
+            }
+          );
+      });
   }
 }

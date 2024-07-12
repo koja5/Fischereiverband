@@ -27,9 +27,12 @@ import { DatetimepickerComponent } from "../dynamic-fields/inputs/datetimepicker
 import { NumericTextboxComponent } from "../dynamic-fields/inputs/numeric-textbox/numeric-textbox.component";
 import { CoreCommonModule } from "@core/common.module";
 import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.module";
+import { CoreSidebarModule } from "@core/components";
+import { DynamicFormsComponent } from "../dynamic-forms.component";
 
 @NgModule({
   declarations: [
+    DynamicFormsComponent,
     DynamicFieldsDirective,
     TextBoxComponent,
     PasswordBoxComponent,
@@ -48,6 +51,7 @@ import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.mod
     PhonePrefixComponent,
   ],
   exports: [
+    DynamicFormsComponent,
     DynamicFieldsDirective,
     TextBoxComponent,
     PasswordBoxComponent,
@@ -76,8 +80,10 @@ import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.mod
     DateTimePickerModule,
     InternationalPhoneModule,
     MainCoreCommonModule,
+    CoreSidebarModule,
   ],
   entryComponents: [
+    DynamicFormsComponent,
     DynamicFieldsDirective,
     TextBoxComponent,
     PasswordBoxComponent,

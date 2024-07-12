@@ -9,6 +9,11 @@ import { AgeOfFishesComponent } from "./age-of-fishes/age-of-fishes.component";
 import { AllOriginsComponent } from "./all-origins/all-origins.component";
 import { AllWatersComponent } from "./all-waters/all-waters.component";
 import { ManagementRegistersComponent } from "./management-registers/management-registers.component";
+import { AllFishStockingReportsComponent } from "./all-fish-stocking-reports/all-fish-stocking-reports.component";
+import { FishStockingReportDetailsComponent } from "./all-fish-stocking-reports/fish-stocking-report-details/fish-stocking-report-details.component";
+import { TranslateModule } from "@ngx-translate/core";
+import { NgbAlertModule } from "@ng-bootstrap/ng-bootstrap";
+import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.module";
 
 const routes = [
   {
@@ -41,6 +46,16 @@ const routes = [
     component: ManagementRegistersComponent,
     canDeactivate: [DirtycheckGuard],
   },
+  {
+    path: "all-fish-stocking-reports",
+    component: AllFishStockingReportsComponent,
+    canDeactivate: [DirtycheckGuard],
+  },
+  {
+    path: "fish-stocking-report-details",
+    component: FishStockingReportDetailsComponent,
+    canDeactivate: [DirtycheckGuard],
+  },
 ];
 
 @NgModule({
@@ -51,8 +66,17 @@ const routes = [
     AllOriginsComponent,
     AllWatersComponent,
     ManagementRegistersComponent,
+    AllFishStockingReportsComponent,
+    FishStockingReportDetailsComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes), DynamicModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    DynamicModule,
+    TranslateModule,
+    NgbAlertModule,
+    MainCoreCommonModule,
+  ],
 
   providers: [],
   exports: [RouterModule],
