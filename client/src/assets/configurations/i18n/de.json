@@ -17,12 +17,6 @@
       "inactive": "Inaktiv",
       "total": "Gesamt",
       "options": "Einstellungen",
-      "syncGoogleContacts": "Google Kontakte synchronisieren",
-      "syncGoogleContactQuestionTitle": "Google Kontakte synchronisieren",
-      "syncGoogleContactsQuestionText": "Sollen die Google Kontakte mit Termmy synchronisiert werden? Das kann 1-2 Minuten dauern.",
-      "successfullySyncGoogleContacts": "Erfolgreiche Synchronisierung der Google Kontakte mit Termmy",
-      "unsuccessfullySyncGoogleContacts": "Synchronisierung der Google Kontakte mit Termmy war nicht erfolgreich. Versuchen Sie es später oder kontaktieren Sie den Support,",
-      "syncContacts": "Sync-Kontakte",
       "noInformation": "Keine Information",
       "ok": "OK",
       "noData": "Es sind keine Informationen zum Anzeigen vorhanden",
@@ -123,8 +117,8 @@
       "completed": "Fertiger Bericht"
    },
    "login": {
-      "title": "Willkommen bei Termmy! 👋",
-      "subtitle": "Melden Sie sich bei Ihrem Termmy-Konto an und erweitern Sie Ihren bestehenden Kalender um viele Funktionen.",
+      "title": "Willkommen bei Fischereiverband! 👋",
+      "subtitle": "Melden Sie sich bei Ihrem Fischereiverband-Konto an und erweitern Sie Ihren bestehenden Kalender um viele Funktionen.",
       "email": "Email",
       "emailIsRequired": "E-Mail ist erforderlich",
       "emailMustBeValid": "E-Mail muss eine gültige E-Mail-Adresse sein",
@@ -185,21 +179,6 @@
    "authGlobal": {
       "backToLogin": "Zurück zum Login"
    },
-   "signUp": {
-      "title": "Zeit sparen und Termintreue erhöhen 🚀",
-      "text": "Erweitern Sie Ihren bestehenden Kalender um Funktionen wie Online-Buchung und vieles mehr.",
-      "IAgreeTo": "Ich stimme zu",
-      "privacyPolicy": "Datenschutzrichtlinie",
-      "and": "und",
-      "terms": "Bedingungen.",
-      "signUp": "Anmelden",
-      "alreadyHaveAnAccount": "Haben Sie bereits ein Konto?",
-      "signInInstead": "Stattdessen einloggen",
-      "fillRequredFields": "Bitte füllen Sie die erforderlichen Felder aus",
-      "mailExists": "Diese E-Mail-Adresse existiert bereits. Bitte geben Sie eine andere E-Mail-Adresse ein oder setzen Sie Ihr Passwort zurück.",
-      "verifyYouMail": "Bitte überprüfen Sie Ihre E-Mail, um sie zu verifizieren.",
-      "passwordNotMatch": "Passwort und Passwort erneut stimmen nicht überein! Sie müssen gleich sein"
-   },
    "forgot": {
       "title": "Passwort vergessen? 🔒",
       "text": "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen Anweisungen, um Ihr Passwort zurückzusetzen",
@@ -230,7 +209,6 @@
       "text": "Bei der vorherigen Aktion ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie unseren Support um Hilfe.",
       "backToHome": "Zurück zur Startseite"
    },
-   "reportOccupation": "",
    "water": {
       "idWater": "ID-Wasser",
       "idWaterBook": "ID-Wasserbuch",

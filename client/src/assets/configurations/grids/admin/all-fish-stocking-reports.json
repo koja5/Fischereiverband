@@ -49,7 +49,9 @@
     },
     "columns": [
         {
-            "title": "commonFields.preview",
+            "title": "",
+            "width": 70,
+            "flexGrow": 1,
             "template": {
                 "type": "action",
                 "actionMode": {

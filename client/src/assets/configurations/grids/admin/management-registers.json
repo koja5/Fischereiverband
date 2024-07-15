@@ -59,6 +59,7 @@
     "columns": [
         {
             "title": "commonFields.action",
+            "width": 90,
             "template": {
                 "type": "action",
                 "actionMode": {
@@ -102,6 +103,7 @@
         },
         {
             "title": "commonFields.fbz",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -138,6 +140,7 @@
         },
         {
             "title": "commonFields.year",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -150,6 +153,7 @@
         },
         {
             "title": "commonFields.idFishingBook",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -162,6 +166,7 @@
         },
         {
             "title": "commonFields.gStatus",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -174,6 +179,7 @@
         },
         {
             "title": "commonFields.occupancyStatus",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -186,6 +192,7 @@
         },
         {
             "title": "commonFields.catchStatus",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -198,6 +205,7 @@
         },
         {
             "title": "commonFields.birdStatus",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -210,6 +218,7 @@
         },
         {
             "title": "commonFields.countStatus",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -222,6 +231,7 @@
         },
         {
             "title": "commonFields.otterStatus",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",

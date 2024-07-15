@@ -8,7 +8,7 @@ var fs = require("fs");
 var smtpTransport = nodemailer.createTransport({
   host: process.env.smtp_host,
   port: process.env.smtp_port,
-  secure: false,
+  secure: process.env.secure,
   tls: {
     rejectUnauthorized: false,
   },
@@ -33,7 +33,7 @@ async function sendMail(to, subject, message, template = false, res) {
     };
   } else {
     var mailOptions = {
-      from: '"Termmy"' + process.env.smtp_user,
+      from: '"Fischereiverband"' + process.env.smtp_user,
       to: to,
       subject: subject,
       text: message,

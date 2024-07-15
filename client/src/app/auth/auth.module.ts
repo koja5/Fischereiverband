@@ -8,6 +8,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { CoreCommonModule } from "@core/common.module";
 
 import { LoginComponent } from "./components/login/login.component";
+import { TranslateModule } from "@ngx-translate/core";
 
 // routing
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     CoreCommonModule,
+    TranslateModule
   ],
 })
 export class AuthModule {}

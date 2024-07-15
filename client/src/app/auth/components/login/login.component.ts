@@ -96,7 +96,12 @@ export class LoginComponent {
           // window.open("dashboard/admin", "_self");
 
           const type = this._storageService.getDecodeToken().type as UserTypes;
-          if (type === UserTypes.admin) {
+          const previousLink =
+            this._storageService.getLocalStorage("previousLink");
+          if (previousLink) {
+            window.open(previousLink);
+            this._storageService.removeLocalStorage("previousLink");
+          } else if (type === UserTypes.admin) {
             window.open("/dashboard/admin/all-users", "_self");
           } else {
             window.open("/dashboard/owner/fish-stocking", "_self");

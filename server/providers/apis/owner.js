@@ -112,7 +112,7 @@ router.get("/getAllObservationSheet", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select os.*, w.name as name_of_water from observation_sheet os join waters w on os.id_owner = w.id where id_owner = ?",
+          "select os.*, w.name as name_of_water from observation_sheet os join waters w on os.id_owner = w.id_water where id_owner = ?",
           [req.user.user.id],
           function (err, rows, fields) {
             conn.release();
@@ -359,13 +359,9 @@ router.get("/getWatersForSpecificFBZ", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        const fbz =
-          req.query.fbz.indexOf(".") != -1
-            ? req.query.fbz.split(".")[0]
-            : req.query.fbz;
-
         conn.query(
-          "select * from waters where fbz = '" + fbz + "'",
+          "select * from waters where fbz = ? and (year is NULL or year = ?)",
+          [splitFBZ(req.query.fbz), req.query.year],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -394,6 +390,10 @@ router.post("/createNewWaterNameEntry", auth, function (req, res, next) {
       res.json(err);
     }
 
+    if (req.body.fbz.indexOf(".") != -1) {
+      req.body.fbz = req.body.fbz.split(".")[0];
+    }
+
     conn.query("INSERT INTO waters set ?", [req.body], function (err, rows) {
       conn.release();
       if (!err) {
@@ -416,7 +416,9 @@ router.post("/createNewFishNameEntry", auth, function (req, res, next) {
       res.json(err);
     }
 
-    delete req.body.fbz;
+    if (req.body.fbz.indexOf(".") != -1) {
+      req.body.fbz = req.body.fbz.split(".")[0];
+    }
 
     conn.query("INSERT INTO fishes set ?", [req.body], function (err, rows) {
       conn.release();
@@ -453,5 +455,73 @@ router.post("/createNewOriginNameEntry", auth, function (req, res, next) {
     });
   });
 });
+
+//#endregion
+
+//#region FISH STOCKING
+
+router.get("/getAllFishes", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from fishes where (fbz is NULL or fbz = ?) and (year is NULL or year = ?)",
+          [splitFBZ(req.query.fbz), req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getAllOrigins", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from origins where (fbz is NULL or fbz = ?) and (year is NULL or year = ?)",
+          [splitFBZ(req.query.fbz), req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+//#endregion
+
+//#region HELPFUL FUNCTION
+
+function splitFBZ(fbz) {
+  return fbz.indexOf(".") != -1 ? fbz.split(".")[0] : fbz;
+}
 
 //#endregion

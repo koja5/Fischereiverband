@@ -119,7 +119,7 @@
                         </ng-template>
                     </ngx-datatable-column> -->
                     <ngx-datatable-column *ngFor="let item of config.columns" [name]="item.title | translate"
-                        [prop]="item.field" [width]="item.width ? item.width : auto"
+                        [prop]="item.field" [width]="item.width ? item.width : auto" [flexGrow]="item.flexGrow"
                         [height]="innerWidth > 992 ? '75vh' : '80vh'"
                         [columnMode]="innerWidth > 1250 ? 'flex' : 'force'" class="{{item.class}}"
                         [className]="item.className" [headerClass]="item.className" [cellClass]="item.className"

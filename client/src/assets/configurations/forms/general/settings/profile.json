@@ -71,15 +71,6 @@
             "required": true
         },
         {
-            "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "password",
-            "title": "commonFields.password",
-            "field": "password",
-            "required": true
-        },
-        {
             "type": "button",
             "response": "toastr",
             "width": "col-md-12",
