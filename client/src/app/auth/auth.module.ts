@@ -9,6 +9,9 @@ import { CoreCommonModule } from "@core/common.module";
 
 import { LoginComponent } from "./components/login/login.component";
 import { TranslateModule } from "@ngx-translate/core";
+import { ForgotPasswordComponent } from "./components/forgot-password/forgot-password.component";
+import { ResetPasswordComponent } from "./components/reset-password/reset-password.component";
+import { SelectLanguageComponent } from './components/common/select-language/select-language.component';
 
 // routing
 const routes: Routes = [
@@ -22,10 +25,23 @@ const routes: Routes = [
     component: LoginComponent,
     data: { animation: "auth" },
   },
+  {
+    path: "forgot-password",
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: "reset-password/:email",
+    component: ResetPasswordComponent,
+  },
 ];
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [
+    LoginComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    SelectLanguageComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -33,7 +49,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     CoreCommonModule,
-    TranslateModule
+    TranslateModule,
   ],
 })
 export class AuthModule {}

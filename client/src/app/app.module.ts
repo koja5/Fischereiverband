@@ -44,11 +44,6 @@ const appRoutes: Routes = [
       ),
   },
   {
-    path: "dashboard1",
-    redirectTo: "/home",
-    pathMatch: "full",
-  },
-  {
     path: "**",
     redirectTo: "/auth/login", //Error 404 - Page not found
   },

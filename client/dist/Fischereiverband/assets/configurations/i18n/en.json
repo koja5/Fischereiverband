@@ -17,12 +17,6 @@
         "inactive": "Inactive",
         "total": "total",
         "options": "Options",
-        "syncGoogleContacts": "Sync google contacts",
-        "syncGoogleContactQuestionTitle": "Sync google contacts",
-        "syncGoogleContactsQuestionText": "Do you want to sync your google contact with Termmy? This can take maximum 1-2 minutes and import new contacts from google and sync current google contacts.",
-        "successfullySyncGoogleContacts": "Successfully sync Google contacts with Termmy",
-        "unsuccessfullySyncGoogleContacts": "Unsuccessfuly sunc Google contacts with Termmy. Please try later or contacts support,",
-        "syncContacts": "Sync contacts",
         "noInformation": "No information",
         "ok": "OK",
         "noData": "There is no information to display",
@@ -122,7 +116,7 @@
         "completed": "Completed report"
     },
     "login": {
-        "title": "Welcome to Termmy! 👋",
+        "title": "Welcome to Fischereiverband! 👋",
         "subtitle": "Please sign-in to your account and start the adventure",
         "email": "Email",
         "emailIsRequired": "Email is required",
@@ -136,25 +130,10 @@
         "createAnAccount": "Create an account",
         "verifiedError": "You need to verified your email address!",
         "activeError": "Your account is not active!",
-        "notExistsError": "Account does not exist!",
+        "notExistsError": "The account does not exist or the username or password is incorrect!",
         "or": "or",
         "signInWithGoogle": "Sign in with Google",
         "signInWithMicrosoft": "Sign in with Microsoft"
-    },
-    "signUp": {
-        "title": "Adventure starts here 🚀",
-        "text": "Make your app management easy and fun!",
-        "IAgreeTo": "I agree to ",
-        "privacyPolicy": "Privacy Policy",
-        "and": "and",
-        "terms": "Terms.",
-        "signUp": "Sign up",
-        "alreadyHaveAnAccount": "Already have an account?",
-        "signInInstead": "Sign in instead",
-        "fillRequredFields": "Please fill required fields",
-        "mailExists": "This mail address exists. Please enter another email address or reset your password.",
-        "verifyYouMail": "Please check your email to verify it.",
-        "passwordNotMatch": "Password and Re-password do not match! Need to be same!"
     },
     "forgot": {
         "title": "Forgot Password? 🔒",
@@ -237,7 +216,6 @@
         "text": "There was an error in the previous action. Please try again or contact our support for help.",
         "backToHome": "Back to Home"
     },
-    "reportOccupation": {},
     "water": {
         "idWater": "ID water",
         "idWaterBook": "ID water book",

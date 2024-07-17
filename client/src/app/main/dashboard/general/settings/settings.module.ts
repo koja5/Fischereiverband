@@ -7,6 +7,8 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { ProfileComponent } from "./profile/profile.component";
 import { SettingsComponent } from "./settings.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.module";
 
 const routes = [
   {
@@ -14,11 +16,21 @@ const routes = [
     component: ProfileComponent,
     canDeactivate: [DirtycheckGuard],
   },
+  {
+    path: "change-password",
+    component: ChangePasswordComponent,
+    canDeactivate: [DirtycheckGuard],
+  },
 ];
 
 @NgModule({
-  declarations: [ProfileComponent, SettingsComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), DynamicModule],
+  declarations: [ProfileComponent, SettingsComponent, ChangePasswordComponent],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    DynamicModule,
+    MainCoreCommonModule,
+  ],
 
   providers: [],
   exports: [RouterModule],

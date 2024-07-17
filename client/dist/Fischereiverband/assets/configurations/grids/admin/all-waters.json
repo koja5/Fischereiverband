@@ -59,6 +59,7 @@
     "columns": [
         {
             "title": "commonFields.action",
+            "width": 70,
             "template": {
                 "type": "action",
                 "actionMode": {
@@ -102,6 +103,7 @@
         },
         {
             "title": "water.idWater",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -114,6 +116,7 @@
         },
         {
             "title": "water.idWaterBook",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -126,6 +129,7 @@
         },
         {
             "title": "water.fbz",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -150,6 +154,7 @@
         },
         {
             "title": "water.data1",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -162,6 +167,7 @@
         },
         {
             "title": "water.data2",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -174,6 +180,7 @@
         },
         {
             "title": "water.data3",
+            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",

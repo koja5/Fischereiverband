@@ -59,6 +59,7 @@
     "columns": [
         {
             "title": "commonFields.action",
+            "width": 70,
             "template": {
                 "type": "action",
                 "actionMode": {
@@ -151,6 +152,7 @@
         },
         {
             "title": "observationSheet.typeOfWater",
+            "width": 150,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -175,6 +177,7 @@
         },
         {
             "title": "observationSheet.findDead",
+            "width": 150,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -314,7 +317,7 @@
             },
             "request": {
                 "type": "GET",
-                "api": "/api/admin/getAllWaters",
+                "api": "/api/owner/getWatersForAll",
                 "parameters": [],
                 "fields": "",
                 "root": ""

@@ -6,6 +6,7 @@ var hogan = require("hogan.js");
 var fs = require("fs");
 const logger = require("../config/logger");
 const sendMail = require("./providers/send-mail");
+const sha1 = require("sha1");
 
 module.exports = router;
 
@@ -183,5 +184,48 @@ router.post("/reminderOwnerToCompleteReport", function (req, res, next) {
     res
   );
 });
+
+//#endregion
+
+//#region AUTH
+
+router.post("/resetPasswordLink", function (req, res, next) {
+  var configuration = JSON.parse(
+    fs.readFileSync("./providers/mails/i18n/forgot_password.json", "utf-8")
+  );
+
+  body = getMessage(configuration, req.body.lang);
+
+  // generate reset password
+  body["reset_password_link"] =
+    process.env.link_client + "auth/reset-password/" + sha1(req.body.email);
+
+  sendMail(
+    req.body.email,
+    getSubject(configuration, req.body.lang),
+    body,
+    configuration.template
+  );
+});
+
+//#endregion
+
+//#region HELPFUL SERVICE
+
+function getSubject(configuration, lang) {
+  if (lang) {
+    return configuration.language[lang].subject;
+  } else {
+    return configuration.language.de.subject;
+  }
+}
+
+function getMessage(configuration, lang) {
+  if (lang) {
+    return configuration.language[lang].body;
+  } else {
+    return configuration.language.de.body;
+  }
+}
 
 //#endregion

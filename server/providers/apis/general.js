@@ -75,4 +75,42 @@ router.post("/saveProfile", auth, function (req, res, next) {
   });
 });
 
+router.post("/changePassword", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "select * from users where password = ? and email = ?",
+      [sha1(req.body.oldPassword), req.user.email],
+      function (err, rows, fields) {
+        if (err) {
+          res.json(true);
+        } else {
+          console.log(rows.length);
+          if (rows.length) {
+            conn.query(
+              "update users set password = ? where email = ?",
+              [sha1(req.body.newPassword), req.user.email],
+              function (err, rows, fields) {
+                conn.release();
+                if (err) {
+                  res.json(false);
+                } else {
+                  res.json(true);
+                }
+              }
+            );
+          } else {
+            conn.release();
+            res.json(false);
+          }
+        }
+      }
+    );
+  });
+});
+
 //#endregion SETTINGS

@@ -13,7 +13,6 @@ export class LoggedGuard {
   ) {}
 
   canActivate() {
-    console.log(this._storageService.getToken());
     if (!this._storageService.getToken()) {
       return true;
     } else {

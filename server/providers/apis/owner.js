@@ -112,7 +112,7 @@ router.get("/getAllObservationSheet", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select os.*, w.name as name_of_water from observation_sheet os join waters w on os.id_owner = w.id_water where id_owner = ?",
+          "select os.*, w.name as name_of_water from observation_sheet os join waters w on os.id_water = w.id_water where id_owner = ?",
           [req.user.user.id],
           function (err, rows, fields) {
             conn.release();
@@ -362,6 +362,33 @@ router.get("/getWatersForSpecificFBZ", auth, async (req, res, next) => {
         conn.query(
           "select * from waters where fbz = ? and (year is NULL or year = ?)",
           [splitFBZ(req.query.fbz), req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getWatersForAll", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from waters where year is NULL",
           function (err, rows, fields) {
             conn.release();
             if (err) {
