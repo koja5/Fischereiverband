@@ -496,7 +496,10 @@ router.get("/getAllFishes", auth, async (req, res, next) => {
       } else {
         conn.query(
           "select * from fishes where (fbz is NULL or fbz = ?) and (year is NULL or year = ?)",
-          [splitFBZ(req.query.fbz), req.query.year],
+          [
+            splitFBZ(req.query.fbz ? req.query.fbz : null),
+            req.query.year ? req.query.year : null,
+          ],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -545,10 +548,67 @@ router.get("/getAllOrigins", auth, async (req, res, next) => {
 
 //#endregion
 
+//#region FISH CATCH FOR WATER
+
+router.get("/getFishCatchForWater", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select fcd.*, f.name from fish_catch_details fcd join fishes f on fcd.id_fish = f.id where fcd.fbz = ? and fcd.id_water = ?",
+          [splitFBZ(req.query.fbz), req.query.id_water],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/setFishCatch", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+
+    conn.query(
+      "INSERT INTO fish_catch_details set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
+
 //#region HELPFUL FUNCTION
 
 function splitFBZ(fbz) {
-  return fbz.indexOf(".") != -1 ? fbz.split(".")[0] : fbz;
+  return fbz ? (fbz.indexOf(".") != -1 ? fbz.split(".")[0] : fbz) : null;
 }
 
 //#endregion

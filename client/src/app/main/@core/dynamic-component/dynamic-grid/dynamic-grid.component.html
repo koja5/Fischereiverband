@@ -347,78 +347,6 @@
 
     <!--/ Dialog -->
 
-    <!-- DIALOG OPTIONS -->
-    <ng-template #modalOptions let-modal class="modal-dialog modal-lg modal-dialog-centered display-none">
-        <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel160">{{'general.options' | translate}}</h5>
-            <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body" tabindex="0" ngbAutofocus>
-            <div *ngFor="let item of config.options">
-                <div *ngIf="item === 'syncGoogleContacts'" class="cursor-pointer"
-                    (click)="dialogSyncGoogleContactConfirm.showQuestionModal(); modalOptionsDialog.close()">
-                    <img class="google-contacts" src="../../../../assets/images/icons/google-contacts.png"> &nbsp;
-                    <span>{{'general.syncGoogleContacts' | translate}}</span>
-                </div>
-            </div>
-        </div>
-    </ng-template>
-    <!-- DIALOG OPTIONS -->
-
-    <!-- IMPORT GOOGLE CONTACTS -->
-    <ng-template #modalGoogleContacts let-modal class="modal-dialog modal-lg modal-dialog-centered display-none">
-        <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel160">{{'general.syncGoogleContacts' | translate}}</h5>
-            <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body" tabindex="0" ngbAutofocus>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">{{'commonFields.displayName' | translate}}</th>
-                        <th scope="col" class="hidden-xs">{{'commonFields.email' | translate}}</th>
-                        <th scope="col" class="hidden-xs">{{'commonFields.telephone' | translate}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of googleContacts">
-                        <td *ngIf="item.names">
-                            <span *ngFor="let name of item.names">{{name.displayName}}</span>
-                        </td>
-                        <td class="hidden-xs">
-                            <div *ngIf="item.emailAddresses">
-                                <span *ngFor="let email of item.emailAddresses">{{email.value}}</span>
-                            </div>
-                            <div *ngIf="!item.emailAddresses" class="font-italic">
-                                <span>{{'general.noInformation' | translate}}</span>
-                            </div>
-                        </td>
-                        <td class="hidden-xs">
-                            <div *ngIf="item.phoneNumbers">
-                                <span *ngFor="let phone of item.phoneNumbers">
-                                    {{phone.canonicalForm}}
-                                </span>
-                            </div>
-                            <div *ngIf="!item.phoneNumbers">
-                                <span class="font-italic">{{'general.noInformation' | translate}}</span>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="modal-footer text-right">
-            <a class="btn btn-outline-primary" (click)="syncGoogleContacts()"><span class="fa fa-refresh"></span>
-                {{'general.syncContacts' |
-                translate}}</a>
-        </div>
-    </ng-template>
-    <!-- IMPORT GOOGLE CONTACTS -->
-
     <!--DELETE QUESTION MODULE-->
 
     <ng-template #modal let-modal>
@@ -444,13 +372,6 @@
     <!--/ DELETE QUESTION MODULE-->
 
     <!-- CONFIRM DIALOG -->
-
-    <!-- IMPORT GOOGLE CONTACT -->
-    <app-dialog-confirm #dialogSyncGoogleContactConfirm
-        [content]="('general.syncGoogleContactsQuestionText' | translate)"
-        (confirm)="syncGoogleContacts()"></app-dialog-confirm>
-    <!-- IMPORT GOOGLE CONTACT -->
-
 
     <app-dialog-confirm #dialogUnsavedContentConfirm [title]="('general.discardChangesTitle' | translate)"
         [content]="('general.discardChangesText' | translate)"

@@ -10,6 +10,8 @@ import { FormsModule } from "@angular/forms";
 import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.module";
 import { TranslateModule } from "@ngx-translate/core";
 import { NgbAlert, NgbAlertModule } from "@ng-bootstrap/ng-bootstrap";
+import { FishCatchComponent } from "./components/fish-catch/fish-catch.component";
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 
 const routes = [
   {
@@ -22,10 +24,18 @@ const routes = [
     component: ObservationSheetComponent,
     canDeactivate: [DirtycheckGuard],
   },
+  {
+    path: "fish-catch",
+    component: FishCatchComponent
+  },
 ];
 
 @NgModule({
-  declarations: [FishStockingComponent, ObservationSheetComponent],
+  declarations: [
+    FishStockingComponent,
+    ObservationSheetComponent,
+    FishCatchComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -35,8 +45,8 @@ const routes = [
     MainCoreCommonModule,
     TranslateModule,
     NgbAlertModule,
+    NgxDatatableModule
   ],
-
   providers: [],
   exports: [RouterModule],
 })

@@ -80,4 +80,13 @@ export const menu = [
     url: "dashboard/owner/observation-sheet",
     users: ["owner"],
   },
+  {
+    id: "fish-catch",
+    title: "fishCatch",
+    translate: "navigations.fishCatch",
+    type: "item",
+    icon: "file-text",
+    url: "dashboard/owner/fish-catch",
+    users: ["owner"],
+  },
 ];
