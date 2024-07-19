@@ -1,12 +1,15 @@
 {
-    "template": "send_reminder_owner_to_complete_report.hjs",
+    "template": "send_notification_to_admin_for_completed_fish_stocking_report.hjs",
     "language": {
         "en": {
-            "subject": "Please complete your report for #fbz",
+            "subject": "Completed report for #fbz from #name",
             "body": {
-                "greetings": "Hey #name 👋",
-                "message": "Your report for #fbz is not yet completed. Please complete your report.",
-                "resetPassword": "Reset Password →",
+                "greetings": "Hey 👋",
+                "message": "User #name completed report #fbz",
+                "nameLabel": "Owner name",
+                "fbzLabel": "FBZ",
+                "yearLabel": "Year",
+                "checkReport": "Check report details",
                 "notSureWhyReceived": "Not sure why you got this email? Please ingorize this email.",
                 "letUsKnow": "let us know",
                 "greetingsEnd": "Thanks,",
@@ -18,10 +21,14 @@
             }
         },
         "de": {
-            "subject": "Bitte vervollständigen Sie Ihren Bericht für #fbz",
+            "subject": "Abgeschlossener Bericht für #fbz von #name",
             "body": {
-                "greetings": "Hey #name 👋",
-                "message": "Ihr Bericht für #fbz ist noch nicht abgeschlossen. Bitte vervollständigen Sie Ihren Bericht.",
+                "greetings": "Hey 👋",
+                "message": "Benutzer #name hat den Bericht #fbz abgeschlossen",
+                "nameLabel": "Besitzername",
+                "fbzLabel": "FBZ",
+                "yearLabel": "Jahr",
+                "checkReport": "Überprüfen Sie die Berichtsdetails",
                 "notSureWhyReceived": "Sie sind sich nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte ignorieren Sie diese E-Mail.",
                 "greetingsEnd": "Danke,",
                 "team": "Fischereiverband",

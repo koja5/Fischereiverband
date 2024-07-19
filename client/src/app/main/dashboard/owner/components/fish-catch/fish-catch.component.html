@@ -2,8 +2,9 @@
     <div class="row">
         <div class="mb-2 col-lg-3 col-md-12">
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
-                [(ngModel)]="selectedManagementRegistryId" (change)="onChangeManagementRegisters($event)"
-                [searchable]="true">
+                [(ngModel)]="fishCatchFilter.managementRegisterId"
+                [placeholder]="'commonFields.chooseNameOfWater' | translate"
+                (change)="onChangeManagementRegister($event)" [searchable]="true">
                 <ng-template ng-label-tmp let-item="item" let-clear="clear">
                     <span>{{item.fbz}} - {{item.year}}</span>
                 </ng-template>
@@ -17,22 +18,23 @@
 
         </div>
         <div class="mb-2 col-lg-3 col-md-12">
-            <ng-select [items]="allWaters" bindLabel="name" bindValue="id_water" [(ngModel)]="selectNameOfWaterId"
-                (change)="onChangeNameOfWater($event)" [searchable]="true">
+            <ng-select [items]="allWaters" bindLabel="name" bindValue="id_water" [(ngModel)]="fishCatchFilter.water"
+                [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChangeWater($event)"
+                [searchable]="true">
             </ng-select>
 
         </div>
-        <div class="col-lg-6" *ngIf="selectedManagementRegistryId">
-            <div class="row">
+        <div class="col-lg-6" *ngIf="fishCatchFilter.managementRegister">
+            <div class=" row">
                 <div class="col-lg-9 col-md-8 text-center">
-                    <div *ngIf="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed">
+                    <div *ngIf="fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed">
                         <ngb-alert [type]="'success'" [dismissible]="false">
                             <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
-                                {{fishStockingReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}</div>
+                                {{fishCatchReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}</div>
                         </ngb-alert>
                     </div>
-                    <div *ngIf="data && data.length && (!fishStockingReport || fishStockingReport.status ===
-                        fishStockingReportEnum.draft)">
+                    <div *ngIf="allData && allData.length && (!fishCatchReport || fishCatchReport.status ===
+                    fishCatchReportEnum.draft)">
                         <ngb-alert [type]="'warning'" [dismissible]="false">
                             <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
                         </ngb-alert>
@@ -40,26 +42,30 @@
                 </div>
                 <div class="col-lg-3 col-md-4 text-right">
                     <button
-                        *ngIf="data && data.length && (!fishStockingReport || fishStockingReport.status === fishStockingReportEnum.draft)"
-                        class="btn btn-success full-width" (click)="completeReports()"><span class="fa fa-check"></span>
+                        *ngIf="allData && allData.length && (!fishCatchReport || fishCatchReport.status === fishCatchReportEnum.draft)"
+                        class="btn btn-success full-width mb-1" (click)="completeReportsDialog()"><span
+                            class="fa fa-check"></span>
                         {{'action.completeReport' |
                         translate}}</button>
-                    <button *ngIf="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed"
-                        class="btn btn-danger full-width" (click)="requestForAdditionalChanges()"><span
+                    <button *ngIf="fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed"
+                        class="btn btn-primary full-width mb-1" (click)="requestForAdditionalChanges()"><span
                             class="fa fa-question-circle-o"></span>
                         {{'action.requestAdminToChangeStatus' |
+                        translate}}</button>
+                    <button *ngIf="!fishCatchReport || fishCatchReport.status !== fishCatchReportEnum.completed"
+                        class="btn btn-outline-danger full-width mb-1" (click)="noHaveFishCatchEntryDialog()"><span
+                            class="fa fa-times"></span>
+                        {{'action.noHaveEntry' |
                         translate}}</button>
                 </div>
             </div>
         </div>
     </div>
-    <div *ngIf="selectedManagementRegistry">
-        <app-dynamic-grid #grid *ngIf="!loading" [path]="path" [file]="file" [data]="data"
-            [additionalData]="selectedRegistry" (submit)="submit($event)" (refreshParentComponent)="refreshGrid()"
-            [disableCRUD]="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed"></app-dynamic-grid>
+    <div *ngIf="!loading">
+        <app-dynamic-grid #grid [path]="path" [file]="file" [data]="data"
+            [disableCRUD]="fishCatchFilter && fishCatchFilter.water  ? false : true" (submit)="submit($event)"
+            (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
     </div>
-    <app-no-data
-        *ngIf="!managementRegistersData || !managementRegistersData.length || !selectedManagementRegistry"></app-no-data>
 </div>
 
 <app-loader *ngIf="loading"></app-loader>
@@ -69,6 +75,11 @@
     [confirmButtonText]="('actionMessage.dialogCompleteReportQuestionYes' | translate)"
     [cancelButtonText]="('actionMessage.dialogCompleteReportQuestionNo' | translate)"
     (confirm)="confirmCompleteReport()"></app-dialog-confirm>
+
+<app-dialog-confirm #dialogNoHaveEntry [title]="('actionMessage.dialogNoHaveReportsTitle' | translate)"
+    [content]="('actionMessage.dialogNoHaveReportsText' | translate)"
+    [confirmButtonText]="('generalDialog.yes' | translate)" [cancelButtonText]="('generalDialog.no' | translate)"
+    (confirm)="confirmNoHaveFishCatchEntry()"></app-dialog-confirm>
 
 <app-dialog-confirm #dialogRequestForAdditionalChanges
     [title]="('actionMessage.dialogRequestForAdditionalChangesTitle' | translate)"

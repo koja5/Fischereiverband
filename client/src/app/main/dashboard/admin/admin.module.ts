@@ -14,6 +14,10 @@ import { FishStockingReportDetailsComponent } from "./all-fish-stocking-reports/
 import { TranslateModule } from "@ngx-translate/core";
 import { NgbAlertModule } from "@ng-bootstrap/ng-bootstrap";
 import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.module";
+import { AllFishCatchReportsComponent } from "./all-fish-catch-reports/all-fish-catch-reports.component";
+import { FishCatchReportDetailsComponent } from "./all-fish-catch-reports/fish-catch-report-details/fish-catch-report-details.component";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { FormsModule } from "@angular/forms";
 
 const routes = [
   {
@@ -54,7 +58,15 @@ const routes = [
   {
     path: "fish-stocking-report-details",
     component: FishStockingReportDetailsComponent,
+  },
+  {
+    path: "all-fish-catch-reports",
+    component: AllFishCatchReportsComponent,
     canDeactivate: [DirtycheckGuard],
+  },
+  {
+    path: "fish-catch-report-details",
+    component: FishCatchReportDetailsComponent,
   },
 ];
 
@@ -67,15 +79,19 @@ const routes = [
     AllWatersComponent,
     ManagementRegistersComponent,
     AllFishStockingReportsComponent,
+    AllFishCatchReportsComponent,
     FishStockingReportDetailsComponent,
+    FishCatchReportDetailsComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routes),
     DynamicModule,
     TranslateModule,
     NgbAlertModule,
     MainCoreCommonModule,
+    NgSelectModule,
   ],
 
   providers: [],

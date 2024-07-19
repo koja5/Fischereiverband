@@ -29,6 +29,7 @@
     "action": {
         "completeReport": "Complete report",
         "backReportToOwner": "Back report to owner",
+        "noHaveEntry": "No have entry",
         "reminderOwnerToCompleteReport": "Remiminder owner to complete report",
         "requestAdminToChangeStatus": "Request for additional changes"
     },
@@ -48,7 +49,9 @@
         "dialogReminderOwnerToCompleteReportTitle": "Are you sure?",
         "dialogReminderOwnerToCompleteReportText": "Do you want to send notification via email to owner like reminder to complete report?",
         "dialogRequestForAdditionalChangesTitle": "Are you sure?",
-        "dialogRequestForAdditionalChangesText": "Do you want to send request to superadmin to allow you to make additional changes?"
+        "dialogRequestForAdditionalChangesText": "Do you want to send request to superadmin to allow you to make additional changes?",
+        "dialogNoHaveReportsTitle": "Are you sure",
+        "dialogNoHaveReportsText": "Do you want to send  empty report? If you current have some entries this entries will be deleted!"
     },
     "commonFields": {
         "name": "Name",
@@ -102,7 +105,9 @@
         "countStatus": "Count Status",
         "otterStatus": "Otter Status",
         "status": "Status",
-        "preview": "Preview"
+        "preview": "Preview",
+        "chooseNameOfWater": "Choose name of water",
+        "chooseManagementRegistry": "Choose management registry"
     },
     "userTypes": {
         "superadmin": "Superadmin",
@@ -163,8 +168,11 @@
         "ageOfFishes": "Age of fishes",
         "managementRegisters": "Management registers",
         "allFishStockingReports": "Fish stocking reports",
+        "fishStocking": "Fish stocking reports",
         "reportOccupation": "Fish stocking",
-        "observationSheet": "Observation sheet"
+        "observationSheet": "Observation sheet",
+        "fishCatch": "Fish catch",
+        "allFishCatchReports": "Fish catch reports"
     },
     "navBar": {
         "profile": "Profile",

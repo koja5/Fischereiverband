@@ -3,17 +3,18 @@ import { ActivatedRoute } from "@angular/router";
 import { DialogConfirmComponent } from "app/main/@core/common/dialog-confirm/dialog-confirm.component";
 import { ToastrComponent } from "app/main/@core/common/toastr/toastr.component";
 import { DynamicGridComponent } from "app/main/@core/dynamic-component/dynamic-grid/dynamic-grid.component";
-import { FishStockingReportEnum } from "app/main/dashboard/enums/fish-stocking-enum";
-import { FishStockingReportModel } from "app/main/dashboard/models/fish-stocking-report-module";
+import { FishCatchReportEnum } from "app/main/dashboard/enums/fish-catch-enum";
+import { FishCatchFilterModel } from "app/main/dashboard/models/fish-catch-filter.model";
+import { FishCatchReportModel } from "app/main/dashboard/models/fish-catch-report-model";
 import { UserModel } from "app/models/user";
 import { CallApiService } from "app/services/call-api.service";
 
 @Component({
-  selector: "app-fish-stocking-report-details",
-  templateUrl: "./fish-stocking-report-details.component.html",
-  styleUrls: ["./fish-stocking-report-details.component.scss"],
+  selector: "app-fish-catch-report-details",
+  templateUrl: "./fish-catch-report-details.component.html",
+  styleUrls: ["./fish-catch-report-details.component.scss"],
 })
-export class FishStockingReportDetailsComponent {
+export class FishCatchReportDetailsComponent {
   @ViewChild("grid") grid: DynamicGridComponent;
   @ViewChild("dialogConfirmBackReport")
   dialogConfirmBackReport: DialogConfirmComponent;
@@ -21,13 +22,16 @@ export class FishStockingReportDetailsComponent {
   dialogConfirmReminderOwner: DialogConfirmComponent;
 
   public path = "grids/admin";
-  public file = "fish-stocking-report-details.json";
+  public file = "fish-catch-report-details.json";
   public data: any;
-  public fishStockingReport = new FishStockingReportModel();
-  public FISH_STOCKING_REPORT_ENUM = FishStockingReportEnum;
+  public fishCatchReport = new FishCatchReportModel();
+  public FISH_CATCH_REPORT_ENUM = FishCatchReportEnum;
   public userProfile = new UserModel();
   public ownerName: string;
   public loader = false;
+
+  public allWaters: any;
+  public fishCatchFilter = new FishCatchFilterModel();
 
   constructor(
     private _service: CallApiService,
@@ -36,14 +40,29 @@ export class FishStockingReportDetailsComponent {
   ) {}
 
   ngOnInit() {
-    this.getFishStockingReportDetails();
-    this.getFishStockingReportStatus();
+    this.getFishCatchReportDetails();
+    this.getFishCatchReportStatus();
+    this.getWatersForSelectedManagementRegister();
   }
 
-  getFishStockingReportDetails() {
+  getWatersForSelectedManagementRegister() {
     this._service
       .callGetMethod(
-        "/api/admin/getFishStockingReportDetails?fbz=" +
+        "api/owner/getWatersForSpecificFBZ?fbz=" +
+          this._activatedRouter.snapshot.queryParams.fbz
+      )
+      .subscribe((data: any) => {
+        this.allWaters = data;
+        if (data.length === 1) {
+          this.fishCatchFilter.water = data[0].id_water;
+        }
+      });
+  }
+
+  getFishCatchReportDetails() {
+    this._service
+      .callGetMethod(
+        "/api/admin/getFishCatchReportDetails?fbz=" +
           this._activatedRouter.snapshot.queryParams.fbz +
           "&year=" +
           this._activatedRouter.snapshot.queryParams.year
@@ -53,26 +72,23 @@ export class FishStockingReportDetailsComponent {
       });
   }
 
-  getFishStockingReportStatus() {
+  getFishCatchReportStatus() {
     this._service
       .callGetMethod(
-        "/api/admin/getFishStockingReport?fbz=" +
+        "/api/admin/getFishCatchReport?fbz=" +
           this._activatedRouter.snapshot.queryParams.fbz +
           "&year=" +
           this._activatedRouter.snapshot.queryParams.year
       )
-      .subscribe((data: FishStockingReportModel) => {
-        this.fishStockingReport = data;
+      .subscribe((data: FishCatchReportModel) => {
+        this.fishCatchReport = data;
         this.getUserProfile();
       });
   }
 
   getUserProfile() {
     this._service
-      .callGetMethod(
-        "/api/admin/getUserProfile",
-        this.fishStockingReport.id_owner
-      )
+      .callGetMethod("/api/admin/getUserProfile", this.fishCatchReport.id_owner)
       .subscribe((data: UserModel) => {
         this.userProfile = data;
       });
@@ -86,34 +102,36 @@ export class FishStockingReportDetailsComponent {
     this.dialogConfirmReminderOwner.showQuestionModal();
   }
 
-  reminderOwnerToCompleteFishStockingReport() {
+  reminderOwnerToCompleteFishCatchReport() {
     this.loader = true;
     this._service
-      .callPostMethod("/api/mail/reminderOwnerToCompleteFishStockingReport", {
-        fishStockingReport: this.fishStockingReport,
+      .callPostMethod("/api/mail/reminderOwnerToCompleteFishCatchReport", {
+        fishCatchReport: this.fishCatchReport,
         userProfile: this.userProfile,
       })
       .subscribe((data) => {
         if (data) {
           this.loader = false;
-          this.fishStockingReport.status = FishStockingReportEnum.draft;
+          this.fishCatchReport.status = FishCatchReportEnum.draft;
         }
       });
   }
 
-  backFishStockingReportToOwner() {
+  backFishCatchReportToOwner() {
     this.loader = true;
     this._service
-      .callPostMethod("/api/admin/backFishStockingReportToOwner", {
-        fishStockingReport: this.fishStockingReport,
+      .callPostMethod("/api/admin/backFishCatchReportToOwner", {
+        fishCatchReport: this.fishCatchReport,
         userProfile: this.userProfile,
       })
       .subscribe((data) => {
         if (data) {
           this.loader = false;
-          this.fishStockingReport.status = FishStockingReportEnum.draft;
+          this.fishCatchReport.status = FishCatchReportEnum.draft;
           this._toastr.showSuccess();
         }
       });
   }
+
+  onChangeWater(event: any) {}
 }

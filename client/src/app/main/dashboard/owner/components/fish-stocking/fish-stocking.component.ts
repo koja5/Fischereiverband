@@ -157,7 +157,7 @@ export class FishStockingComponent implements OnInit {
       date_completed: new Date(),
     };
     this._service
-      .callPostMethod("/api/owner/completeReport", this.fishStockingReport)
+      .callPostMethod("/api/owner/completeFishStockingReport", this.fishStockingReport)
       .subscribe((data) => {
         if (data) {
           this.getAllFishStocking();
@@ -169,7 +169,7 @@ export class FishStockingComponent implements OnInit {
   requestToAdminForAdditionalChanges() {
     this._service
       .callPostMethod(
-        "/api/owner/requestToAdminForAdditionalChanges",
+        "/api/owner/requestToAdminForAdditionalFishStockingReportChanges",
         this.fishStockingReport
       )
       .subscribe((data) => {

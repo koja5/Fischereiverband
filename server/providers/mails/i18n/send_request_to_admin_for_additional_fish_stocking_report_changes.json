@@ -1,5 +1,5 @@
 {
-    "template": "send_request_to_admin_for_additional_changes.hjs",
+    "template": "send_request_to_admin_for_additional_fish_stocking_report_changes.hjs",
     "language": {
         "en": {
             "subject": "User #name request for additional changes on #fbz",

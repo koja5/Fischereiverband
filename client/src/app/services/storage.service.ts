@@ -180,4 +180,38 @@ export class StorageService {
     }
     return body;
   }
+
+  setValueInLocalStorage(key: string, value: any) {
+    let values = localStorage.getItem("values");
+    if (values) {
+      values = JSON.parse(values);
+      values[key] = value;
+      localStorage.setItem("values", JSON.stringify(values));
+    } else {
+      let values = {};
+      values[key] = value;
+      localStorage.setItem("values", JSON.stringify(values));
+    }
+  }
+
+  getValueFromLocalStorage(key: string) {
+    let values = localStorage.getItem("values");
+    if (values) {
+      values = JSON.parse(values);
+      if (values[key]) {
+        return values[key];
+      }
+      return false;
+    }
+    return false;
+  }
+
+  deleteValueFromLocalStorage(key: string) {
+    let values = localStorage.getItem("values");
+    if (values) {
+      values = JSON.parse(values);
+      delete values[key];
+      localStorage.setItem("values", JSON.stringify(values));
+    }
+  }
 }

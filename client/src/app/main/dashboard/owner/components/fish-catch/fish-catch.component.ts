@@ -7,8 +7,10 @@ import { FishStockingReportEnum } from "../../../enums/fish-stocking-enum";
 import { StorageService } from "app/services/storage.service";
 import { DialogConfirmComponent } from "app/main/@core/common/dialog-confirm/dialog-confirm.component";
 import { FishCatchModel } from "app/main/dashboard/models/fish-catch.model";
-import { FishStockingReportModel } from "app/main/dashboard/models/fish-stocking-report-module";
 import { TranslateService } from "@ngx-translate/core";
+import { FishCatchFilterModel } from "app/main/dashboard/models/fish-catch-filter.model";
+import { FishCatchReportModel } from "app/main/dashboard/models/fish-catch-report-model";
+import { FishCatchReportEnum } from "app/main/dashboard/enums/fish-catch-enum";
 
 @Component({
   selector: "app-fish-catch",
@@ -22,17 +24,21 @@ export class FishCatchComponent {
   dialogConfirm: DialogConfirmComponent;
   @ViewChild("dialogRequestForAdditionalChanges")
   dialogRequestForAdditionalChanges: DialogConfirmComponent;
+  @ViewChild("dialogNoHaveEntry")
+  dialogNoHaveEntry: DialogConfirmComponent;
 
   public path = "grids/owner";
   public file = "fish-catch.json";
   public managementRegistersData: ManagementRegisterModel[];
   public data: FishCatchModel[];
-  public fishStockingReport = new FishStockingReportModel();
+  public allData: FishCatchModel[];
+  public fishCatchReport = new FishCatchReportModel();
   public selectedManagementRegistry: ManagementRegisterModel;
   public selectedManagementRegistryId: number;
   public selectNameOfWaterId: number;
-  public loading = true;
-  public fishStockingReportEnum = FishStockingReportEnum;
+  public fishCatchFilter = new FishCatchFilterModel();
+  public loading = false;
+  public fishCatchReportEnum = FishCatchReportEnum;
   public allWaters: any;
 
   constructor(
@@ -49,94 +55,138 @@ export class FishCatchComponent {
   }
 
   ngOnInit() {
+    this.initialize();
+  }
+
+  initialize() {
+    if (this._storageService.getValueFromLocalStorage("fish-catch-filter")) {
+      this.fishCatchFilter =
+        this._storageService.getValueFromLocalStorage("fish-catch-filter");
+    } else {
+      this.fishCatchFilter = new FishCatchFilterModel();
+    }
+
+    this.getFishStockingReport();
+    this.getFishCatchDetailsForManagementRegister();
+
     this._service
       .callGetMethod("/api/owner/getFbzRegister", "")
       .subscribe((data: ManagementRegisterModel[]) => {
         this.managementRegistersData = data;
         if (data.length) {
-          if (
-            this._storageService.getLocalStorage("selectedManagementRegistry")
-          ) {
-            this.selectedManagementRegistry =
-              this._storageService.getLocalStorage(
-                "selectedManagementRegistry"
-              );
+          if (this.fishCatchFilter.managementRegister) {
+            this.getWatersForSelectedManagementRegister(
+              this.fishCatchFilter.managementRegister.fbz
+            );
           } else {
-            this.selectedManagementRegistry = data[0];
+            this.data = [];
           }
-          this.selectedManagementRegistryId =
-            this.selectedManagementRegistry.id;
-          this.getNameOfWaterForSelectedManagementRegister(
-            this.selectedManagementRegistry.fbz
-          );
-          this.initializeFishCatch();
         }
       });
   }
 
-  initializeFishCatch() {
-    this.getFishCatchDetails();
-  }
-
-  getFishCatchDetails() {
-    this.loading = true;
+  getFishStockingReport() {
     this._service
       .callGetMethod(
-        "api/owner/getFishCatchForWater?fbz=" +
-          this.selectedManagementRegistry.fbz +
-          "&id_water=" +
-          this.selectNameOfWaterId
+        "/api/owner/getFishCatchReport?fbz=" +
+          this.fishCatchFilter.managementRegister.fbz
+      )
+      .subscribe((data: FishCatchReportModel) => {
+        if (data) {
+          this.fishCatchReport = data[0];
+        } else {
+          this.fishCatchReport = new FishCatchReportModel();
+        }
+      });
+  }
+
+  getFishCatchDetailsForManagementRegister() {
+    this._service
+      .callGetMethod(
+        "/api/owner/getFishCatchDetailsForManagementRegister?fbz=" +
+          this.fishCatchFilter.managementRegister.fbz
       )
       .subscribe((data: FishCatchModel[]) => {
-        this.data = data;
-        this.loading = false;
+        this.allData = data;
       });
   }
 
   checkCompletedStatusReport() {
     return (
-      this.fishStockingReport &&
-      this.fishStockingReport.status === FishStockingReportEnum.completed
+      this.fishCatchReport &&
+      this.fishCatchReport.status === FishCatchReportEnum.completed
     );
   }
 
-  onChangeManagementRegisters(event: ManagementRegisterModel) {
-    this.selectedManagementRegistry = event;
-    if (this.selectedManagementRegistry) {
-      this.selectedManagementRegistryId = event.id;
-      this.getNameOfWaterForSelectedManagementRegister(event.fbz);
+  onChangeManagementRegister(event: ManagementRegisterModel) {
+    this.fishCatchFilter.managementRegister = event;
+    this.fishCatchFilter.water = null;
+    this._storageService.setValueInLocalStorage(
+      "fish-catch-filter",
+      this.fishCatchFilter
+    );
+    if (this.fishCatchFilter.managementRegister) {
+      this.fishCatchFilter.managementRegisterId = event.id;
+      this.getWatersForSelectedManagementRegister(event.fbz);
       this._storageService.setLocalStorage(
         "selectedManagementRegistry",
-        this.selectedManagementRegistry
+        this.fishCatchFilter.managementRegister
       );
-      this.initializeFishCatch();
     } else {
-      this._storageService.removeLocalStorage("selectedManagementRegistry");
-      this.selectedManagementRegistryId = null;
+      this._storageService.deleteValueFromLocalStorage("fish-catch-filter");
+      this.fishCatchFilter = new FishCatchFilterModel();
+      this.refreshGrid();
     }
   }
 
-  getNameOfWaterForSelectedManagementRegister(fbz: string) {
+  getWatersForSelectedManagementRegister(fbz: string) {
     this._service
       .callGetMethod("api/owner/getWatersForSpecificFBZ?fbz=" + fbz)
       .subscribe((data: any) => {
         this.allWaters = data;
         if (data.length === 1) {
-          this.selectNameOfWaterId = data[0].id_water;
-          this.getFishCatchDetails();
+          this.fishCatchFilter.water = data[0].id_water;
         }
+        this.getFishCatchDetailsForSelectedWater();
       });
   }
 
-  onChangeNameOfWater(event: any) {
-    this.getFishCatchDetails();
+  onChangeWater() {
+    this.getFishCatchDetailsForSelectedWater();
+    this._storageService.setValueInLocalStorage(
+      "fish-catch-filter",
+      this.fishCatchFilter
+    );
+  }
+
+  getFishCatchDetailsForSelectedWater() {
+    this.loading = true;
+    if (this.fishCatchFilter.managementRegister || this.fishCatchFilter.water) {
+      this._service
+        .callGetMethod(
+          "api/owner/getFishCatchDetailsForSelectedWater?fbz=" +
+            this.fishCatchFilter.managementRegister.fbz +
+            "&id_water=" +
+            this.fishCatchFilter.water
+        )
+        .subscribe((data: FishCatchModel[]) => {
+          this.data = data;
+          this.loading = false;
+        });
+    } else {
+      setTimeout(() => {
+        this.data = [];
+        this.loading = false;
+      }, 100);
+    }
   }
 
   submit(event: FishCatchModel) {
-    event.fbz = this.selectedManagementRegistry.fbz;
-    event.id_water = this.selectNameOfWaterId;
+    event.fbz = this.fishCatchFilter.managementRegister.fbz;
+    event.year = this.fishCatchFilter.managementRegister.year;
+    event.id_water = this.fishCatchFilter.water;
 
-    if (event.edible_fish_quantity < event.quantity) {
+    if (event.edible_fish_quantity <= event.quantity) {
       event.stocked_fish_quantity = event.quantity - event.edible_fish_quantity;
     } else if (event.edible_fish_quantity > event.quantity) {
       this._toastr.showWarningCustom(
@@ -150,14 +200,18 @@ export class FishCatchComponent {
       .subscribe((data) => {
         if (data) {
           this._toastr.showSuccess();
-          this.getFishCatchDetails();
+          this.getFishCatchDetailsForSelectedWater();
+          this.getFishCatchDetailsForManagementRegister();
         }
       });
   }
 
-  refreshGrid() {}
+  refreshGrid() {
+    this.getFishCatchDetailsForSelectedWater();
+    this.getFishCatchDetailsForManagementRegister();
+  }
 
-  completeReports() {
+  completeReportsDialog() {
     this.dialogConfirm.showQuestionModal();
   }
 
@@ -166,17 +220,21 @@ export class FishCatchComponent {
   }
 
   confirmCompleteReport() {
-    this.fishStockingReport = {
-      fbz: this.selectedManagementRegistry.fbz,
-      year: this.selectedManagementRegistry.year,
-      status: FishStockingReportEnum.completed,
+    this.fishCatchReport = {
+      fbz: this.fishCatchFilter.managementRegister.fbz,
+      year: this.fishCatchFilter.managementRegister.year,
+      status: FishCatchReportEnum.completed,
       date_completed: new Date(),
     };
     this._service
-      .callPostMethod("/api/owner/completeReport", this.fishStockingReport)
+      .callPostMethod(
+        "/api/owner/completeFishCatchReport",
+        this.fishCatchReport
+      )
       .subscribe((data) => {
         if (data) {
           this._toastr.showSuccess();
+          this.refreshGrid();
         }
       });
   }
@@ -184,11 +242,32 @@ export class FishCatchComponent {
   requestToAdminForAdditionalChanges() {
     this._service
       .callPostMethod(
-        "/api/owner/requestToAdminForAdditionalChanges",
-        this.fishStockingReport
+        "/api/owner/requestToAdminForAdditionalFishCatchReportChanges",
+        this.fishCatchReport
       )
       .subscribe((data) => {
         if (data) {
+          this._toastr.showSuccess();
+        }
+      });
+  }
+
+  noHaveFishCatchEntryDialog() {
+    this.dialogNoHaveEntry.showQuestionModal();
+  }
+
+  confirmNoHaveFishCatchEntry() {
+    this.fishCatchReport = {
+      fbz: this.fishCatchFilter.managementRegister.fbz,
+      year: this.fishCatchFilter.managementRegister.year,
+      status: FishCatchReportEnum.completed,
+      date_completed: new Date(),
+    };
+    this._service
+      .callPostMethod("/api/owner/noHaveFishCatchEntry", this.fishCatchReport)
+      .subscribe((data) => {
+        if (data) {
+          this.refreshGrid();
           this._toastr.showSuccess();
         }
       });

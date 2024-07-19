@@ -248,7 +248,7 @@ router.get("/getFishStockingReport", auth, async (req, res, next) => {
   }
 });
 
-router.post("/completeReport", auth, function (req, res, next) {
+router.post("/completeFishStockingReport", auth, function (req, res, next) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -256,10 +256,11 @@ router.post("/completeReport", auth, function (req, res, next) {
     }
 
     req.body.id_owner = req.user.user.id;
+    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query(
       "select * from fish_stocking_reports where fbz = ? and year = ?",
-      [req.body.fbz, req.body.year],
+      [splitFBZ(req.body.fbz), req.body.year],
       function (err, rows) {
         if (!err) {
           if (rows.length) {
@@ -273,7 +274,7 @@ router.post("/completeReport", auth, function (req, res, next) {
                   req.body["lastname"] = req.user.user.lastname;
                   makeRequest(
                     req.body,
-                    "mail/sendNotificationToAdminForCompletedReport",
+                    "mail/sendNotificationToAdminForCompletedFishStockingReport",
                     res
                   );
                 } else {
@@ -293,7 +294,7 @@ router.post("/completeReport", auth, function (req, res, next) {
                   req.body["lastname"] = req.user.user.lastname;
                   makeRequest(
                     req.body,
-                    "mail/sendNotificationToAdminForCompletedReport",
+                    "mail/sendNotificationToAdminForCompletedFishStockingReport",
                     res
                   );
                 } else {
@@ -335,18 +336,26 @@ router.post("/deleteFishStockingReport", auth, function (req, res) {
   });
 });
 
-router.post("/requestToAdminForAdditionalChanges", auth, function (req, res) {
-  connection.getConnection(function (err, conn) {
-    if (err) {
-      logger.log("error", err.sql + ". " + err.sqlMessage);
-      res.json(err);
-    }
+router.post(
+  "/requestToAdminForAdditionalFishStockingReportChanges",
+  auth,
+  function (req, res) {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
 
-    req.body["firstname"] = req.user.user.firstname;
-    req.body["lastname"] = req.user.user.lastname;
-    makeRequest(req.body, "mail/sendRequestToAdminForAdditionalChanges", res);
-  });
-});
+      req.body["firstname"] = req.user.user.firstname;
+      req.body["lastname"] = req.user.user.lastname;
+      makeRequest(
+        req.body,
+        "mail/sendRequestToAdminForAdditionalFishStockingReportChanges",
+        res
+      );
+    });
+  }
+);
 
 //#endregion ALL REPORT OCCUPATION
 
@@ -417,9 +426,7 @@ router.post("/createNewWaterNameEntry", auth, function (req, res, next) {
       res.json(err);
     }
 
-    if (req.body.fbz.indexOf(".") != -1) {
-      req.body.fbz = req.body.fbz.split(".")[0];
-    }
+    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query("INSERT INTO waters set ?", [req.body], function (err, rows) {
       conn.release();
@@ -443,19 +450,21 @@ router.post("/createNewFishNameEntry", auth, function (req, res, next) {
       res.json(err);
     }
 
-    if (req.body.fbz.indexOf(".") != -1) {
-      req.body.fbz = req.body.fbz.split(".")[0];
-    }
+    req.body.fbz = splitFBZ(req.body.fbz);
 
-    conn.query("INSERT INTO fishes set ?", [req.body], function (err, rows) {
-      conn.release();
-      if (!err) {
-        res.json(rows.insertId);
-      } else {
-        logger.log("error", err.sql + ". " + err.sqlMessage);
-        res.json(false);
+    conn.query(
+      "INSERT INTO fishes_custom set ?",
+      [req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(req.body.name);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
       }
-    });
+    );
   });
 });
 
@@ -495,7 +504,7 @@ router.get("/getAllFishes", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from fishes where (fbz is NULL or fbz = ?) and (year is NULL or year = ?)",
+          "select f.name from fishes f union select fc.name from fishes_custom fc where (fc.fbz is NULL or fc.fbz = ?) and (fc.year is NULL or fc.year = ?)",
           [
             splitFBZ(req.query.fbz ? req.query.fbz : null),
             req.query.year ? req.query.year : null,
@@ -548,9 +557,108 @@ router.get("/getAllOrigins", auth, async (req, res, next) => {
 
 //#endregion
 
-//#region FISH CATCH FOR WATER
+//#region FISH CATCH
+router.get(
+  "/getFishCatchDetailsForSelectedWater",
+  auth,
+  async (req, res, next) => {
+    try {
+      connection.getConnection(function (err, conn) {
+        if (err) {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(err);
+        } else {
+          if (
+            req.query.id_water != "undefined" &&
+            req.query.id_water != "null"
+          ) {
+            conn.query(
+              "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.id_water = ?",
+              [splitFBZ(req.query.fbz), req.query.id_water],
+              function (err, rows, fields) {
+                conn.release();
+                if (err) {
+                  logger.log("error", err.sql + ". " + err.sqlMessage);
+                  res.json(err);
+                } else {
+                  res.json(rows);
+                }
+              }
+            );
+          } else {
+            conn.query(
+              "select fcd.* from fish_catch_details fcd where fcd.fbz = ?",
+              [splitFBZ(req.query.fbz)],
+              function (err, rows, fields) {
+                conn.release();
+                if (err) {
+                  logger.log("error", err.sql + ". " + err.sqlMessage);
+                  res.json(err);
+                } else {
+                  res.json(rows);
+                }
+              }
+            );
+          }
+        }
+      });
+    } catch (ex) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(ex);
+    }
+  }
+);
 
-router.get("/getFishCatchForWater", auth, async (req, res, next) => {
+router.post("/deleteFishCatch", auth, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "delete from fish_catch_details where id = ?",
+      [req.body.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/setFishCatch", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+    req.body.fbz = splitFBZ(req.body.fbz);
+
+    conn.query(
+      "INSERT INTO fish_catch_details set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.get("/getFishCatchReport", auth, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -558,8 +666,8 @@ router.get("/getFishCatchForWater", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select fcd.*, f.name from fish_catch_details fcd join fishes f on fcd.id_fish = f.id where fcd.fbz = ? and fcd.id_water = ?",
-          [splitFBZ(req.query.fbz), req.query.id_water],
+          "select * from fish_catch_reports where id_owner = ? and fbz = ?",
+          [req.user.user.id, req.query.fbz],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -578,7 +686,104 @@ router.get("/getFishCatchForWater", auth, async (req, res, next) => {
   }
 });
 
-router.post("/setFishCatch", auth, function (req, res, next) {
+router.get(
+  "/getFishCatchDetailsForManagementRegister",
+  auth,
+  async (req, res, next) => {
+    try {
+      connection.getConnection(function (err, conn) {
+        if (err) {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(err);
+        } else {
+          conn.query(
+            "select fcd.* from fish_catch_details fcd where fcd.fbz = ?",
+            [splitFBZ(req.query.fbz)],
+            function (err, rows, fields) {
+              conn.release();
+              if (err) {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(err);
+              } else {
+                res.json(rows);
+              }
+            }
+          );
+        }
+      });
+    } catch (ex) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(ex);
+    }
+  }
+);
+
+router.post("/completeFishCatchReport", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+    req.body.fbz = splitFBZ(req.body.fbz);
+
+    conn.query(
+      "select * from fish_catch_reports where fbz = ? and year = ?",
+      [splitFBZ(req.body.fbz), req.body.year],
+      function (err, rows) {
+        if (!err) {
+          if (rows.length) {
+            conn.query(
+              "UPDATE fish_catch_reports set ? where id = ?",
+              [req.body, rows[0].id],
+              function (err, rows) {
+                conn.release();
+                if (!err) {
+                  req.body["firstname"] = req.user.user.firstname;
+                  req.body["lastname"] = req.user.user.lastname;
+                  makeRequest(
+                    req.body,
+                    "mail/sendNotificationToAdminForCompletedFishCatchReport",
+                    res
+                  );
+                } else {
+                  logger.log("error", err.sql + ". " + err.sqlMessage);
+                  res.json(false);
+                }
+              }
+            );
+          } else {
+            conn.query(
+              "INSERT INTO fish_catch_reports set ?",
+              [req.body],
+              function (err, rows) {
+                conn.release();
+                if (!err) {
+                  req.body["firstname"] = req.user.user.firstname;
+                  req.body["lastname"] = req.user.user.lastname;
+                  makeRequest(
+                    req.body,
+                    "mail/sendNotificationToAdminForCompletedFishCatchReport",
+                    res
+                  );
+                } else {
+                  logger.log("error", err.sql + ". " + err.sqlMessage);
+                  res.json(false);
+                }
+              }
+            );
+          }
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/noHaveFishCatchEntry", auth, function (req, res, next) {
   connection.getConnection(function (err, conn) {
     if (err) {
       logger.log("error", err.sql + ". " + err.sqlMessage);
@@ -588,12 +793,62 @@ router.post("/setFishCatch", auth, function (req, res, next) {
     req.body.id_owner = req.user.user.id;
 
     conn.query(
-      "INSERT INTO fish_catch_details set ? ON DUPLICATE KEY UPDATE ?",
-      [req.body, req.body],
+      "delete from fish_catch_details where fbz = ?",
+      [splitFBZ(req.body.fbz)],
       function (err, rows) {
-        conn.release();
         if (!err) {
-          res.json(true);
+          conn.query(
+            "select * from fish_catch_reports where fbz = ? and year = ?",
+            [splitFBZ(req.body.fbz), req.body.year],
+            function (err, rows) {
+              if (!err) {
+                if (rows.length) {
+                  conn.query(
+                    "UPDATE fish_catch_reports set ? where id = ?",
+                    [req.body, rows[0].id],
+                    function (err, rows) {
+                      conn.release();
+                      if (!err) {
+                        req.body["firstname"] = req.user.user.firstname;
+                        req.body["lastname"] = req.user.user.lastname;
+                        makeRequest(
+                          req.body,
+                          "mail/sendNotificationToAdminForCompletedFishCatchReport",
+                          res
+                        );
+                      } else {
+                        logger.log("error", err.sql + ". " + err.sqlMessage);
+                        res.json(false);
+                      }
+                    }
+                  );
+                } else {
+                  conn.query(
+                    "INSERT INTO fish_catch_reports set ?",
+                    [req.body],
+                    function (err, rows) {
+                      conn.release();
+                      if (!err) {
+                        req.body["firstname"] = req.user.user.firstname;
+                        req.body["lastname"] = req.user.user.lastname;
+                        makeRequest(
+                          req.body,
+                          "mail/sendNotificationToAdminForCompletedFishCatchReport",
+                          res
+                        );
+                      } else {
+                        logger.log("error", err.sql + ". " + err.sqlMessage);
+                        res.json(false);
+                      }
+                    }
+                  );
+                }
+              } else {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(false);
+              }
+            }
+          );
         } else {
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(false);
@@ -602,6 +857,27 @@ router.post("/setFishCatch", auth, function (req, res, next) {
     );
   });
 });
+
+router.post(
+  "/requestToAdminForAdditionalFishCatchReportChanges",
+  auth,
+  function (req, res) {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+
+      req.body["firstname"] = req.user.user.firstname;
+      req.body["lastname"] = req.user.user.lastname;
+      makeRequest(
+        req.body,
+        "mail/sendRequestToAdminForAdditionalFishCatchReportChanges",
+        res
+      );
+    });
+  }
+);
 
 //#endregion
 

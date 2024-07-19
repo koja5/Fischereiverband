@@ -52,7 +52,6 @@
     "columns": [
         {
             "title": "commonFields.action",
-            "width": 80,
             "template": {
                 "type": "action",
                 "actionMode": {
@@ -101,7 +100,7 @@
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "name",
+            "field": "fish",
             "validation": {
                 "required": true
             }
@@ -156,11 +155,11 @@
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_fish",
-            "title": "commonFields.nameOfWater",
+            "name": "fish",
+            "title": "commonFields.nameOfFish",
             "field": {
                 "text": "name",
-                "value": "id"
+                "value": "name"
             },
             "request": {
                 "type": "GET",
@@ -174,7 +173,8 @@
                         "type": "localStorage",
                         "key": "selectedManagementRegistry",
                         "property": [
-                            "fbz"
+                            "fbz",
+                            "year"
                         ]
                     }
                 ]
@@ -187,7 +187,7 @@
                 },
                 "request": {
                     "type": "POST",
-                    "api": "/api/owner/createNewWaterNameEntry",
+                    "api": "/api/owner/createNewFishNameEntry",
                     "parameters": [],
                     "fields": [
                         {

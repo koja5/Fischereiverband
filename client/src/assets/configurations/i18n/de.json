@@ -29,6 +29,7 @@
    "action": {
       "completeReport": "Vollständiger Bericht",
       "backReportToOwner": "Besatzbericht wieder zum ändern freigeben",
+      "noHaveEntry": "Kein Eintrag vorhanden",
       "reminderOwnerToCompleteReport": "Bewirtschafter  Erinnerung",
       "requestAdminToChangeStatus": "Anfrage zum ändern stellen"
    },
@@ -49,7 +50,9 @@
       "dialogReminderOwnerToCompleteReportTitle": "Sind sie sicher?",
       "dialogReminderOwnerToCompleteReportText": "Möchten Sie eine Benachrichtigung per E-Mail an den Bewirtschafter senden, z. B. eine Erinnerung zum Ausfüllen des Besatzberichts?",
       "dialogRequestForAdditionalChangesTitle": "Sind sie sicher?",
-      "dialogRequestForAdditionalChangesText": "Möchten Sie eine Anfrage an den Landesfischereiverband senden, um beim Besatzbericht wieder Änderungen vornehmen zu können?"
+      "dialogRequestForAdditionalChangesText": "Möchten Sie eine Anfrage an den Landesfischereiverband senden, um beim Besatzbericht wieder Änderungen vornehmen zu können?",
+      "dialogNoHaveReportsTitle": "Sind sie sicher?",
+      "dialogNoHaveReportsText": "Möchten Sie einen leeren Bericht senden? Wenn Sie derzeit über einige Einträge verfügen, werden diese Einträge gelöscht!"
    },
    "commonFields": {
       "name": "Name",
@@ -103,7 +106,9 @@
       "countStatus": "Zählstatus",
       "otterStatus": "Otter-Status",
       "status": "Status",
-      "preview": "Vorschau"
+      "preview": "Vorschau",
+      "chooseNameOfWater": "Wählen Sie den Namen des Wassers",
+      "chooseManagementRegistry": "Wählen Sie die Verwaltungsregistrierung"
    },
    "userTypes": {
       "superadmin": "Superadmin",
@@ -143,9 +148,12 @@
       "allWaters": "Alle Gewässer",
       "ageOfFishes": "Alter der Fische",
       "allFishStockingReports": "Besatzmeldungen",
+      "fishStocking": "Besatzmeldungen",
       "managementRegisters": "FBZs",
       "reportOccupation": "Besatzmeldung",
-      "observationSheet": "Beobachtungsblatt"
+      "observationSheet": "Beobachtungsblatt",
+      "fishCatch": "Fischfang",
+      "allFishCatchReports": "Fischfangberichte"
    },
    "navBar": {
       "profile": "Profil",

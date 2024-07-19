@@ -26,7 +26,7 @@ async function sendMail(to, subject, message, template = false, res) {
     );
     var hoganTemplate = hogan.compile(emailTemplate);
     var mailOptions = {
-      from: '"Termmy"' + process.env.smtp_user,
+      from: '"Fischereiverband"' + process.env.smtp_user,
       to: to,
       subject: subject,
       html: hoganTemplate.render(message),

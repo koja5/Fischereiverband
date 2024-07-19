@@ -47,8 +47,6 @@ export class ComboboxComponent implements OnInit {
     } else {
       this.initialization();
     }
-    console.log(this.config);
-    console.log(this.group);
   }
 
   initialization() {
@@ -162,9 +160,6 @@ export class ComboboxComponent implements OnInit {
   createNewEntries(event) {}
 
   submitNewEntriesEmitter(event) {
-    console.log(this.config);
-    console.log(event);
-
     let body = {};
 
     if (this.config.addTag) {

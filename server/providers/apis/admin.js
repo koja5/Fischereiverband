@@ -614,7 +614,7 @@ router.get(
         } else {
           conn.query(
             "select fsd.*, w.name as 'water', f.name as 'fish', af.name as 'age_of_fish', o.name as 'origin', CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_stocking_details fsd join waters w on fsd.id_water = w.id_water join fishes f on fsd.id_fish = f.id join age_of_fishes af on fsd.id_age_of_fish = af.id join origins o on fsd.id_origin = o.id join users u on fsd.id_owner = u.id_owner where fsd.fbz = ? and fsd.year = ?",
-            [req.query.fbz, req.query.year],
+            [splitFBZ(req.query.fbz), req.query.year],
             function (err, rows, fields) {
               conn.release();
               if (err) {
@@ -643,7 +643,7 @@ router.get("/getFishStockingReport", authAdmin, async (req, res, next) => {
       } else {
         conn.query(
           "select fsr.*, CONCAT(u.firstname, ' ', u.lastname) as 'owner_name' from fish_stocking_reports fsr join users u on fsr.id_owner = u.id_owner where fsr.fbz = ? and fsr.year = ?",
-          [req.query.fbz, req.query.year],
+          [splitFBZ(req.query.fbz), req.query.year],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -695,10 +695,101 @@ router.post("/backFishStockingReportToOwner", authAdmin, function (req, res) {
 
 //#endregion
 
+//#region FISH CATCH REPORTS
+
+router.get("/getAllFishCatchReports", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select fcr.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_catch_reports fcr join users u on fcr.id_owner = u.id_owner order by fcr.date_completed desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getFishCatchReport", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select fcr.*, CONCAT(u.firstname, ' ', u.lastname) as 'owner_name' from fish_catch_reports fcr join users u on fcr.id_owner = u.id_owner where fcr.fbz = ? and fcr.year = ?",
+          [splitFBZ(req.query.fbz), req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows.length ? rows[0] : rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getFishCatchReportDetails", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select fcd.*, w.name as 'water', CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_catch_details fcd join waters w on fcd.id_water = w.id_water join users u on fcd.id_owner = u.id_owner where fcd.fbz = ? and fcd.year = ?",
+          [splitFBZ(req.query.fbz), req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+//#endregion
+
 //#region HELP FUNCTION
 
 function isValidSHA1(s) {
   return s.indexOf("^[a-fA-F0-9]{40}$") == 1;
+}
+
+function splitFBZ(fbz) {
+  return fbz ? (fbz.indexOf(".") != -1 ? fbz.split(".")[0] : fbz) : null;
 }
 
 //#endregion
