@@ -1,37 +1,36 @@
 <div class="informations d-flex row">
-    <div class="col-lg-2 col-md-12 owner">
-        <label>{{'commonFields.name' | translate}}: <b>{{userProfile.firstname}} {{userProfile.lastname}}</b></label>
-        <br>
+
+    <div class="col-md-12 owner text-center mb-1">
+        <h3><b>{{userProfile.firstname}}
+                {{userProfile.lastname}}</b></h3>
+
         <label>{{'commonFields.fbz' | translate}}: <b>{{fishStockingReport.fbz}}</b></label> &nbsp;
         <label>{{'commonFields.year' | translate}}: <b>{{fishStockingReport.year}}</b></label> &nbsp;
     </div>
-    <div class="col-lg-10 col-md-12 d-flex status align-items-center">
-        <div class="row full-width">
-            <div class="col-md-9 text-center">
-                <ngb-alert *ngIf="fishStockingReport.status == FISH_STOCKING_REPORT_ENUM.completed" [type]="'success'"
-                    [dismissible]="false">
-                    <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
-                        {{fishStockingReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}
-                    </div>
-                </ngb-alert>
-                <ngb-alert *ngIf="fishStockingReport.status == FISH_STOCKING_REPORT_ENUM.draft" [type]="'warning'"
-                    [dismissible]="false">
-                    <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
-                </ngb-alert>
-            </div>
-            <div class="col-md-3">
-                <button *ngIf="fishStockingReport.status == FISH_STOCKING_REPORT_ENUM.completed"
-                    class="btn btn-warning full-width" (click)="dialogConfirmBackReportShow()"><span
-                        class="fa fa-backward"></span>
-                    {{'action.backReportToOwner' |
-                    translate}}</button>
 
-                <button *ngIf="fishStockingReport.status == FISH_STOCKING_REPORT_ENUM.draft"
-                    class="btn btn-info full-width" (click)="dialogConfirmReminderOwnerShow()"><span
-                        class="fa fa-bell"></span>
-                    {{'action.reminderOwnerToCompleteReport' |
-                    translate}}</button>
+    <div class="col-md-12 text-center">
+        <ngb-alert *ngIf="fishStockingReport.status == FISH_STOCKING_REPORT_ENUM.completed" [type]="'success'"
+            [dismissible]="false">
+            <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
+                {{fishStockingReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}
             </div>
+        </ngb-alert>
+        <ngb-alert *ngIf="fishStockingReport.status == FISH_STOCKING_REPORT_ENUM.draft" [type]="'warning'"
+            [dismissible]="false">
+            <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
+        </ngb-alert>
+    </div>
+    <div class="col-md-12 mb-1">
+        <div class="d-flex justify-content-end action">
+            <button *ngIf="fishStockingReport.status == FISH_STOCKING_REPORT_ENUM.completed" class="btn btn-warning"
+                (click)="dialogConfirmBackReportShow()"><span class="fa fa-backward"></span>
+                {{'action.backReportToOwner' |
+                translate}}</button>
+
+            <button *ngIf="fishStockingReport.status == FISH_STOCKING_REPORT_ENUM.draft" class="btn btn-info"
+                (click)="dialogConfirmReminderOwnerShow()"><span class="fa fa-bell"></span>
+                {{'action.reminderOwnerToCompleteReport' |
+                translate}}</button>
         </div>
     </div>
 </div>

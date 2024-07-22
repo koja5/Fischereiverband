@@ -1,6 +1,20 @@
 <div *ngIf="managementRegistersData">
     <div class="row">
-        <div class="mb-2 col-lg-3 col-md-12">
+        <div class="col-md-12 text-center">
+            <div *ngIf="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed">
+                <ngb-alert [type]="'success'" [dismissible]="false">
+                    <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
+                        {{fishStockingReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}</div>
+                </ngb-alert>
+            </div>
+            <div *ngIf="data && data.length && (!fishStockingReport || fishStockingReport.status ===
+                fishStockingReportEnum.draft)">
+                <ngb-alert [type]="'warning'" [dismissible]="false">
+                    <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
+                </ngb-alert>
+            </div>
+        </div>
+        <div class="mb-2 col-md-3">
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
                 [(ngModel)]="selectedManagementRegistryId"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChange($event)"
@@ -16,34 +30,18 @@
                 </ng-template>
             </ng-select>
         </div>
-        <div class="col-lg-9" *ngIf="selectedManagementRegistryId">
-            <div class="row">
-                <div class="col-lg-9 col-md-8 text-center">
-                    <div *ngIf="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed">
-                        <ngb-alert [type]="'success'" [dismissible]="false">
-                            <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
-                                {{fishStockingReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}</div>
-                        </ngb-alert>
-                    </div>
-                    <div *ngIf="data && data.length && (!fishStockingReport || fishStockingReport.status ===
-                        fishStockingReportEnum.draft)">
-                        <ngb-alert [type]="'warning'" [dismissible]="false">
-                            <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
-                        </ngb-alert>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 text-right">
-                    <button
-                        *ngIf="data && data.length && (!fishStockingReport || fishStockingReport.status === fishStockingReportEnum.draft)"
-                        class="btn btn-success full-width" (click)="completeReports()"><span class="fa fa-check"></span>
-                        {{'action.completeReport' |
-                        translate}}</button>
-                    <button *ngIf="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed"
-                        class="btn btn-danger full-width" (click)="requestForAdditionalChanges()"><span
-                            class="fa fa-question-circle-o"></span>
-                        {{'action.requestAdminToChangeStatus' |
-                        translate}}</button>
-                </div>
+        <div class="col-md-9" *ngIf="selectedManagementRegistryId">
+            <div class="d-flex justify-content-end action">
+                <button
+                    *ngIf="data && data.length && (!fishStockingReport || fishStockingReport.status === fishStockingReportEnum.draft)"
+                    class="btn btn-success" (click)="completeReports()"><span class="fa fa-check"></span>
+                    {{'action.completeReport' |
+                    translate}}</button>
+                <button *ngIf="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed"
+                    class="btn btn-primary" (click)="requestForAdditionalChanges()"><span
+                        class="fa fa-question-circle-o"></span>
+                    {{'action.requestAdminToChangeStatus' |
+                    translate}}</button>
             </div>
         </div>
     </div>

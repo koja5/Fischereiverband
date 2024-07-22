@@ -171,7 +171,7 @@
             "request": {
                 "type": "GET",
                 "parameterType": "QUERY",
-                "api": "/api/owner/getWatersForSpecificFBZ",
+                "api": "/api/owner/getAllWaters",
                 "parameters": [],
                 "fields": "",
                 "root": "",

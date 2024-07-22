@@ -1,48 +1,46 @@
 <div class="informations d-flex row">
-    <div class="col-lg-2 col-md-12 owner">
-        <label>{{'commonFields.name' | translate}}: <b>{{userProfile.firstname}} {{userProfile.lastname}}</b></label>
-        <br>
+    <div class="col-md-12 owner text-center mb-1">
+        <h3><b>{{userProfile.firstname}}
+                {{userProfile.lastname}}</b></h3>
+
         <label>{{'commonFields.fbz' | translate}}: <b>{{fishCatchReport.fbz}}</b></label> &nbsp;
         <label>{{'commonFields.year' | translate}}: <b>{{fishCatchReport.year}}</b></label> &nbsp;
     </div>
-    <div class="mb-2 col-lg-3 col-md-12">
+    <div class="col-md-12 text-center">
+        <ngb-alert *ngIf="fishCatchReport.status == FISH_CATCH_REPORT_ENUM.completed" [type]="'success'"
+            [dismissible]="false">
+            <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
+                {{fishCatchReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}
+            </div>
+        </ngb-alert>
+        <ngb-alert *ngIf="fishCatchReport.status == FISH_CATCH_REPORT_ENUM.draft" [type]="'warning'"
+            [dismissible]="false">
+            <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
+        </ngb-alert>
+    </div>
+    <div class="col-md-4">
         <ng-select [items]="allWaters" bindLabel="name" bindValue="id_water" [(ngModel)]="fishCatchFilter.water"
             [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChangeWater($event)"
             [searchable]="true">
         </ng-select>
-
     </div>
-    <div class="col-lg-10 col-md-12 d-flex status align-items-center">
-        <div class="row full-width">
-            <div class="col-md-9 text-center">
-                <ngb-alert *ngIf="fishCatchReport.status == FISH_CATCH_REPORT_ENUM.completed" [type]="'success'"
-                    [dismissible]="false">
-                    <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
-                        {{fishCatchReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}
-                    </div>
-                </ngb-alert>
-                <ngb-alert *ngIf="fishCatchReport.status == FISH_CATCH_REPORT_ENUM.draft" [type]="'warning'"
-                    [dismissible]="false">
-                    <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
-                </ngb-alert>
-            </div>
-            <div class="col-md-3">
-                <button *ngIf="fishCatchReport.status == FISH_CATCH_REPORT_ENUM.completed"
-                    class="btn btn-warning full-width" (click)="dialogConfirmBackReportShow()"><span
-                        class="fa fa-backward"></span>
-                    {{'action.backReportToOwner' |
-                    translate}}</button>
+    <div class="col-md-8 mb-1">
 
-                <button *ngIf="fishCatchReport.status == FISH_CATCH_REPORT_ENUM.draft" class="btn btn-info full-width"
-                    (click)="dialogConfirmReminderOwnerShow()"><span class="fa fa-bell"></span>
-                    {{'action.reminderOwnerToCompleteReport' |
-                    translate}}</button>
-            </div>
+        <div class="d-flex justify-content-end action">
+            <button *ngIf="fishCatchReport.status == FISH_CATCH_REPORT_ENUM.completed" class="btn btn-warning"
+                (click)="dialogConfirmBackReportShow()"><span class="fa fa-backward"></span>
+                {{'action.backReportToOwner' |
+                translate}}</button>
+
+            <button *ngIf="fishCatchReport.status == FISH_CATCH_REPORT_ENUM.draft" class="btn btn-info reminder-button"
+                (click)="dialogConfirmReminderOwnerShow()"><span class="fa fa-bell"></span>
+                {{'action.reminderOwnerToCompleteReport' |
+                translate}}</button>
         </div>
     </div>
 </div>
 <app-loader *ngIf="loader"></app-loader>
-<app-dynamic-grid #grid *ngIf="data" [path]="path" [file]="file" [data]="data"></app-dynamic-grid>
+<app-dynamic-grid #grid *ngIf="!loader" [path]="path" [file]="file" [data]="data"></app-dynamic-grid>
 
 <app-dialog-confirm #dialogConfirmBackReport [title]="('actionMessage.dialogBackReportToOwnerTitle' | translate)"
     [content]="('actionMessage.dialogBackReportToOwnerText' | translate)"

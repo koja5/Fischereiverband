@@ -48,7 +48,7 @@ export class FishCatchReportDetailsComponent {
   getWatersForSelectedManagementRegister() {
     this._service
       .callGetMethod(
-        "api/owner/getWatersForSpecificFBZ?fbz=" +
+        "api/owner/getAllWaters?fbz=" +
           this._activatedRouter.snapshot.queryParams.fbz
       )
       .subscribe((data: any) => {
@@ -60,6 +60,7 @@ export class FishCatchReportDetailsComponent {
   }
 
   getFishCatchReportDetails() {
+    this.loader = true;
     this._service
       .callGetMethod(
         "/api/admin/getFishCatchReportDetails?fbz=" +
@@ -69,6 +70,24 @@ export class FishCatchReportDetailsComponent {
       )
       .subscribe((data) => {
         this.data = data;
+        this.loader = false;
+      });
+  }
+
+  getFishCatchDetailsForSelectedWater(idWater: number) {
+    this.loader = true;
+    this._service
+      .callGetMethod(
+        "/api/admin/getFishCatchDetailsForSelectedWater?fbz=" +
+          this._activatedRouter.snapshot.queryParams.fbz +
+          "&year=" +
+          this._activatedRouter.snapshot.queryParams.year +
+          "&id_water=" +
+          idWater
+      )
+      .subscribe((data) => {
+        this.data = data;
+        this.loader = false;
       });
   }
 
@@ -133,5 +152,7 @@ export class FishCatchReportDetailsComponent {
       });
   }
 
-  onChangeWater(event: any) {}
+  onChangeWater(event: any) {
+    this.getFishCatchDetailsForSelectedWater(event.id_water);
+  }
 }

@@ -133,7 +133,7 @@
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "name_of_water",
+            "field": "water",
             "validation": {
                 "required": true
             }
@@ -309,11 +309,11 @@
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_water",
+            "name": "water",
             "title": "observationSheet.nameOfWater",
             "field": {
                 "text": "name",
-                "value": "id_water"
+                "value": "name"
             },
             "request": {
                 "type": "GET",

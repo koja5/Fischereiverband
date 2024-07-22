@@ -140,28 +140,6 @@
                           </tr>
                           <tr>
                             <td
-                              style="font-family: Montserrat, -apple-system, &#39;Segoe UI&#39;, sans-serif; font-size: 12px; padding-left: 48px; padding-right: 48px; --text-opacity: 1; color: #eceff1; color: rgba(236, 239, 241, var(--text-opacity));"
-                            >
-                              <p
-                                style="--text-opacity: 1; color: #263238; color: rgba(38, 50, 56, var(--text-opacity));"
-                              >
-                                {{acceptOurTerms}}
-                                <a
-                                  href="https://termmy.com/terms"
-                                  class="hover-underline"
-                                  style="--text-opacity: 1; color: #1296e8 !important; color: rgba(115, 103, 240, var(--text-opacity)); text-decoration: none;"
-                                >{{terms}}</a>
-                                {{and}}
-                                <a
-                                  href="https://termmy.com/privacy-policy"
-                                  class="hover-underline"
-                                  style="--text-opacity: 1; color: #1296e8 !important; color: rgba(115, 103, 240, var(--text-opacity)); text-decoration: none;"
-                                >{{privacyPolicy}}</a>.
-                              </p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td
                               style="font-family: &#39;Montserrat&#39;,Arial,sans-serif; height: 16px;"
                               height="16"
                             >

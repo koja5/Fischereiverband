@@ -107,7 +107,9 @@
         "status": "Status",
         "preview": "Preview",
         "chooseNameOfWater": "Choose name of water",
-        "chooseManagementRegistry": "Choose management registry"
+        "chooseManagementRegistry": "Choose management registry",
+        "edibleFishQuantity": "Edible quantity",
+        "stockedFishQuantity": "Stocked quantity"
     },
     "userTypes": {
         "superadmin": "Superadmin",

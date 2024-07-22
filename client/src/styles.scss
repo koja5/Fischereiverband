@@ -28,6 +28,10 @@
     td.e-header-cells.e-week-number {
     font-size: 32px;
   }
+
+  .ngx-datatable.scroll-horz .datatable-body {
+    height: calc(100vh - 55vh) !important;
+  }
 }
 
 @media (max-width: 991px) {
@@ -50,6 +54,15 @@
     tbody
     td.e-header-cells.e-week-number {
     font-size: 16px;
+  }
+
+  .action button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .ngx-datatable.scroll-horz .datatable-body {
+    height: calc(100vh - 55vh) !important;
   }
 }
 
@@ -174,10 +187,6 @@
 .e-toolbar .e-toolbar-item .e-tbar-btn,
 .e-toolbar .e-toolbar-items {
   background: #fff !important;
-}
-
-.ngx-datatable.scroll-horz .datatable-body {
-  height: calc(100vh - 40vh) !important;
 }
 
 .ngx-datatable.bootstrap.core-bootstrap .datatable-footer {

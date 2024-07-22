@@ -66,7 +66,6 @@ export class FishCatchComponent {
       this.fishCatchFilter = new FishCatchFilterModel();
     }
 
-    this.getFishStockingReport();
     this.getFishCatchDetailsForManagementRegister();
 
     this._service
@@ -141,12 +140,13 @@ export class FishCatchComponent {
 
   getWatersForSelectedManagementRegister(fbz: string) {
     this._service
-      .callGetMethod("api/owner/getWatersForSpecificFBZ?fbz=" + fbz)
+      .callGetMethod("api/owner/getAllWaters?fbz=" + fbz)
       .subscribe((data: any) => {
         this.allWaters = data;
         if (data.length === 1) {
           this.fishCatchFilter.water = data[0].id_water;
         }
+        this.getFishStockingReport();
         this.getFishCatchDetailsForSelectedWater();
       });
   }

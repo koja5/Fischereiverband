@@ -179,6 +179,72 @@ router.post(
   }
 );
 
+router.post(
+  "/sendNotificationToOwnerForBackFishCatchReport",
+  function (req, res, next) {
+    var configuration = JSON.parse(
+      fs.readFileSync(
+        "./providers/mails/i18n/send_notification_to_owner_for_back_fish_catch_report.json",
+        "utf-8"
+      )
+    );
+
+    let subject = configuration.language.de.subject;
+    let body = configuration.language.de.body;
+
+    body.greetings = body.greetings.replace(
+      "#name",
+      req.body.userProfile.firstname
+    );
+    body.message = body.message.replaceAll(
+      "#fbz",
+      req.body.fishCatchReport.fbz
+    );
+    subject = subject.replaceAll("#fbz", req.body.fishCatchReport.fbz);
+
+    sendMail(
+      req.body.userProfile.email,
+      subject,
+      body,
+      configuration.template,
+      res
+    );
+  }
+);
+
+router.post(
+  "/reminderOwnerToCompleteFishCatchReport",
+  function (req, res, next) {
+    var configuration = JSON.parse(
+      fs.readFileSync(
+        "./providers/mails/i18n/send_reminder_owner_to_complete_fish_catch_report.json",
+        "utf-8"
+      )
+    );
+
+    let subject = configuration.language.de.subject;
+    let body = configuration.language.de.body;
+
+    body.greetings = body.greetings.replace(
+      "#name",
+      req.body.userProfile.firstname
+    );
+    body.message = body.message.replaceAll(
+      "#fbz",
+      req.body.fishCatchReport.fbz
+    );
+    subject = subject.replaceAll("#fbz", req.body.fishCatchReport.fbz);
+
+    sendMail(
+      req.body.userProfile.email,
+      subject,
+      body,
+      configuration.template,
+      res
+    );
+  }
+);
+
 //#endregion
 
 //#region AUTH

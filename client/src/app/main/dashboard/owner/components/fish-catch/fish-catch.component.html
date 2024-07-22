@@ -1,6 +1,20 @@
 <div *ngIf="managementRegistersData">
     <div class="row">
-        <div class="mb-2 col-lg-3 col-md-12">
+        <div class="col-md-12 text-center">
+            <div *ngIf="fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed">
+                <ngb-alert [type]="'success'" [dismissible]="false">
+                    <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
+                        {{fishCatchReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}</div>
+                </ngb-alert>
+            </div>
+            <div *ngIf="allData && allData.length && (!fishCatchReport || fishCatchReport.status ===
+            fishCatchReportEnum.draft)">
+                <ngb-alert [type]="'warning'" [dismissible]="false">
+                    <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
+                </ngb-alert>
+            </div>
+        </div>
+        <div class="mb-2 col-md-3">
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
                 [(ngModel)]="fishCatchFilter.managementRegisterId"
                 [placeholder]="'commonFields.chooseNameOfWater' | translate"
@@ -17,47 +31,30 @@
             </ng-select>
 
         </div>
-        <div class="mb-2 col-lg-3 col-md-12">
+        <div class="mb-2 col-md-3">
             <ng-select [items]="allWaters" bindLabel="name" bindValue="id_water" [(ngModel)]="fishCatchFilter.water"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChangeWater($event)"
                 [searchable]="true">
             </ng-select>
 
         </div>
-        <div class="col-lg-6" *ngIf="fishCatchFilter.managementRegister">
-            <div class=" row">
-                <div class="col-lg-9 col-md-8 text-center">
-                    <div *ngIf="fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed">
-                        <ngb-alert [type]="'success'" [dismissible]="false">
-                            <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
-                                {{fishCatchReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}</div>
-                        </ngb-alert>
-                    </div>
-                    <div *ngIf="allData && allData.length && (!fishCatchReport || fishCatchReport.status ===
-                    fishCatchReportEnum.draft)">
-                        <ngb-alert [type]="'warning'" [dismissible]="false">
-                            <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
-                        </ngb-alert>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 text-right">
-                    <button
-                        *ngIf="allData && allData.length && (!fishCatchReport || fishCatchReport.status === fishCatchReportEnum.draft)"
-                        class="btn btn-success full-width mb-1" (click)="completeReportsDialog()"><span
-                            class="fa fa-check"></span>
-                        {{'action.completeReport' |
-                        translate}}</button>
-                    <button *ngIf="fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed"
-                        class="btn btn-primary full-width mb-1" (click)="requestForAdditionalChanges()"><span
-                            class="fa fa-question-circle-o"></span>
-                        {{'action.requestAdminToChangeStatus' |
-                        translate}}</button>
-                    <button *ngIf="!fishCatchReport || fishCatchReport.status !== fishCatchReportEnum.completed"
-                        class="btn btn-outline-danger full-width mb-1" (click)="noHaveFishCatchEntryDialog()"><span
-                            class="fa fa-times"></span>
-                        {{'action.noHaveEntry' |
-                        translate}}</button>
-                </div>
+        <div class="col-md-6" *ngIf="fishCatchFilter.managementRegister">
+            <div class="d-flex justify-content-end action">
+                <button
+                    *ngIf="allData && allData.length && (!fishCatchReport || fishCatchReport.status === fishCatchReportEnum.draft)"
+                    class="btn btn-success mb-1" (click)="completeReportsDialog()"><span class="fa fa-check"></span>
+                    {{'action.completeReport' |
+                    translate}}</button>
+                <button *ngIf="fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed"
+                    class="btn btn-primary mb-1" (click)="requestForAdditionalChanges()"><span
+                        class="fa fa-question-circle-o"></span>
+                    {{'action.requestAdminToChangeStatus' |
+                    translate}}</button>
+                <button *ngIf="!fishCatchReport || fishCatchReport.status !== fishCatchReportEnum.completed"
+                    class="btn btn-outline-danger mb-1 ml-1" (click)="noHaveFishCatchEntryDialog()"><span
+                        class="fa fa-times"></span>
+                    {{'action.noHaveEntry' |
+                    translate}}</button>
             </div>
         </div>
     </div>

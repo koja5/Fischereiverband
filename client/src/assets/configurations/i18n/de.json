@@ -108,7 +108,9 @@
       "status": "Status",
       "preview": "Vorschau",
       "chooseNameOfWater": "Wählen Sie den Namen des Wassers",
-      "chooseManagementRegistry": "Wählen Sie die Verwaltungsregistrierung"
+      "chooseManagementRegistry": "Wählen Sie die Verwaltungsregistrierung",
+      "edibleFishQuantity": "Essbare Menge",
+      "stockedFishQuantity": "Lagermenge"
    },
    "userTypes": {
       "superadmin": "Superadmin",

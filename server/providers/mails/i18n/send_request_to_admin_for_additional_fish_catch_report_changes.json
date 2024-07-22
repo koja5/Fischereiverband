@@ -22,7 +22,7 @@
             }
         },
         "de": {
-            "subject": "Benutzername #Anfrage für weitere Fischfangänderungen auf #fbz",
+            "subject": "Benutzername #name für weitere Fischfangänderungen auf #fbz",
             "body": {
                 "greetings": "Hey 👋",
                 "message": "Anfrage des Benutzers #name, damit er weitere Änderungen an #fbz vornehmen kann.",

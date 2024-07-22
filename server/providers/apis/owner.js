@@ -28,8 +28,8 @@ router.get("/getAllFishStocking", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select fs.*, w.name as 'water', f.name as 'fish', af.name as 'age_of_fish', o.name as 'origin' from fish_stocking_details fs join waters w on fs.id_water = w.id_water join fishes f on fs.id_fish = f.id join age_of_fishes af on fs.id_age_of_fish = af.id join origins o on fs.id_origin = o.id where fs.id_owner = ? and fs.fbz like ? and fs.year = ?",
-          [req.user.user.id, req.query.fbz, req.query.year],
+          "select fsd.* from fish_stocking_details fsd where fsd.id_owner = ? and fsd.fbz like ? and fsd.year = ?",
+          [req.user.user.id, splitFBZ(req.query.fbz), req.query.year],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -60,6 +60,7 @@ router.post("/setFishStocking", auth, function (req, res, next) {
     }
 
     req.body.id_owner = req.user.user.id;
+    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query(
       "INSERT INTO fish_stocking_details set ? ON DUPLICATE KEY UPDATE ?",
@@ -112,7 +113,7 @@ router.get("/getAllObservationSheet", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select os.*, w.name as name_of_water from observation_sheet os join waters w on os.id_water = w.id_water where id_owner = ?",
+          "select os.* from observation_sheet os where os.id_owner = ?",
           [req.user.user.id],
           function (err, rows, fields) {
             conn.release();
@@ -229,7 +230,7 @@ router.get("/getFishStockingReport", auth, async (req, res, next) => {
       } else {
         conn.query(
           "select * from fish_stocking_reports where id_owner = ? and fbz = ?",
-          [req.user.user.id, req.query.fbz],
+          [req.user.user.id, splitFBZ(req.query.fbz)],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -361,7 +362,7 @@ router.post(
 
 //#region GET WATER FOR SPECIFIC FBZ
 
-router.get("/getWatersForSpecificFBZ", auth, async (req, res, next) => {
+router.get("/getAllWaters", auth, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -369,8 +370,8 @@ router.get("/getWatersForSpecificFBZ", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from waters where fbz = ? and (year is NULL or year = ?)",
-          [splitFBZ(req.query.fbz), req.query.year],
+          "select w.name from waters w where fbz = ? union select wc.name from waters_custom wc where wc.fbz = ? and wc.year = ?",
+          [splitFBZ(req.query.fbz), splitFBZ(req.query.fbz), req.query.year],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -428,15 +429,19 @@ router.post("/createNewWaterNameEntry", auth, function (req, res, next) {
 
     req.body.fbz = splitFBZ(req.body.fbz);
 
-    conn.query("INSERT INTO waters set ?", [req.body], function (err, rows) {
-      conn.release();
-      if (!err) {
-        res.json(rows.insertId);
-      } else {
-        logger.log("error", err.sql + ". " + err.sqlMessage);
-        res.json(false);
+    conn.query(
+      "INSERT INTO waters_custom set ?",
+      [req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(req.body.name);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
       }
-    });
+    );
   });
 });
 
@@ -480,10 +485,10 @@ router.post("/createNewOriginNameEntry", auth, function (req, res, next) {
 
     delete req.body.fbz;
 
-    conn.query("INSERT INTO origins set ?", [req.body], function (err, rows) {
+    conn.query("INSERT INTO origins_custom set ?", [req.body], function (err, rows) {
       conn.release();
       if (!err) {
-        res.json(rows.insertId);
+        res.json(req.body.name);
       } else {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(false);
@@ -535,7 +540,7 @@ router.get("/getAllOrigins", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select * from origins where (fbz is NULL or fbz = ?) and (year is NULL or year = ?)",
+          "select o.name from origins o union select oc.name from origins_custom oc where (oc.fbz is NULL or oc.fbz = ?) and (oc.year is NULL or oc.year = ?)",
           [splitFBZ(req.query.fbz), req.query.year],
           function (err, rows, fields) {
             conn.release();
@@ -667,7 +672,7 @@ router.get("/getFishCatchReport", auth, async (req, res, next) => {
       } else {
         conn.query(
           "select * from fish_catch_reports where id_owner = ? and fbz = ?",
-          [req.user.user.id, req.query.fbz],
+          [req.user.user.id, splitFBZ(req.query.fbz)],
           function (err, rows, fields) {
             conn.release();
             if (err) {

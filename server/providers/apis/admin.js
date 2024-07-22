@@ -780,6 +780,65 @@ router.get("/getFishCatchReportDetails", authAdmin, async (req, res, next) => {
   }
 });
 
+router.post("/backFishCatchReportToOwner", authAdmin, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "update fish_catch_reports set status = 1 where id = ?",
+      [req.body.fishCatchReport.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          makeRequest(
+            req.body,
+            "mail/sendNotificationToOwnerForBackFishCatchReport",
+            res
+          );
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.get(
+  "/getFishCatchDetailsForSelectedWater",
+  authAdmin,
+  async (req, res, next) => {
+    try {
+      connection.getConnection(function (err, conn) {
+        if (err) {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(err);
+        } else {
+          conn.query(
+            "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.year = ? and fcd.id_water = ?",
+            [splitFBZ(req.query.fbz), req.query.year, req.query.id_water],
+            function (err, rows, fields) {
+              conn.release();
+              if (err) {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(err);
+              } else {
+                res.json(rows);
+              }
+            }
+          );
+        }
+      });
+    } catch (ex) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(ex);
+    }
+  }
+);
+
 //#endregion
 
 //#region HELP FUNCTION
