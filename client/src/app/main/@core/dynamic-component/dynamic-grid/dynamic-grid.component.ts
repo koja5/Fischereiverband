@@ -27,6 +27,7 @@ import { CanComponentDeactivate } from "app/services/guards/dirtycheck.guard";
 import { MethodRequest } from "app/main/enums/method-request";
 import { DialogConfirmComponent } from "../../common/dialog-confirm/dialog-confirm.component";
 import { ToastrComponent } from "../../common/toastr/toastr.component";
+import { ExportAsConfig, ExportAsService } from "ngx-export-as";
 
 @Component({
   selector: "app-dynamic-grid",
@@ -55,6 +56,11 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   dialogUnsavedContentConfirm: DialogConfirmComponent;
   @ViewChild(DynamicFormsComponent) form!: DynamicFormsComponent;
   @ViewChild("form") form1: DynamicFormsComponent;
+
+  exportAsConfig: ExportAsConfig = {
+    type: "png", // the type you want to download
+    elementIdOrContent: "grid",
+  };
 
   // Public
   public sidebarToggleRef = false;
@@ -130,7 +136,8 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     private _helpService: HelpService,
     private _toastr: ToastrComponent,
     private _modalService: NgbModal,
-    private _translate: TranslateService
+    private _translate: TranslateService,
+    private exportAsService: ExportAsService
   ) {
     this._unsubscribeAll = new Subject();
     this._modalService.dismissAll();
@@ -559,5 +566,11 @@ export class DynamicGridComponent implements CanComponentDeactivate {
 
   unsavedChanges(): boolean {
     return this.form.unsavedChanges();
+  }
+
+  exportToPdf() {
+    this.exportAsService.save(this.exportAsConfig, "Test").subscribe(() => {
+      // save started
+    });
   }
 }

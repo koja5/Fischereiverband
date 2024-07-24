@@ -19,12 +19,11 @@ import { ContentHeaderModule } from "app/layout/components/content-header/conten
 import { ExplanationMarkComponent } from "./dynamic-forms/dynamic-fields/common/explanation-mark/explanation-mark.component";
 import { DynamicGridComponent } from "./dynamic-grid/dynamic-grid.component";
 import { MainCoreCommonModule } from "../common/main-core-common.module";
+import { ExportAsModule } from "ngx-export-as";
+import { CsvModule } from "@ctrl/ngx-csv";
 
 @NgModule({
-  declarations: [
-    DynamicGridComponent,
-    DynamicTabsComponent,
-  ],
+  declarations: [DynamicGridComponent, DynamicTabsComponent],
   imports: [
     CommonModule,
     DynamicFormsModule,
@@ -40,6 +39,8 @@ import { MainCoreCommonModule } from "../common/main-core-common.module";
     RouterModule,
     ContentHeaderModule,
     MainCoreCommonModule,
+    ExportAsModule,
+    CsvModule,
   ],
   providers: [ToastrComponent],
   exports: [

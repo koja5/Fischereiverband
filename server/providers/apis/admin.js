@@ -613,7 +613,7 @@ router.get(
           res.json(err);
         } else {
           conn.query(
-            "select fsd.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_stocking_details fsd join users u on fsd.id_owner = u.id_owner where fsd.fbz = ? and fsd.year = ?",
+            "select fsd.*, CONCAT(u.firstname, ' ', u.lastname) as 'name', CONCAT(fsd.quantity, ' ', fsd.unit) as 'quantity' from fish_stocking_details fsd join users u on fsd.id_owner = u.id_owner where fsd.fbz = ? and fsd.year = ?",
             [splitFBZ(req.query.fbz), req.query.year],
             function (err, rows, fields) {
               conn.release();

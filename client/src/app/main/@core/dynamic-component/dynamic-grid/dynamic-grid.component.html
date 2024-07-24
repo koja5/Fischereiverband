@@ -61,13 +61,20 @@
                         <span *ngIf="config.options" class="fa fa-cog cursor-pointer options"
                             (click)="showModalOptionsDialog()"></span>
                     </div>
+                    <div class="flex-grow-0">
+                        <span class="fa fa-file-pdf-o cursor-pointer options pdf-icon" (click)="exportToPdf()"></span>
+                    </div>
+                    <div class="flex-grow-0 ml-1">
+                        <a csvLink [data]="rows"> <span class="fa fa-file-excel-o cursor-pointer options excel-icon"></span></a>
+
+                    </div>
                 </div>
 
 
                 <app-no-data *ngIf="!rows || !rows.length"></app-no-data>
 
 
-                <ngx-datatable *ngIf="rows && rows.length" #grid [rows]=" rows" [rowHeight]="50"
+                <ngx-datatable #grid id="grid" *ngIf="rows && rows.length" [rows]="rows" [rowHeight]="50"
                     class="bootstrap core-bootstrap" [limit]="selectedOption" [columnMode]="ColumnMode.force"
                     [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true" [sorts]="config.sorting.fields">
                     <!-- <ngx-datatable-column name="User" prop="fullName" [width]="200">
@@ -380,5 +387,121 @@
         (cancel)="cancelUnsavedContent()"></app-dialog-confirm>
 
     <!-- CONFIRM DIALOG -->
+
+
+    <!-- EXPORT  -->
+    <!-- 
+    <table id="grid1" class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>Test</td>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>Test</td>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>Test</td>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </tbody>
+    </table> -->
+
+    <!-- END EXPORT -->
 
 </div>
