@@ -164,7 +164,7 @@
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "quantity",
+            "field": "quantity_with_unit",
             "validation": {
                 "required": true
             }
@@ -244,6 +244,10 @@
                         {
                             "name": "name",
                             "path": "name"
+                        },
+                        {
+                            "name": "type_of_water",
+                            "path": "type_of_water"
                         }
                     ],
                     "root": "",
@@ -415,11 +419,39 @@
         },
         {
             "type": "numeric",
-            "width": "col-md-12",
+            "width": "col-md-7",
             "class": "e-outline",
             "name": "quantity",
             "title": "commonFields.quantity",
             "field": "quantity",
+            "required": true
+        },
+        {
+            "type": "combobox",
+            "width": "col-md-5",
+            "class": "e-outline",
+            "name": "unit",
+            "title": "commonFields.unit",
+            "field": {
+                "text": "name",
+                "value": "value"
+            },
+            "fieldTemplate": {
+                "fields": [
+                    {
+                        "type": "text",
+                        "values": [
+                            "name"
+                        ]
+                    }
+                ]
+            },
+            "request": {
+                "localData": {
+                    "path": "data",
+                    "file": "units.json"
+                }
+            },
             "required": true
         },
         {

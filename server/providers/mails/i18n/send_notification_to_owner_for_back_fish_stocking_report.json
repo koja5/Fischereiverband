@@ -18,10 +18,10 @@
             }
         },
         "de": {
-            "subject": "Ihr Status für #fbz ist zurück",
+            "subject": "Besatzmeldung: Bearbeitungs-Status für #fbz wurde zurückgesetzt",
             "body": {
                 "greetings": "Hey #name 👋",
-                "message": "Ihr Status für #fbz ist zurück und Sie können nun wieder an Ihrem Bericht arbeiten.",
+                "message": "der Bearbeitungs-Status für die Besatzmeldung für #fbz ist zurück gesetzt worden. Sie können Ihre Besatzmeldung wieder bearbeiten.",
                 "notSureWhyReceived": "Sie sind sich nicht sicher, warum Sie diese E-Mail erhalten haben? Bitte ignorieren Sie diese E-Mail.",
                 "greetingsEnd": "Danke,",
                 "team": "Fischereiverband",

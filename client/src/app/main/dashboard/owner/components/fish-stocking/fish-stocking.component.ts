@@ -20,6 +20,8 @@ export class FishStockingComponent implements OnInit {
   dialogConfirm: DialogConfirmComponent;
   @ViewChild("dialogRequestForAdditionalChanges")
   dialogRequestForAdditionalChanges: DialogConfirmComponent;
+  @ViewChild("dialogNoHaveEntry")
+  dialogNoHaveEntry: DialogConfirmComponent;
 
   public path = "grids/owner";
   public file = "fish-stocking.json";
@@ -157,7 +159,10 @@ export class FishStockingComponent implements OnInit {
       date_completed: new Date(),
     };
     this._service
-      .callPostMethod("/api/owner/completeFishStockingReport", this.fishStockingReport)
+      .callPostMethod(
+        "/api/owner/completeFishStockingReport",
+        this.fishStockingReport
+      )
       .subscribe((data) => {
         if (data) {
           this.getAllFishStocking();
@@ -175,6 +180,31 @@ export class FishStockingComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.getAllFishStocking();
+          this._toastr.showSuccess();
+        }
+      });
+  }
+
+  noHaveFishStockingEntryDialog() {
+    this.dialogNoHaveEntry.showQuestionModal();
+  }
+
+  confirmNoHaveFishStockingEntry() {
+    this.loading = true;
+    this.fishStockingReport = {
+      fbz: this.selectedManagementRegistry.fbz,
+      year: this.selectedManagementRegistry.year,
+      status: FishStockingReportEnum.completed,
+      date_completed: new Date(),
+    };
+    this._service
+      .callPostMethod(
+        "/api/owner/noHaveFishStockingEntry",
+        this.fishStockingReport
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.refreshGrid();
           this._toastr.showSuccess();
         }
       });

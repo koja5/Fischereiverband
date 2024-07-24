@@ -158,7 +158,7 @@
         },
         {
             "title": "commonFields.quantity",
-            "width": 80,
+            "width": 100,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -171,7 +171,7 @@
         },
         {
             "title": "commonFields.cost",
-            "width": 80,
+            "width": 100,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -206,11 +206,11 @@
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_water",
+            "name": "water",
             "title": "commonFields.nameOfWater",
             "field": {
                 "text": "name",
-                "value": "id_water"
+                "value": "name"
             },
             "request": {
                 "type": "GET",
@@ -269,11 +269,11 @@
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_fish",
+            "name": "fish",
             "title": "commonFields.nameOfFish",
             "field": {
                 "text": "name",
-                "value": "id"
+                "value": "name"
             },
             "request": {
                 "type": "GET",
@@ -287,8 +287,7 @@
                         "type": "localStorage",
                         "key": "selectedManagementRegistry",
                         "property": [
-                            "fbz",
-                            "year"
+                            "fbz"
                         ]
                     }
                 ]
@@ -332,11 +331,11 @@
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_age_of_fish",
+            "name": "age_of_fish",
             "title": "commonFields.ageOfFish",
             "field": {
                 "text": "name",
-                "value": "id"
+                "value": "name"
             },
             "request": {
                 "type": "GET",
@@ -355,11 +354,11 @@
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_origin",
+            "name": "origin",
             "title": "commonFields.origin",
             "field": {
                 "text": "name",
-                "value": "id"
+                "value": "name"
             },
             "request": {
                 "type": "GET",

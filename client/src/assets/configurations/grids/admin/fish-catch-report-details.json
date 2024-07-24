@@ -66,6 +66,18 @@
             }
         },
         {
+            "title": "commonFields.nameOfWater",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "water",
+            "validation": {
+                "required": true
+            }
+        },
+        {
             "title": "commonFields.quantity",
             "filterable": true,
             "hideable": true,
@@ -78,7 +90,7 @@
             }
         },
         {
-            "title": "commonFields.cost",
+            "title": "commonFields.edibleFishQuantity",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -90,7 +102,7 @@
             }
         },
         {
-            "title": "commonFields.cost",
+            "title": "commonFields.stockedFishQuantity",
             "filterable": true,
             "hideable": true,
             "filter": "date",

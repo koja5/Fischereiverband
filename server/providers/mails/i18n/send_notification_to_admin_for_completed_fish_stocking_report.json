@@ -21,10 +21,10 @@
             }
         },
         "de": {
-            "subject": "Abgeschlossener Bericht für #fbz von #name",
+            "subject": "Besatzmeldung für #fbz von #name",
             "body": {
                 "greetings": "Hey 👋",
-                "message": "Benutzer #name hat den Bericht #fbz abgeschlossen",
+                "message": "der Bewirtschafter #name hat seinen Besatzbericht für #fbz abgeschlossen",
                 "nameLabel": "Besitzername",
                 "fbzLabel": "FBZ",
                 "yearLabel": "Jahr",

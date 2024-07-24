@@ -27,8 +27,8 @@
       "discardChangesCancel": "Abbrechen"
    },
    "action": {
-      "completeReport": "Vollständiger Bericht",
-      "backReportToOwner": "Besatzbericht wieder zum ändern freigeben",
+      "completeReport": "Meldung absenden",
+      "backReportToOwner": "Besatzmeldung wieder zum ändern freigeben",
       "noHaveEntry": "Kein Eintrag vorhanden",
       "reminderOwnerToCompleteReport": "Bewirtschafter  Erinnerung",
       "requestAdminToChangeStatus": "Anfrage zum ändern stellen"
@@ -39,18 +39,18 @@
       "errorExecuteActionTitleDefault": "Etwas ist passiert",
       "errorExecuteActionTextDefault": "Bitte überprüfen Sie es noch einmal oder versuchen Sie es später",
       "errorUpdateTermineOnGoogleCalendarRights": "Ein Problem mit den Rechten beim Aktualisieren eines Termins im Google-Kalender.",
-      "dialogCompleteReportQuestionTitle": "Bist du sicher?",
-      "dialogCompleteReportQuestionText": "Möchten Sie den Besatzbericht abschließen und senden? Beachten Sie, dass Sie den Besatzbericht danach nicht mehr ändern können.",
-      "dialogCompleteReportQuestionYes": "Ja, Besatzbericht abschließen und senden!",
+      "dialogCompleteReportQuestionTitle": "Sind Sie sicher?",
+      "dialogCompleteReportQuestionText": "Möchten Sie den Besatzmeldung abschließen und senden? Beachten Sie bitte, dass  die Besatzmeldung danach nicht mehr geändert werden kann.",
+      "dialogCompleteReportQuestionYes": "Ja, Besatzmeldung abschließen und senden!",
       "dialogCompleteReportQuestionNo": "NEIN",
-      "reportCompletedNotYet": "Der Besatzbericht wurde noch nicht fertiggestellt und gesendet.",
-      "reportCompleted": "Dieser Besatzbericht wurde abgeschlossen am/um",
+      "reportCompletedNotYet": "Die Besatzmeldung wurde noch nicht fertiggestellt und gesendet.",
+      "reportCompleted": "Diese Besatzmeldung wurde abgeschlossen am/um",
       "dialogBackReportToOwnerTitle": "Sind sie sicher?",
-      "dialogBackReportToOwnerText": "Möchten Sie dem Bewirtschafter den Besatzbericht wieder zum Änderung freigeben?",
+      "dialogBackReportToOwnerText": "Möchten Sie dem Bewirtschafter die Besatzmeldung wieder zum andern freigeben?",
       "dialogReminderOwnerToCompleteReportTitle": "Sind sie sicher?",
-      "dialogReminderOwnerToCompleteReportText": "Möchten Sie eine Benachrichtigung per E-Mail an den Bewirtschafter senden, z. B. eine Erinnerung zum Ausfüllen des Besatzberichts?",
+      "dialogReminderOwnerToCompleteReportText": "Möchten Sie eine Benachrichtigung per E-Mail an den Bewirtschafter senden, z. B. eine Erinnerung zum Ausfüllen der Besatzmeldung?",
       "dialogRequestForAdditionalChangesTitle": "Sind sie sicher?",
-      "dialogRequestForAdditionalChangesText": "Möchten Sie eine Anfrage an den Landesfischereiverband senden, um beim Besatzbericht wieder Änderungen vornehmen zu können?",
+      "dialogRequestForAdditionalChangesText": "Möchten Sie eine Anfrage an den Landesfischereiverband senden, um die Besatzmeldung wieder ändern zu können?",
       "dialogNoHaveReportsTitle": "Sind sie sicher?",
       "dialogNoHaveReportsText": "Möchten Sie einen leeren Bericht senden? Wenn Sie derzeit über einige Einträge verfügen, werden diese Einträge gelöscht!"
    },
@@ -84,11 +84,12 @@
       "newPassword": "Neues Passwort",
       "confirmNewPassword": "Neues Passwort wiederholen",
       "fillRequredFields": "Bitte füllen Sie die erforderlichen Felder aus",
-      "createNew": "Erstelle neu",
+      "createNew": "Eintrag hinzufügen",
       "noDataFoundFor": "Keine Daten gefunden für",
       "doYouWantToCreateNew": "Möchten Sie etwas Neues erstellen?",
       "date": "Besatzdatum",
       "nameOfWater": "Name Gewässer",
+      "typeOfWater": "Art des Wassers",
       "nameOfFish": "Fischart, Krebsart",
       "ageOfFish": "Alter der Fische",
       "origin": "Herkunft (Händler, Fischzucht)",
@@ -109,8 +110,9 @@
       "preview": "Vorschau",
       "chooseNameOfWater": "Wählen Sie den Namen des Wassers",
       "chooseManagementRegistry": "Wählen Sie die Verwaltungsregistrierung",
-      "edibleFishQuantity": "Essbare Menge",
-      "stockedFishQuantity": "Lagermenge"
+      "edibleFishQuantity": "Speisefische",
+      "stockedFishQuantity": "Besatzfische",
+      "unit": "Einheit"
    },
    "userTypes": {
       "superadmin": "Superadmin",
@@ -121,13 +123,13 @@
    "status": {
       "empty": "Leer",
       "default": "Beginnend mit der Anfrage",
-      "completed": "Fertiger Bericht"
+      "completed": "Fertige Besatzmeldung"
    },
    "login": {
-      "title": "Willkommen bei Fischereiverband! 👋",
+      "title": "Willkommen beim Fischereiverband! 👋",
       "subtitle": "Melden Sie sich bei Ihrem Konto an.",
-      "email": "Email",
-      "emailIsRequired": "E-Mail ist erforderlich",
+      "email": "Email / Nutzername",
+      "emailIsRequired": "Email / Nutzername ist erforderlich",
       "emailMustBeValid": "E-Mail muss eine gültige E-Mail-Adresse sein",
       "password": "Passwort",
       "forgotPassword": "Passwort vergessen?",
@@ -162,7 +164,7 @@
       "logout": "Ausloggen"
    },
    "generalDialog": {
-      "areYouSure": "Bist du sicher?",
+      "areYouSure": "Sind Sie sicher?",
       "deleteQuestion": "Mit der Bestätigung gehen Daten verloren, die nicht mehr wiederhergestellt werden können!",
       "yes": "Ja, bitte durchführen",
       "no": "Nein"
@@ -258,5 +260,10 @@
       "photoTrap": "Fotofalle",
       "estimationInventory": "Schätzungsinventar",
       "documentation": "Dokumentation"
+   },
+   "typeOfWater": {
+      "river": "Fluss",
+      "lake": "See",
+      "smallLake": "Kleiner See"
    }
 }

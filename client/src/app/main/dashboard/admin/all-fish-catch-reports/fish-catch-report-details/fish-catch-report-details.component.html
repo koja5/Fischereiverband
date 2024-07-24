@@ -19,7 +19,7 @@
         </ngb-alert>
     </div>
     <div class="col-md-4">
-        <ng-select [items]="allWaters" bindLabel="name" bindValue="id_water" [(ngModel)]="fishCatchFilter.water"
+        <ng-select [items]="allWaters" bindLabel="name" bindValue="name" [(ngModel)]="fishCatchFilter.water"
             [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChangeWater($event)"
             [searchable]="true">
         </ng-select>

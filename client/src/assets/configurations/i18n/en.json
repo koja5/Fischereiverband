@@ -88,6 +88,7 @@
         "doYouWantToCreateNew": "Do you want to create new?",
         "date": "Date",
         "nameOfWater": "Name of water",
+        "typeOfWater": "Type of water",
         "nameOfFish": "Name of fish",
         "ageOfFish": "Age of fish",
         "origin": "Origin",
@@ -109,7 +110,8 @@
         "chooseNameOfWater": "Choose name of water",
         "chooseManagementRegistry": "Choose management registry",
         "edibleFishQuantity": "Edible quantity",
-        "stockedFishQuantity": "Stocked quantity"
+        "stockedFishQuantity": "Stocked quantity",
+        "unit": "Unit"
     },
     "userTypes": {
         "superadmin": "Superadmin",
@@ -265,5 +267,10 @@
         "photoTrap": "Photo trap",
         "estimationInventory": "Estimation inventory",
         "documentation": "Documentation"
+    },
+    "typeOfWater": {
+        "river": "River",
+        "lake": "Lake",
+        "smallLake": "Small lake"
     }
 }

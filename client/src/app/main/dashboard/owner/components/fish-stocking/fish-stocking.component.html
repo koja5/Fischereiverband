@@ -30,17 +30,24 @@
                 </ng-template>
             </ng-select>
         </div>
-        <div class="col-md-9" *ngIf="selectedManagementRegistryId">
+        <div class="col-md-9" *ngIf="selectedManagementRegistryId && !loading">
             <div class="d-flex justify-content-end action">
                 <button
                     *ngIf="data && data.length && (!fishStockingReport || fishStockingReport.status === fishStockingReportEnum.draft)"
-                    class="btn btn-success" (click)="completeReports()"><span class="fa fa-check"></span>
+                    class="btn btn-success mb-1" (click)="completeReports()"><span class="fa fa-check"></span>
                     {{'action.completeReport' |
                     translate}}</button>
+
                 <button *ngIf="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed"
-                    class="btn btn-primary" (click)="requestForAdditionalChanges()"><span
+                    class="btn btn-primary mb-1" (click)="requestForAdditionalChanges()"><span
                         class="fa fa-question-circle-o"></span>
                     {{'action.requestAdminToChangeStatus' |
+                    translate}}</button>
+
+                <button *ngIf="!fishStockingReport || fishStockingReport.status !== fishStockingReportEnum.completed"
+                    class="btn btn-outline-danger mb-1 ml-1" (click)="noHaveFishStockingEntryDialog()"><span
+                        class="fa fa-times"></span>
+                    {{'action.noHaveEntry' |
                     translate}}</button>
             </div>
         </div>
@@ -61,6 +68,12 @@
     [confirmButtonText]="('actionMessage.dialogCompleteReportQuestionYes' | translate)"
     [cancelButtonText]="('actionMessage.dialogCompleteReportQuestionNo' | translate)"
     (confirm)="confirmCompleteReport()"></app-dialog-confirm>
+
+
+<app-dialog-confirm #dialogNoHaveEntry [title]="('actionMessage.dialogNoHaveReportsTitle' | translate)"
+    [content]="('actionMessage.dialogNoHaveReportsText' | translate)"
+    [confirmButtonText]="('generalDialog.yes' | translate)" [cancelButtonText]="('generalDialog.no' | translate)"
+    (confirm)="confirmNoHaveFishStockingEntry()"></app-dialog-confirm>
 
 <app-dialog-confirm #dialogRequestForAdditionalChanges
     [title]="('actionMessage.dialogRequestForAdditionalChangesTitle' | translate)"

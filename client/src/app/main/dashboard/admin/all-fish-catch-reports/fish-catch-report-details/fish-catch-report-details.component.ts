@@ -74,7 +74,7 @@ export class FishCatchReportDetailsComponent {
       });
   }
 
-  getFishCatchDetailsForSelectedWater(idWater: number) {
+  getFishCatchDetailsForSelectedWater(water: string) {
     this.loader = true;
     this._service
       .callGetMethod(
@@ -82,8 +82,8 @@ export class FishCatchReportDetailsComponent {
           this._activatedRouter.snapshot.queryParams.fbz +
           "&year=" +
           this._activatedRouter.snapshot.queryParams.year +
-          "&id_water=" +
-          idWater
+          "&water=" +
+          water
       )
       .subscribe((data) => {
         this.data = data;
@@ -153,6 +153,10 @@ export class FishCatchReportDetailsComponent {
   }
 
   onChangeWater(event: any) {
-    this.getFishCatchDetailsForSelectedWater(event.id_water);
+    if (event) {
+      this.getFishCatchDetailsForSelectedWater(event.name);
+    } else {
+      this.getFishCatchReportDetails();
+    }
   }
 }

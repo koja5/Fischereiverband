@@ -613,7 +613,7 @@ router.get(
           res.json(err);
         } else {
           conn.query(
-            "select fsd.*, w.name as 'water', f.name as 'fish', af.name as 'age_of_fish', o.name as 'origin', CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_stocking_details fsd join waters w on fsd.id_water = w.id_water join fishes f on fsd.id_fish = f.id join age_of_fishes af on fsd.id_age_of_fish = af.id join origins o on fsd.id_origin = o.id join users u on fsd.id_owner = u.id_owner where fsd.fbz = ? and fsd.year = ?",
+            "select fsd.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_stocking_details fsd join users u on fsd.id_owner = u.id_owner where fsd.fbz = ? and fsd.year = ?",
             [splitFBZ(req.query.fbz), req.query.year],
             function (err, rows, fields) {
               conn.release();
@@ -760,7 +760,7 @@ router.get("/getFishCatchReportDetails", authAdmin, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select fcd.*, w.name as 'water', CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_catch_details fcd join waters w on fcd.id_water = w.id_water join users u on fcd.id_owner = u.id_owner where fcd.fbz = ? and fcd.year = ?",
+          "select fcd.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_catch_details fcd join users u on fcd.id_owner = u.id_owner where fcd.fbz = ? and fcd.year = ?",
           [splitFBZ(req.query.fbz), req.query.year],
           function (err, rows, fields) {
             conn.release();
@@ -818,8 +818,8 @@ router.get(
           res.json(err);
         } else {
           conn.query(
-            "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.year = ? and fcd.id_water = ?",
-            [splitFBZ(req.query.fbz), req.query.year, req.query.id_water],
+            "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.year = ? and fcd.water = ?",
+            [splitFBZ(req.query.fbz), req.query.year, req.query.water],
             function (err, rows, fields) {
               conn.release();
               if (err) {

@@ -11,8 +11,4 @@ export class AllFishStockingReportsComponent {
 
   public path = "grids/admin";
   public file = "all-fish-stocking-reports.json";
-
-  unsavedChanges(): boolean {
-    return this.grid.unsavedChanges();
-  }
 }

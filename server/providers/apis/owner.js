@@ -28,7 +28,7 @@ router.get("/getAllFishStocking", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select fsd.* from fish_stocking_details fsd where fsd.id_owner = ? and fsd.fbz like ? and fsd.year = ?",
+          "select fsd.*, CONCAT(quantity, ' ', unit) as 'quantity_with_unit' from fish_stocking_details fsd where fsd.id_owner = ? and fsd.fbz like ? and fsd.year = ?",
           [req.user.user.id, splitFBZ(req.query.fbz), req.query.year],
           function (err, rows, fields) {
             conn.release();
@@ -92,6 +92,82 @@ router.post("/deleteFishStocking", auth, function (req, res) {
         conn.release();
         if (!err) {
           res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/noHaveFishStockingEntry", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+    req.body.fbz = splitFBZ(req.body.fbz);
+
+    conn.query(
+      "delete from fish_stocking_details where fbz = ?",
+      [splitFBZ(req.body.fbz)],
+      function (err, rows) {
+        if (!err) {
+          conn.query(
+            "select * from fish_stocking_reports where fbz = ? and year = ?",
+            [splitFBZ(req.body.fbz), req.body.year],
+            function (err, rows) {
+              if (!err) {
+                if (rows.length) {
+                  conn.query(
+                    "UPDATE fish_stocking_reports set ? where id = ?",
+                    [req.body, rows[0].id],
+                    function (err, rows) {
+                      conn.release();
+                      if (!err) {
+                        req.body["firstname"] = req.user.user.firstname;
+                        req.body["lastname"] = req.user.user.lastname;
+                        makeRequest(
+                          req.body,
+                          "mail/sendNotificationToAdminForCompletedFishStockingReport",
+                          res
+                        );
+                      } else {
+                        logger.log("error", err.sql + ". " + err.sqlMessage);
+                        res.json(false);
+                      }
+                    }
+                  );
+                } else {
+                  conn.query(
+                    "INSERT INTO fish_stocking_reports set ?",
+                    [req.body],
+                    function (err, rows) {
+                      conn.release();
+                      if (!err) {
+                        req.body["firstname"] = req.user.user.firstname;
+                        req.body["lastname"] = req.user.user.lastname;
+                        makeRequest(
+                          req.body,
+                          "mail/sendNotificationToAdminForCompletedFishStockingReport",
+                          res
+                        );
+                      } else {
+                        logger.log("error", err.sql + ". " + err.sqlMessage);
+                        res.json(false);
+                      }
+                    }
+                  );
+                }
+              } else {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(false);
+              }
+            }
+          );
         } else {
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(false);
@@ -397,18 +473,15 @@ router.get("/getWatersForAll", auth, async (req, res, next) => {
         logger.log("error", err.sql + ". " + err.sqlMessage);
         res.json(err);
       } else {
-        conn.query(
-          "select * from waters where year is NULL",
-          function (err, rows, fields) {
-            conn.release();
-            if (err) {
-              logger.log("error", err.sql + ". " + err.sqlMessage);
-              res.json(err);
-            } else {
-              res.json(rows);
-            }
+        conn.query("select * from waters", function (err, rows, fields) {
+          conn.release();
+          if (err) {
+            logger.log("error", err.sql + ". " + err.sqlMessage);
+            res.json(err);
+          } else {
+            res.json(rows);
           }
-        );
+        });
       }
     });
   } catch (ex) {
@@ -483,17 +556,23 @@ router.post("/createNewOriginNameEntry", auth, function (req, res, next) {
       res.json(err);
     }
 
-    delete req.body.fbz;
+    req.body.fbz = splitFBZ(req.body.fbz);
 
-    conn.query("INSERT INTO origins_custom set ?", [req.body], function (err, rows) {
-      conn.release();
-      if (!err) {
-        res.json(req.body.name);
-      } else {
-        logger.log("error", err.sql + ". " + err.sqlMessage);
-        res.json(false);
+    console.log(req.body);
+
+    conn.query(
+      "INSERT INTO origins_custom set ?",
+      [req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(req.body.name);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
       }
-    });
+    );
   });
 });
 
@@ -540,7 +619,7 @@ router.get("/getAllOrigins", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select o.name from origins o union select oc.name from origins_custom oc where (oc.fbz is NULL or oc.fbz = ?) and (oc.year is NULL or oc.year = ?)",
+          "select o.name from origins o union select oc.name from origins_custom oc where oc.fbz = ? and oc.year = ?",
           [splitFBZ(req.query.fbz), req.query.year],
           function (err, rows, fields) {
             conn.release();
@@ -573,13 +652,10 @@ router.get(
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(err);
         } else {
-          if (
-            req.query.id_water != "undefined" &&
-            req.query.id_water != "null"
-          ) {
+          if (req.query.water != "undefined" && req.query.water != "null") {
             conn.query(
-              "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.id_water = ?",
-              [splitFBZ(req.query.fbz), req.query.id_water],
+              "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.water = ?",
+              [splitFBZ(req.query.fbz), req.query.water],
               function (err, rows, fields) {
                 conn.release();
                 if (err) {
@@ -796,6 +872,7 @@ router.post("/noHaveFishCatchEntry", auth, function (req, res, next) {
     }
 
     req.body.id_owner = req.user.user.id;
+    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query(
       "delete from fish_catch_details where fbz = ?",

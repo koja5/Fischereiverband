@@ -59,6 +59,7 @@
     "columns": [
         {
             "title": "commonFields.action",
+            "width": 70,
             "template": {
                 "type": "action",
                 "actionMode": {
@@ -132,7 +133,7 @@
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "name_of_water",
+            "field": "water",
             "validation": {
                 "required": true
             }
@@ -151,6 +152,7 @@
         },
         {
             "title": "observationSheet.typeOfWater",
+            "width": 150,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -175,6 +177,7 @@
         },
         {
             "title": "observationSheet.findDead",
+            "width": 150,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -306,15 +309,15 @@
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "id_water",
+            "name": "water",
             "title": "observationSheet.nameOfWater",
             "field": {
                 "text": "name",
-                "value": "id_water"
+                "value": "name"
             },
             "request": {
                 "type": "GET",
-                "api": "/api/admin/getAllWaters",
+                "api": "/api/owner/getWatersForAll",
                 "parameters": [],
                 "fields": "",
                 "root": ""

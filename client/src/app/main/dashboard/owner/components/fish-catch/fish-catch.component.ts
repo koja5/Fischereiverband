@@ -62,11 +62,10 @@ export class FishCatchComponent {
     if (this._storageService.getValueFromLocalStorage("fish-catch-filter")) {
       this.fishCatchFilter =
         this._storageService.getValueFromLocalStorage("fish-catch-filter");
+      this.getFishCatchDetailsForManagementRegister();
     } else {
       this.fishCatchFilter = new FishCatchFilterModel();
     }
-
-    this.getFishCatchDetailsForManagementRegister();
 
     this._service
       .callGetMethod("/api/owner/getFbzRegister", "")
@@ -144,7 +143,7 @@ export class FishCatchComponent {
       .subscribe((data: any) => {
         this.allWaters = data;
         if (data.length === 1) {
-          this.fishCatchFilter.water = data[0].id_water;
+          this.fishCatchFilter.water = data[0].name;
         }
         this.getFishStockingReport();
         this.getFishCatchDetailsForSelectedWater();
@@ -166,7 +165,7 @@ export class FishCatchComponent {
         .callGetMethod(
           "api/owner/getFishCatchDetailsForSelectedWater?fbz=" +
             this.fishCatchFilter.managementRegister.fbz +
-            "&id_water=" +
+            "&water=" +
             this.fishCatchFilter.water
         )
         .subscribe((data: FishCatchModel[]) => {
@@ -182,10 +181,6 @@ export class FishCatchComponent {
   }
 
   submit(event: FishCatchModel) {
-    event.fbz = this.fishCatchFilter.managementRegister.fbz;
-    event.year = this.fishCatchFilter.managementRegister.year;
-    event.id_water = this.fishCatchFilter.water;
-
     if (event.edible_fish_quantity <= event.quantity) {
       event.stocked_fish_quantity = event.quantity - event.edible_fish_quantity;
     } else if (event.edible_fish_quantity > event.quantity) {
@@ -195,6 +190,11 @@ export class FishCatchComponent {
       return;
     }
 
+    event.fbz = this.fishCatchFilter.managementRegister.fbz;
+    event.year = this.fishCatchFilter.managementRegister.year;
+    event.water = this.fishCatchFilter.water;
+
+    this.loading = true;
     this._service
       .callPostMethod("/api/owner/setFishCatch", event)
       .subscribe((data) => {
@@ -220,6 +220,7 @@ export class FishCatchComponent {
   }
 
   confirmCompleteReport() {
+    this.loading = true;
     this.fishCatchReport = {
       fbz: this.fishCatchFilter.managementRegister.fbz,
       year: this.fishCatchFilter.managementRegister.year,
@@ -257,6 +258,7 @@ export class FishCatchComponent {
   }
 
   confirmNoHaveFishCatchEntry() {
+    this.loading = true;
     this.fishCatchReport = {
       fbz: this.fishCatchFilter.managementRegister.fbz,
       year: this.fishCatchFilter.managementRegister.year,

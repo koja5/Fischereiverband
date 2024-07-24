@@ -53,7 +53,6 @@ const routes = [
   {
     path: "all-fish-stocking-reports",
     component: AllFishStockingReportsComponent,
-    canDeactivate: [DirtycheckGuard],
   },
   {
     path: "fish-stocking-report-details",
@@ -62,7 +61,6 @@ const routes = [
   {
     path: "all-fish-catch-reports",
     component: AllFishCatchReportsComponent,
-    canDeactivate: [DirtycheckGuard],
   },
   {
     path: "fish-catch-report-details",

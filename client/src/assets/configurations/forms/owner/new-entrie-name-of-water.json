@@ -1,6 +1,34 @@
 {
     "config": [
         {
+            "type": "combobox",
+            "width": "col-md-12",
+            "class": "e-outline",
+            "name": "type_of_water",
+            "title": "commonFields.typeOfWater",
+            "field": {
+                "text": "name",
+                "value": "value"
+            },
+            "fieldTemplate": {
+                "fields": [
+                    {
+                        "type": "text",
+                        "values": [
+                            "name"
+                        ]
+                    }
+                ]
+            },
+            "request": {
+                "localData": {
+                    "path": "data",
+                    "file": "type-of-water.json"
+                }
+            },
+            "required": true
+        },
+        {
             "type": "textbox",
             "width": "col-md-12",
             "class": "e-outline",

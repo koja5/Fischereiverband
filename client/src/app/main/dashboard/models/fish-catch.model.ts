@@ -3,7 +3,7 @@ export class FishCatchModel {
   id_fish: number;
   fbz: string;
   year: number;
-  id_water: number;
+  water: string;
   quantity: number;
   edible_fish_quantity: number;
   stocked_fish_quantity: number;

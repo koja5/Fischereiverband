@@ -50,7 +50,7 @@
     "columns": [
         {
             "title": "",
-            "width": 70,
+            "width": 90,
             "flexGrow": 1,
             "template": {
                 "type": "action",
@@ -153,32 +153,5 @@
             }
         }
     ],
-    "config": [
-        {
-            "type": "textbox",
-            "width": "col-md-12 hidden",
-            "class": "e-outline",
-            "name": "id",
-            "title": "ID",
-            "field": "id"
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-12",
-            "class": "e-outline",
-            "name": "name",
-            "title": "commonFields.name",
-            "field": "name",
-            "required": true
-        },
-        {
-            "type": "button",
-            "width": "col-md-12",
-            "class": "btn btn-primary",
-            "name": "submit",
-            "title": "general.save",
-            "field": "submit",
-            "positionClass": "text-right mt-3 col-md-12"
-        }
-    ]
+    "config": []
 }

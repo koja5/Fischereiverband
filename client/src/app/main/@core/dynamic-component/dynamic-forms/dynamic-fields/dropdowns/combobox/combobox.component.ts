@@ -160,45 +160,43 @@ export class ComboboxComponent implements OnInit {
   createNewEntries(event) {}
 
   submitNewEntriesEmitter(event) {
-    let body = {};
+    if (
+      this._helpService.checkUndefinedProperty(event) &&
+      event.type != "submit"
+    ) {
+      let body = {};
 
-    if (this.config.addTag) {
-      if (this.config.addTag.request) {
-        body = this._service.buildParameterDate(
-          this.config.addTag.request,
-          event
-        );
+      if (this.config.addTag) {
+        if (this.config.addTag.request) {
+          body = this._service.buildParameterDate(
+            this.config.addTag.request,
+            event
+          );
+        }
       }
-    }
 
-    // const selectedManagementRegistry = this._storageService.getLocalStorage(
-    //   "selectedManagementRegistry"
-    // );
-    // let data = {
-    //   fbz: selectedManagementRegistry.fbz,
-    //   name: event.name_of_water,
-    // };
-    this._service
-      .callPostMethod(this.config.addTag.request.api, body)
-      .subscribe((entryId) => {
-        this.loading = true;
-        this._service
-          .callApi(this.config, this.config.request!.fields)
-          .subscribe(
-            (data) => {
-              if (this.config.request!.root) {
-                // this.data = data[this.config.request!.root];
-              } else {
-                this.data = data;
-                this.group.controls[this.config.name].setValue(entryId);
-                this.modalDialog.close();
+      this._service
+        .callPostMethod(this.config.addTag.request.api, body)
+        .subscribe((entryId) => {
+          this.loading = true;
+          this._service
+            .callApi(this.config, this.config.request!.fields)
+            .subscribe(
+              (data) => {
+                if (this.config.request!.root) {
+                  // this.data = data[this.config.request!.root];
+                } else {
+                  this.data = data;
+                  this.group.controls[this.config.name].setValue(entryId);
+                  this.modalDialog.close();
+                  this.loading = false;
+                }
+              },
+              (error) => {
                 this.loading = false;
               }
-            },
-            (error) => {
-              this.loading = false;
-            }
-          );
-      });
+            );
+        });
+    }
   }
 }
