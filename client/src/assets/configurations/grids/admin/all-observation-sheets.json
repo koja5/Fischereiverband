@@ -2,7 +2,7 @@
     "pageSize": 10,
     "request": {
         "type": "GET",
-        "api": "/api/admin/getAllFishCatchReports",
+        "api": "/api/admin/getAllObservationSheets",
         "parameters": [],
         "fields": "",
         "root": ""
@@ -47,10 +47,18 @@
         "showDeleteConfirmDialog": true,
         "mode": "Dialog"
     },
+    "editSettingsRequest": {
+        "add": {
+            "type": "POST",
+            "api": "/api/owner/setObservationSheet",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        }
+    },
     "columns": [
         {
             "title": "",
-            "width": 90,
             "flexGrow": 1,
             "template": {
                 "type": "action",
@@ -58,10 +66,12 @@
                     "type": "button",
                     "icon": "eye",
                     "routerLink": {
-                        "link": "/dashboard/admin/fish-catch-report-details",
+                        "newTab": false,
+                        "link": "/dashboard/admin/observation-sheet-details",
                         "parameters": [
                             "fbz",
-                            "year"
+                            "year",
+                            "id_owner"
                         ]
                     }
                 }
@@ -98,55 +108,7 @@
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "name",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "commonFields.status",
-            "field": "status",
-            "template": {
-                "choices": [
-                    {
-                        "field": "status",
-                        "value": 0,
-                        "operator": "==",
-                        "apart": {
-                            "title": "status.empty",
-                            "badge": "badge badge-pill badge-light-default"
-                        }
-                    },
-                    {
-                        "field": "status",
-                        "value": 1,
-                        "operator": "==",
-                        "apart": {
-                            "title": "status.default",
-                            "badge": "badge badge-pill badge-light-warning"
-                        }
-                    },
-                    {
-                        "field": "status",
-                        "value": 2,
-                        "operator": "==",
-                        "apart": {
-                            "title": "status.completed",
-                            "badge": "badge badge-pill badge-light-success"
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "title": "commonFields.date",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "date",
-            "format": "dd.MM.yyyy HH:mm",
-            "class": "text-align-right",
-            "field": "date_completed",
+            "field": "owner_name",
             "validation": {
                 "required": true
             }

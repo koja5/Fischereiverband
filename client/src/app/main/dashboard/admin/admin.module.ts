@@ -18,6 +18,8 @@ import { AllFishCatchReportsComponent } from "./all-fish-catch-reports/all-fish-
 import { FishCatchReportDetailsComponent } from "./all-fish-catch-reports/fish-catch-report-details/fish-catch-report-details.component";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule } from "@angular/forms";
+import { AllObservationSheetsComponent } from "./all-observation-sheets/all-observation-sheets.component";
+import { ObservationSheetDetailsComponent } from "./all-observation-sheets/observation-sheet-details/observation-sheet-details.component";
 
 const routes = [
   {
@@ -66,6 +68,14 @@ const routes = [
     path: "fish-catch-report-details",
     component: FishCatchReportDetailsComponent,
   },
+  {
+    path: "all-observation-sheets",
+    component: AllObservationSheetsComponent,
+  },
+  {
+    path: "observation-sheet-details",
+    component: ObservationSheetDetailsComponent,
+  },
 ];
 
 @NgModule({
@@ -80,6 +90,8 @@ const routes = [
     AllFishCatchReportsComponent,
     FishStockingReportDetailsComponent,
     FishCatchReportDetailsComponent,
+    AllObservationSheetsComponent,
+    ObservationSheetDetailsComponent,
   ],
   imports: [
     CommonModule,

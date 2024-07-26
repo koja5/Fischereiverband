@@ -143,7 +143,7 @@ export class FishCatchComponent {
       .subscribe((data: any) => {
         this.allWaters = data;
         if (data.length === 1) {
-          this.fishCatchFilter.water = data[0].name;
+          this.fishCatchFilter.water = data[0].id;
         }
         this.getFishStockingReport();
         this.getFishCatchDetailsForSelectedWater();
@@ -165,7 +165,7 @@ export class FishCatchComponent {
         .callGetMethod(
           "api/owner/getFishCatchDetailsForSelectedWater?fbz=" +
             this.fishCatchFilter.managementRegister.fbz +
-            "&water=" +
+            "&id_water=" +
             this.fishCatchFilter.water
         )
         .subscribe((data: FishCatchModel[]) => {
@@ -192,7 +192,7 @@ export class FishCatchComponent {
 
     event.fbz = this.fishCatchFilter.managementRegister.fbz;
     event.year = this.fishCatchFilter.managementRegister.year;
-    event.water = this.fishCatchFilter.water;
+    event.id_water = this.fishCatchFilter.water;
 
     this.loading = true;
     this._service

@@ -52,7 +52,10 @@
       "dialogRequestForAdditionalChangesTitle": "Sind sie sicher?",
       "dialogRequestForAdditionalChangesText": "Möchten Sie eine Anfrage an den Landesfischereiverband senden, um die Besatzmeldung wieder ändern zu können?",
       "dialogNoHaveReportsTitle": "Sind sie sicher?",
-      "dialogNoHaveReportsText": "Möchten Sie einen leeren Bericht senden? Wenn Sie derzeit über einige Einträge verfügen, werden diese Einträge gelöscht!"
+      "dialogNoHaveReportsText": "Möchten Sie einen leeren Bericht senden? Wenn Sie derzeit über einige Einträge verfügen, werden diese Einträge gelöscht!",
+      "exportToPng": "Nach PNG exportieren",
+      "exportToCsv": "Als CSV exportieren",
+      "goBack": "Geh zurück"
    },
    "commonFields": {
       "name": "Name",
@@ -110,8 +113,8 @@
       "preview": "Vorschau",
       "chooseNameOfWater": "Wählen Sie den Namen des Wassers",
       "chooseManagementRegistry": "Wählen Sie die Verwaltungsregistrierung",
-      "edibleFishQuantity": "Speisefische",
-      "stockedFishQuantity": "Besatzfische",
+      "edibleFishQuantity": "Essbare Menge",
+      "stockedFishQuantity": "Lagermenge",
       "unit": "Einheit"
    },
    "userTypes": {
@@ -149,15 +152,16 @@
       "allUsers": "Nutzer",
       "allFishes": "Fischarten",
       "allOrigins": "Herkunft Besatz",
-      "allWaters": "Alle Gewässer",
+      "allWaters": "Gewässer",
       "ageOfFishes": "Alter der Fische",
       "allFishStockingReports": "Besatzmeldungen",
       "fishStocking": "Besatzmeldungen",
       "managementRegisters": "FBZs",
       "reportOccupation": "Besatzmeldung",
-      "observationSheet": "Beobachtungsblatt",
-      "fishCatch": "Fischfang",
-      "allFishCatchReports": "Fischfangberichte"
+      "observationSheet": "Fischotterschaden",
+      "fishCatch": "Ausfang",
+      "allFishCatchReports": "Ausfang",
+      "allObservationSheets": "Fischotterschaden"
    },
    "navBar": {
       "profile": "Profil",
@@ -243,7 +247,8 @@
       "orientation": "Orientierung",
       "typeOfWater": "Art des Wassers",
       "rivers": "Fließgewässer",
-      "see": "See",
+      "lake": "See",
+      "see": "Sehen",
       "pond": "Teich",
       "fishingFarm": "Fischzuchtanlage",
       "thirdSection": "Art der Beobachtung",

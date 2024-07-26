@@ -58,8 +58,7 @@
                     "type": "button",
                     "icon": "eye",
                     "routerLink": {
-                        "newTab": true,
-                        "link": "/dashboard/admin/fish-stocking-report-details?fbz=#fbz&year=#year",
+                        "link": "/dashboard/admin/fish-stocking-report-details",
                         "parameters": [
                             "fbz",
                             "year"

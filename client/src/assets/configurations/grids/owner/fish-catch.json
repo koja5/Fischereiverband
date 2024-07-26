@@ -183,7 +183,7 @@
                 "title": "",
                 "formConfig": {
                     "path": "forms/owner",
-                    "file": "new-entrie-name-of-water.json"
+                    "file": "new-entrie-name-of-fish.json"
                 },
                 "request": {
                     "type": "POST",

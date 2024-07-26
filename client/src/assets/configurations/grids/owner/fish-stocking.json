@@ -115,7 +115,7 @@
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "water",
+            "field": "name_of_water",
             "validation": {
                 "required": true
             }
@@ -206,11 +206,11 @@
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
-            "name": "water",
+            "name": "id_water",
             "title": "commonFields.nameOfWater",
             "field": {
                 "text": "name",
-                "value": "name"
+                "value": "id"
             },
             "request": {
                 "type": "GET",
@@ -256,8 +256,7 @@
                             "type": "localStorage",
                             "key": "selectedManagementRegistry",
                             "property": [
-                                "fbz",
-                                "year"
+                                "fbz"
                             ]
                         }
                     ]

@@ -72,6 +72,15 @@ export const menu = [
     users: ["admin"],
   },
   {
+    id: "all-observation-sheets",
+    title: "allFishCatchReports",
+    translate: "navigations.allObservationSheets",
+    type: "item",
+    icon: "file-text",
+    url: "dashboard/admin/all-observation-sheets",
+    users: ["admin"],
+  },
+  {
     id: "fish-stocking",
     title: "fishStocking",
     translate: "navigations.fishStocking",

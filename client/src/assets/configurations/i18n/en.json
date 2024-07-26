@@ -51,7 +51,10 @@
         "dialogRequestForAdditionalChangesTitle": "Are you sure?",
         "dialogRequestForAdditionalChangesText": "Do you want to send request to superadmin to allow you to make additional changes?",
         "dialogNoHaveReportsTitle": "Are you sure",
-        "dialogNoHaveReportsText": "Do you want to send  empty report? If you current have some entries this entries will be deleted!"
+        "dialogNoHaveReportsText": "Do you want to send  empty report? If you current have some entries this entries will be deleted!",
+        "exportToPng": "Export to PNG",
+        "exportToCsv": "Export to CSV",
+        "goBack": "Go back"
     },
     "commonFields": {
         "name": "Name",
@@ -165,10 +168,10 @@
         "successfulyChangedPassword": "Successfully changed your password"
     },
     "navigations": {
-        "allUsers": "All users",
-        "allFishes": "All fishes",
-        "allOrigins": "All origins",
-        "allWaters": "All waters",
+        "allUsers": "Users",
+        "allFishes": "Fishes",
+        "allOrigins": "Origins",
+        "allWaters": "Waters",
         "ageOfFishes": "Age of fishes",
         "managementRegisters": "Management registers",
         "allFishStockingReports": "Fish stocking reports",
@@ -176,7 +179,8 @@
         "reportOccupation": "Fish stocking",
         "observationSheet": "Observation sheet",
         "fishCatch": "Fish catch",
-        "allFishCatchReports": "Fish catch reports"
+        "allFishCatchReports": "Fish catch reports",
+        "allObservationSheets": "Observation sheets"
     },
     "navBar": {
         "profile": "Profile",

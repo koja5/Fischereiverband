@@ -1,4 +1,7 @@
 <div class="informations d-flex row">
+    <div class="col-md-12">
+        <app-go-back></app-go-back>
+    </div>
     <div class="col-md-12 owner text-center mb-1">
         <h3><b>{{userProfile.firstname}}
                 {{userProfile.lastname}}</b></h3>
@@ -19,7 +22,7 @@
         </ngb-alert>
     </div>
     <div class="col-md-4">
-        <ng-select [items]="allWaters" bindLabel="name" bindValue="name" [(ngModel)]="fishCatchFilter.water"
+        <ng-select [items]="allWaters" bindLabel="name" bindValue="id" [(ngModel)]="fishCatchFilter.water"
             [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChangeWater($event)"
             [searchable]="true">
         </ng-select>

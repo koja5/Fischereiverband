@@ -32,7 +32,7 @@
 
         </div>
         <div class="mb-2 col-md-3">
-            <ng-select [items]="allWaters" bindLabel="name" bindValue="name" [(ngModel)]="fishCatchFilter.water"
+            <ng-select [items]="allWaters" bindLabel="name" bindValue="id" [(ngModel)]="fishCatchFilter.water"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChangeWater($event)"
                 [searchable]="true">
             </ng-select>
@@ -61,7 +61,7 @@
 
     <div *ngIf="!loading">
         <app-dynamic-grid #grid [path]="path" [file]="file" [data]="data"
-            [disableCRUD]="fishCatchFilter && fishCatchFilter.water  ? false : true" (submit)="submit($event)"
+            [disableCRUD]="fishCatchFilter && fishCatchFilter.water ? false : true" (submit)="submit($event)"
             (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
     </div>
 </div>

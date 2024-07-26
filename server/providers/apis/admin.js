@@ -613,8 +613,13 @@ router.get(
           res.json(err);
         } else {
           conn.query(
-            "select fsd.*, CONCAT(u.firstname, ' ', u.lastname) as 'name', CONCAT(fsd.quantity, ' ', fsd.unit) as 'quantity' from fish_stocking_details fsd join users u on fsd.id_owner = u.id_owner where fsd.fbz = ? and fsd.year = ?",
-            [splitFBZ(req.query.fbz), req.query.year],
+            "select fsd.*, w.name as 'name_of_water', null as 'type_of_water', CONCAT(u.firstname, ' ', u.lastname) as 'name', CONCAT(fsd.quantity, ' ', fsd.unit) as 'quantity' from fish_stocking_details fsd join users u on fsd.id_owner = u.id_owner join waters w on fsd.id_water = w.id where fsd.fbz = ? and fsd.year = ? union select fsd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water', CONCAT(u.firstname, ' ', u.lastname) as 'name', CONCAT(fsd.quantity, ' ', fsd.unit) as 'quantity' from fish_stocking_details fsd join users u on fsd.id_owner = u.id_owner join waters_custom wc on fsd.id_water = wc.id where fsd.fbz = ? and fsd.year = ?",
+            [
+              splitFBZ(req.query.fbz),
+              req.query.year,
+              splitFBZ(req.query.fbz),
+              req.query.year,
+            ],
             function (err, rows, fields) {
               conn.release();
               if (err) {
@@ -760,8 +765,13 @@ router.get("/getFishCatchReportDetails", authAdmin, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select fcd.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from fish_catch_details fcd join users u on fcd.id_owner = u.id_owner where fcd.fbz = ? and fcd.year = ?",
-          [splitFBZ(req.query.fbz), req.query.year],
+          "select fcd.*, w.name as 'name_of_water', null as 'type_of_water' from fish_catch_details fcd join waters w on fcd.id_water = w.id where fcd.fbz = ? and fcd.year = ? union select fcd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water' from fish_catch_details fcd join waters_custom wc on fcd.id_water = wc.id where fcd.fbz = ? and fcd.year = ?",
+          [
+            splitFBZ(req.query.fbz),
+            req.query.year,
+            splitFBZ(req.query.fbz),
+            req.query.year,
+          ],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -818,8 +828,15 @@ router.get(
           res.json(err);
         } else {
           conn.query(
-            "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.year = ? and fcd.water = ?",
-            [splitFBZ(req.query.fbz), req.query.year, req.query.water],
+            "select fcd.*, w.name as 'name_of_water', null as 'type_of_water' from fish_catch_details fcd join waters w on fcd.id_water = w.id where fcd.fbz = ? and fcd.year = ? and fcd.id_water = ? union select fcd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water' from fish_catch_details fcd join waters_custom wc on fcd.id_water = wc.id where fcd.fbz = ? and fcd.year = ? and fcd.id_water = ?",
+            [
+              splitFBZ(req.query.fbz),
+              req.query.year,
+              req.query.id_water,
+              splitFBZ(req.query.fbz),
+              req.query.year,
+              req.query.id_water,
+            ],
             function (err, rows, fields) {
               conn.release();
               if (err) {
@@ -838,6 +855,64 @@ router.get(
     }
   }
 );
+
+//#endregion
+
+//#region OBSERVATION SHEETS
+router.get("/getAllObservationSheets", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select distinct os.fbz, os.year, CONCAT(u.firstname, ' ', u.lastname) as 'owner_name', u.id_owner from observation_sheet os join users u on os.id_owner = u.id_owner order by os.date_time desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getObservationSheetDetails", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select os.*, CONCAT(u.firstname, ' ', u.lastname) as 'owner_name' from observation_sheet os join users u on os.id_owner = u.id_owner where os.fbz = ? and os.year = ? order by os.date_time desc",
+          [req.query.fbz, req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
 
 //#endregion
 

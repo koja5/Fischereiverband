@@ -33,7 +33,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "name",
-            "title": "commonFields.name",
+            "title": "commonFields.nameOfWater",
             "field": "name",
             "required": true
         },

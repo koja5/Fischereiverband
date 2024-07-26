@@ -99,7 +99,7 @@ export class LoginComponent {
           const previousLink =
             this._storageService.getLocalStorage("previousLink");
           if (previousLink) {
-            window.open(previousLink);
+            window.open(previousLink, "_self");
             this._storageService.removeLocalStorage("previousLink");
           } else if (type === UserTypes.admin) {
             window.open("/dashboard/admin/all-users", "_self");

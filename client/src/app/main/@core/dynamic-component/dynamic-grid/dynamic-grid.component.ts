@@ -137,7 +137,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     private _toastr: ToastrComponent,
     private _modalService: NgbModal,
     private _translate: TranslateService,
-    private exportAsService: ExportAsService
+    private exportAsService: ExportAsService,
   ) {
     this._unsubscribeAll = new Subject();
     this._modalService.dismissAll();
@@ -532,27 +532,32 @@ export class DynamicGridComponent implements CanComponentDeactivate {
 
   openLink(routerLink: any, data: any) {
     let generateLink = routerLink.link;
-    let parametersInSessionStorage = [];
+    let parameters = [];
     for (let i = 0; i < routerLink.parameters.length; i++) {
       generateLink = generateLink.replace(
         "#" + routerLink.parameters[i],
         data[routerLink.parameters[i]]
       );
-      parametersInSessionStorage.push({
+      parameters.push({
         key: routerLink.parameters[i],
         value: data[routerLink.parameters[i]],
       });
     }
     if (routerLink.saveParametersInSessionStorage) {
-      this._helpService.setSessionStorage(
-        "parameter",
-        parametersInSessionStorage
-      );
+      this._helpService.setSessionStorage("parameter", parameters);
     }
     if (routerLink.newTab) {
       window.open(generateLink);
     } else {
-      this._router.navigate([generateLink]);
+      let queryParams = {};
+      if (parameters.length) {
+        for (let i = 0; i < parameters.length; i++) {
+          queryParams[parameters[i].key] = parameters[i].value;
+        }
+      }
+      this._router.navigate([routerLink.link], {
+        queryParams: queryParams,
+      });
     }
   }
 
@@ -569,8 +574,22 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   }
 
   exportToPdf() {
-    this.exportAsService.save(this.exportAsConfig, "Test").subscribe(() => {
+    this.exportAsService.save(this.exportAsConfig, "data").subscribe(() => {
       // save started
     });
+  }
+
+  print() {
+    const printContents = document.getElementById("grid1").innerHTML;
+    const WindowObject = window.open(
+      "",
+      "PrintWindow",
+      "width=750,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes"
+    );
+    const htmlData = `<html><body>${printContents}</body></html>`;
+
+    WindowObject.document.writeln(htmlData);
+    WindowObject.document.close();
+    WindowObject.focus();
   }
 }

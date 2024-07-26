@@ -32,14 +32,6 @@
         "closeAfterExecute": false,
         "size": "lg"
     },
-    "customGrouping": false,
-    "allowResizing": true,
-    "reorderable": true,
-    "selectable": true,
-    "scrollable": false,
-    "hideable": true,
-    "refresh": false,
-    "reset": true,
     "editSettings": {
         "allowEditing": true,
         "allowAdding": true,

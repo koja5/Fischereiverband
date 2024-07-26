@@ -35,7 +35,11 @@ export class StorageService {
   }
 
   setLocalStorage(key: string, value: any) {
-    localStorage.setItem(key, JSON.stringify(value));
+    if (typeof value === "object") {
+      localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      localStorage.setItem(key, value);
+    }
   }
 
   getLocalStorage(key: string) {

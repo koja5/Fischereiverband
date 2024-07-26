@@ -7,16 +7,16 @@ import { StorageService } from "../storage.service";
   providedIn: "root",
 })
 export class LoginGuardService {
-  constructor(
-    public _router: Router,
-    public _storageService: StorageService
-  ) {}
+  constructor(public _router: Router, public _storageService: StorageService) {}
 
   canActivate() {
     if (this._storageService.getToken()) {
       return true;
     } else {
-      this._storageService.setLocalStorage("previousLink", window.location.href);
+      this._storageService.setLocalStorage(
+        "previousLink",
+        window.location.href.split(window.location.origin)[1]
+      );
       this._router.navigate(["/auth/login"]);
       return false;
     }

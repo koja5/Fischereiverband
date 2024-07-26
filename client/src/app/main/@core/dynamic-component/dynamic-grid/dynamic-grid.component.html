@@ -61,12 +61,16 @@
                         <span *ngIf="config.options" class="fa fa-cog cursor-pointer options"
                             (click)="showModalOptionsDialog()"></span>
                     </div>
-                    <div class="flex-grow-0">
-                        <span class="fa fa-file-pdf-o cursor-pointer options pdf-icon" (click)="exportToPdf()"></span>
+                    <div *ngIf="rows && rows.length" class="flex-grow-0">
+                        <span class="fa fa-file-pdf-o cursor-pointer options pdf-icon"
+                            title="{{'actionMessage.exportToPng' | translate}}" (click)="exportToPdf()"></span>
                     </div>
-                    <div class="flex-grow-0 ml-1">
-                        <a csvLink [data]="rows"> <span class="fa fa-file-excel-o cursor-pointer options excel-icon"></span></a>
-
+                    <!-- <div class="flex-grow-0">
+                        <span class="fa fa-file-pdf-o cursor-pointer options pdf-icon"  (click)="print()"></span>
+                    </div> -->
+                    <div *ngIf="rows && rows.length" class="flex-grow-0 ml-1">
+                        <a csvLink [data]="rows" title="{{'actionMessage.exportToCsv' | translate}}"> <span
+                                class="fa fa-file-excel-o cursor-pointer options excel-icon"></span></a>
                     </div>
                 </div>
 
@@ -390,8 +394,8 @@
 
 
     <!-- EXPORT  -->
-    <!-- 
-    <table id="grid1" class="table table-sm">
+
+    <!-- <table id="grid1" class="table table-sm">
         <thead>
             <tr>
                 <th scope="col">#</th>

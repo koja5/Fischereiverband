@@ -72,7 +72,7 @@
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "water",
+            "field": "name_of_water",
             "validation": {
                 "required": true
             }

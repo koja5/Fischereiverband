@@ -5,7 +5,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "name",
-            "title": "commonFields.name",
+            "title": "commonFields.origin",
             "field": "name",
             "required": true
         },

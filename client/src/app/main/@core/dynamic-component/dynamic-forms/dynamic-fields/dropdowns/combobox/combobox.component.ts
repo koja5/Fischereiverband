@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 import { ConfigurationFile } from "../../../models/complex-properties/configuration-file";
 import { FieldConfig } from "../../../models/field-config";
 import { CallApiService } from "app/services/call-api.service";
@@ -131,9 +131,12 @@ export class ComboboxComponent implements OnInit {
 
   onChange(event: any) {
     if (this.config.additionalField) {
-      this.group.controls[this.config.additionalField].setValue(
-        event.firstname + " " + event.lastname
-      );
+      for (let i = 0; i < this.config.additionalField.length; i++) {
+        this.group.addControl(
+          this.config.additionalField[i].key,
+          new FormControl(event[this.config.additionalField[i].value])
+        );
+      }
     }
     this.group.controls[this.config.name].setValue(
       event[this.config.field.value]

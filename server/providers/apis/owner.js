@@ -28,8 +28,15 @@ router.get("/getAllFishStocking", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select fsd.*, CONCAT(quantity, ' ', unit) as 'quantity_with_unit' from fish_stocking_details fsd where fsd.id_owner = ? and fsd.fbz like ? and fsd.year = ?",
-          [req.user.user.id, splitFBZ(req.query.fbz), req.query.year],
+          "select fsd.*, w.name as 'name_of_water', null as 'type_of_water', CONCAT(quantity, ' ', unit) as 'quantity_with_unit' from fish_stocking_details fsd join waters w on fsd.id_water = w.id where fsd.id_owner = ? and fsd.fbz like ? and fsd.year = ? union select fsd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water', CONCAT(quantity, ' ', unit) as 'quantity_with_unit' from fish_stocking_details fsd join waters_custom wc on fsd.id_water = wc.id where fsd.id_owner = ? and fsd.fbz like ? and fsd.year = ?",
+          [
+            req.user.user.id,
+            splitFBZ(req.query.fbz),
+            req.query.year,
+            req.user.user.id,
+            splitFBZ(req.query.fbz),
+            req.query.year,
+          ],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -446,8 +453,8 @@ router.get("/getAllWaters", auth, async (req, res, next) => {
         res.json(err);
       } else {
         conn.query(
-          "select w.name from waters w where fbz = ? union select wc.name from waters_custom wc where wc.fbz = ? and wc.year = ?",
-          [splitFBZ(req.query.fbz), splitFBZ(req.query.fbz), req.query.year],
+          "select w.id, w.name from waters w where fbz = ? union select wc.id, wc.name from waters_custom wc where wc.fbz = ?",
+          [splitFBZ(req.query.fbz), splitFBZ(req.query.fbz)],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -508,7 +515,7 @@ router.post("/createNewWaterNameEntry", auth, function (req, res, next) {
       function (err, rows) {
         conn.release();
         if (!err) {
-          res.json(req.body.name);
+          res.json(rows.insertId);
         } else {
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(false);
@@ -652,10 +659,10 @@ router.get(
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(err);
         } else {
-          if (req.query.water != "undefined" && req.query.water != "null") {
+          if (req.query.id_water != "undefined" && req.query.id_water != "null") {
             conn.query(
-              "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.water = ?",
-              [splitFBZ(req.query.fbz), req.query.water],
+              "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.id_water = ?",
+              [splitFBZ(req.query.fbz), req.query.id_water],
               function (err, rows, fields) {
                 conn.release();
                 if (err) {

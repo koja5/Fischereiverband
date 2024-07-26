@@ -1,12 +1,5 @@
 {
     "pageSize": 10,
-    "request": {
-        "type": "GET",
-        "api": "/api/owner/getAllObservationSheet",
-        "parameters": [],
-        "fields": "",
-        "root": ""
-    },
     "paging": {
         "enable": true,
         "settings": {
@@ -40,79 +33,7 @@
     "hideable": true,
     "refresh": false,
     "reset": true,
-    "editSettings": {
-        "allowEditing": true,
-        "allowAdding": true,
-        "allowDeleting": true,
-        "showDeleteConfirmDialog": true,
-        "mode": "Dialog"
-    },
-    "editSettingsRequest": {
-        "add": {
-            "type": "POST",
-            "api": "/api/owner/setObservationSheet",
-            "parameters": [],
-            "fields": "",
-            "root": ""
-        }
-    },
     "columns": [
-        {
-            "title": "commonFields.action",
-            "width": 70,
-            "template": {
-                "type": "action",
-                "actionMode": {
-                    "type": "menu",
-                    "icon": "more-vertical",
-                    "menu": [
-                        {
-                            "type": "edit",
-                            "actionName": "general.edit",
-                            "icon": "edit",
-                            "formDialog": {
-                                "type": "sidebar",
-                                "closeAfterExecute": true
-                            }
-                        },
-                        {
-                            "type": "delete",
-                            "actionName": "general.delete",
-                            "icon": "trash",
-                            "executeAction": {
-                                "request": {
-                                    "type": "POST",
-                                    "api": "/api/owner/deleteObservationSheet",
-                                    "parameters": [],
-                                    "fields": "",
-                                    "root": ""
-                                },
-                                "response": "toastr",
-                                "showQuestionBeforeExecute": true,
-                                "modalConfig": {
-                                    "modalTitle": "",
-                                    "modalText": "",
-                                    "windowClass": "modal modal-danger"
-                                }
-                            }
-                        }
-                    ]
-                }
-            },
-            "field": "allow_online"
-        },
-        {
-            "title": "observationSheet.district",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "string",
-            "class": "text-align-right",
-            "field": "fbz",
-            "validation": {
-                "required": true
-            }
-        },
         {
             "title": "observationSheet.dateAndTime",
             "filterable": true,
@@ -299,7 +220,7 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "fbz",
-            "title": "commonFields.fbz",
+            "title": "observationSheet.nameOfWater",
             "field": {
                 "text": "fbz",
                 "value": "fbz"
@@ -358,12 +279,26 @@
             "field": "district"
         },
         {
-            "type": "textbox",
+            "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
             "name": "water",
             "title": "observationSheet.nameOfWater",
-            "field": "water"
+            "field": {
+                "text": "name",
+                "value": "name"
+            },
+            "request": {
+                "type": "GET",
+                "api": "/api/owner/getWatersForAll",
+                "parameters": [],
+                "fields": "",
+                "root": ""
+            },
+            "fieldConfig": {
+                "ignoreAccent": false,
+                "filter": true
+            }
         },
         {
             "type": "textbox",
