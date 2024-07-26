@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation,
+} from "@angular/core";
 import { ToastrComponent } from "app/main/@core/common/toastr/toastr.component";
 import { DynamicGridComponent } from "app/main/@core/dynamic-component/dynamic-grid/dynamic-grid.component";
 import { CallApiService } from "app/services/call-api.service";
@@ -11,6 +17,9 @@ import { TranslateService } from "@ngx-translate/core";
 import { FishCatchFilterModel } from "app/main/dashboard/models/fish-catch-filter.model";
 import { FishCatchReportModel } from "app/main/dashboard/models/fish-catch-report-model";
 import { FishCatchReportEnum } from "app/main/dashboard/enums/fish-catch-enum";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { HelpService } from "app/services/help.service";
+import { WaterCustomModel } from "app/main/dashboard/models/water-custom-model";
 
 @Component({
   selector: "app-fish-catch",
@@ -26,6 +35,8 @@ export class FishCatchComponent {
   dialogRequestForAdditionalChanges: DialogConfirmComponent;
   @ViewChild("dialogNoHaveEntry")
   dialogNoHaveEntry: DialogConfirmComponent;
+  @ViewChild("modalNewEntrie") modal: TemplateRef<any>;
+  public modalDialog: any;
 
   public path = "grids/owner";
   public file = "fish-catch.json";
@@ -40,12 +51,15 @@ export class FishCatchComponent {
   public loading = false;
   public fishCatchReportEnum = FishCatchReportEnum;
   public allWaters: any;
+  public waterCustom = new WaterCustomModel();
 
   constructor(
     private _service: CallApiService,
     private _toastr: ToastrComponent,
     private _storageService: StorageService,
-    private _translate: TranslateService
+    private _translate: TranslateService,
+    private _modalService: NgbModal,
+    private _helpService: HelpService
   ) {}
 
   unsavedChanges(): boolean {
@@ -273,5 +287,38 @@ export class FishCatchComponent {
           this._toastr.showSuccess();
         }
       });
+  }
+
+  openModalNewEntrie() {
+    setTimeout(() => {
+      this.modalDialog = this._modalService.open(this.modal, {
+        centered: true,
+        windowClass: "modal modal-danger",
+      });
+    }, 20);
+  }
+
+  submitNewEntriesEmitter(event) {
+    if (
+      this._helpService.checkUndefinedProperty(event) &&
+      event.type != "submit"
+    ) {
+      let body = {};
+
+      this.waterCustom = {
+        type_of_water: event.type_of_water,
+        name: event.name,
+        fbz: this.fishCatchFilter.managementRegister.fbz,
+      };
+
+      this._service
+        .callPostMethod("/api/owner/createNewWaterNameEntry", this.waterCustom)
+        .subscribe((entryId: number) => {
+          this.getWatersForSelectedManagementRegister(
+            this.fishCatchFilter.managementRegister.fbz
+          );
+          this.fishCatchFilter.water = entryId;
+        });
+    }
   }
 }

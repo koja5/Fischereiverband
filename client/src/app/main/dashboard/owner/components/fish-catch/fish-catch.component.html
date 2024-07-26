@@ -35,6 +35,12 @@
             <ng-select [items]="allWaters" bindLabel="name" bindValue="id" [(ngModel)]="fishCatchFilter.water"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChangeWater($event)"
                 [searchable]="true">
+                <ng-template ng-footer-tmp>
+                    <p class="m-0 font-weight-bold cursor-pointer" (click)="openModalNewEntrie()"><span
+                            class="fa fa-plus-circle"></span> {{
+                        'commonFields.createNew' | translate
+                        }} </p>
+                </ng-template>
             </ng-select>
 
         </div>
@@ -61,12 +67,28 @@
 
     <div *ngIf="!loading">
         <app-dynamic-grid #grid [path]="path" [file]="file" [data]="data"
-            [disableCRUD]="fishCatchFilter && fishCatchFilter.water ? false : true" (submit)="submit($event)"
-            (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
+            [disableCRUD]="(fishCatchFilter && fishCatchFilter.water ? false : true) || (fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed)"
+            (submit)="submit($event)" (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
     </div>
 </div>
 
 <app-loader *ngIf="loading"></app-loader>
+
+
+<ng-template #modalNewEntrie let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="myModalLabel160">{{title ? title : 'generalDialog.areYouSure' | translate}}</h5>
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <app-dynamic-forms [path]="'forms/owner'" [file]="'new-entrie-name-of-water.json'"
+            (submit)="submitNewEntriesEmitter($event)" #form="dynamicForm">
+        </app-dynamic-forms>
+    </div>
+</ng-template>
+
 
 <app-dialog-confirm #dialogConfirm [title]="('actionMessage.dialogCompleteReportQuestionTitle' | translate)"
     [content]="('actionMessage.dialogCompleteReportQuestionText' | translate)"
