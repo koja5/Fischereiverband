@@ -14,6 +14,7 @@ const general = require("./providers/apis/general");
 const auth = require("./providers/apis/auth");
 const owner = require("./providers/apis/owner");
 const admin = require("./providers/apis/admin");
+const uploader = require("./providers/apis/uploader/upload");
 const mail = require("./providers/mails/mail-api");
 //#endregion
 
@@ -58,6 +59,7 @@ app.use("/api", general);
 app.use("/api/auth", auth);
 app.use("/api/owner", owner);
 app.use("/api/admin", admin);
+app.use("/api/uploader", uploader);
 app.use("/api/mail", mail);
 
 app.use(express.static(path.join(__dirname, "../client/src")));

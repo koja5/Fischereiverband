@@ -270,5 +270,8 @@
       "river": "Fluss",
       "lake": "See",
       "smallLake": "Kleiner See"
+   },
+   "uploader": {
+      "savedFiles": "Gespeicherte Dateien"
    }
 }

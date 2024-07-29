@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { FieldConfig } from "../../models/field-config";
 import { FormGroup } from "@angular/forms";
+import { CallApiService } from "app/services/call-api.service";
 
 @Component({
   selector: "app-uploader",
@@ -10,11 +11,27 @@ import { FormGroup } from "@angular/forms";
 export class UploaderComponent {
   public config: FieldConfig;
   public group: FormGroup;
+  public savedFiles = [];
   files: any[] = [];
 
-  constructor() {
+  constructor(private _service: CallApiService) {
     this.config = new FieldConfig();
     this.group = new FormGroup({});
+  }
+
+  ngOnInit() {
+    console.log(this.config);
+    console.log(this.group);
+  }
+
+  packFiles(documentation) {
+    if (documentation[this.config.name]) {
+      let files = documentation[this.config.name].split(";");
+      for (let i = 0; i < files.length; i++) {
+        this.savedFiles.push(files[i]);
+      }
+      return files;
+    }
   }
 
   /**
@@ -46,20 +63,34 @@ export class UploaderComponent {
     console.log("USAO SAM!");
     console.log(this.files);
     console.log(index);
-    setTimeout(() => {
-      if (index === this.files.length) {
-        return;
-      } else {
-        const progressInterval = setInterval(() => {
-          if (this.files[index].progress === 100) {
-            clearInterval(progressInterval);
-            this.uploadFilesSimulator(index + 1);
-          } else {
-            this.files[index].progress += 5;
-          }
-        }, 200);
-      }
-    }, 1000);
+
+    let formData = new FormData();
+
+    for (let i = 0; i < this.files.length; i++) {
+      formData.append("files[]", this.files[i], this.files[i].name);
+    }
+
+    this.group.controls[this.config.name].setValue({ files: this.files });
+
+    // this._service
+    //   .callPostMethod("api/uploader/upload", formData)
+    //   .subscribe((data) => {
+    //     console.log(data);
+    //   });
+    // setTimeout(() => {
+    //   if (index === this.files.length) {
+    //     return;
+    //   } else {
+    //     const progressInterval = setInterval(() => {
+    //       if (this.files[index].progress === 100) {
+    //         clearInterval(progressInterval);
+    //         this.uploadFilesSimulator(index + 1);
+    //       } else {
+    //         this.files[index].progress += 5;
+    //       }
+    //     }, 200);
+    //   }
+    // }, 1000);
   }
 
   /**

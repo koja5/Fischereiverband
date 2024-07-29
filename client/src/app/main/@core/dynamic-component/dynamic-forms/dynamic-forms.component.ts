@@ -187,6 +187,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
   }
 
   callApiPost(api: string, body: any) {
+    console.log("USAO SAM U POZIV!");
     this.apiService.callPostMethod(api, body).subscribe((data) => {
       this.data = data;
       this.setValueToForm(this.config.config, data);
@@ -237,14 +238,43 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
   }
 
   handleSubmit(event: Event) {
+    console.log("USAO SAM U POZIV!");
+    console.log(this.value);
     if (this.form.valid) {
       event.preventDefault();
       event.stopPropagation();
       this.isDirty = false;
-      this.submit.emit(this.value);
+      const formData = this.packFormData();
+      this.submit.emit(formData);
     } else {
       this.form.markAsPending();
     }
+  }
+
+  packFormData() {
+    let formData = new FormData();
+
+    for (let item of Object.keys(this.value)) {
+      if (item === "documentation") {
+        for (let i = 0; i < this.value[item].files.length; i++) {
+          // formData.append("documentation", this.value[item][i]);
+
+          formData.append(
+            item,
+            this.value[item].files[i],
+            this.value[item].files[i].name
+          );
+        }
+      }
+      formData.append(item, this.value[item]);
+    }
+    console.log(formData);
+
+    return formData;
+  }
+
+  getKeyFromObject(value) {
+    return Object.keys(this.value).find((key) => this.value[key] === value);
   }
 
   setDisabled(name: string, disable: boolean) {

@@ -276,5 +276,8 @@
         "river": "River",
         "lake": "Lake",
         "smallLake": "Small lake"
+    },
+    "uploader": {
+        "savedFiles": "Saved files"
     }
 }

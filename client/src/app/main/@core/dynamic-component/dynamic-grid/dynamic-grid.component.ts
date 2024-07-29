@@ -137,7 +137,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     private _toastr: ToastrComponent,
     private _modalService: NgbModal,
     private _translate: TranslateService,
-    private exportAsService: ExportAsService,
+    private exportAsService: ExportAsService
   ) {
     this._unsubscribeAll = new Subject();
     this._modalService.dismissAll();
@@ -348,8 +348,9 @@ export class DynamicGridComponent implements CanComponentDeactivate {
 
   submitEmitter(event: any) {
     if (
-      this._helpService.checkUndefinedProperty(event) &&
-      event.type != "submit"
+      (this._helpService.checkUndefinedProperty(event) &&
+        event.type != "submit") ||
+      event instanceof FormData
     ) {
       if (
         this.config.editSettingsRequest &&
