@@ -491,7 +491,7 @@
             "field": "estimation_inventory"
         },
         {
-            "type": "textbox",
+            "type": "uploader",
             "multiline": true,
             "cols": 50,
             "width": "col-md-12",

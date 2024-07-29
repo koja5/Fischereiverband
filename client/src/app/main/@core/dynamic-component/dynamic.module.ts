@@ -21,9 +21,10 @@ import { DynamicGridComponent } from "./dynamic-grid/dynamic-grid.component";
 import { MainCoreCommonModule } from "../common/main-core-common.module";
 import { ExportAsModule } from "ngx-export-as";
 import { CsvModule } from "@ctrl/ngx-csv";
+import { UploaderComponent } from './dynamic-forms/dynamic-fields/uploader/uploader.component';
 
 @NgModule({
-  declarations: [DynamicGridComponent, DynamicTabsComponent],
+  declarations: [DynamicGridComponent, DynamicTabsComponent, UploaderComponent],
   imports: [
     CommonModule,
     DynamicFormsModule,
