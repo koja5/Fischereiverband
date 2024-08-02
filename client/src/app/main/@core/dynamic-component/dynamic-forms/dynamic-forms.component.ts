@@ -78,9 +78,7 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
     this._messageService
       .getConfigValueEmit()
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((data) => {
-        console.log(data);
-      });
+      .subscribe((data) => {});
   }
 
   ngOnInit() {
@@ -187,7 +185,6 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
   }
 
   callApiPost(api: string, body: any) {
-    console.log("USAO SAM U POZIV!");
     this.apiService.callPostMethod(api, body).subscribe((data) => {
       this.data = data;
       this.setValueToForm(this.config.config, data);
@@ -238,8 +235,6 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
   }
 
   handleSubmit(event: Event) {
-    console.log("USAO SAM U POZIV!");
-    console.log(this.value);
     if (this.form.valid) {
       event.preventDefault();
       event.stopPropagation();
@@ -256,19 +251,20 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
 
     for (let item of Object.keys(this.value)) {
       if (item === "documentation") {
-        for (let i = 0; i < this.value[item].files.length; i++) {
-          // formData.append("documentation", this.value[item][i]);
+        if (this.value[item] && this.value[item].files) {
+          for (let i = 0; i < this.value[item].files.length; i++) {
+            // formData.append("documentation", this.value[item][i]);
 
-          formData.append(
-            item,
-            this.value[item].files[i],
-            this.value[item].files[i].name
-          );
+            formData.append(
+              item,
+              this.value[item].files[i],
+              this.value[item].files[i].name
+            );
+          }
         }
       }
-      formData.append(item, this.value[item]);
+      formData.append(item, this.value[item] != null ? this.value[item] : "");
     }
-    console.log(formData);
 
     return formData;
   }

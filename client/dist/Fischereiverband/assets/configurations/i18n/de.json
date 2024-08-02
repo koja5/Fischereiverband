@@ -270,5 +270,12 @@
       "river": "Fluss",
       "lake": "See",
       "smallLake": "Kleiner See"
+   },
+   "uploader": {
+      "dragAndDrop": "Ziehen Sie die Datei hierher und legen Sie sie dort ab",
+      "or": "oder",
+      "browseForFile": "Suchen Sie nach der Datei",
+      "savedFiles": "Gespeicherte Dateien",
+      "noDocumentsAdded": "Keine Dokumente hinzugefügt"
    }
 }

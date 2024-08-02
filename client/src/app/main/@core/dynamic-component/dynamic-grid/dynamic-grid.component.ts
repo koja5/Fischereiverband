@@ -28,6 +28,7 @@ import { MethodRequest } from "app/main/enums/method-request";
 import { DialogConfirmComponent } from "../../common/dialog-confirm/dialog-confirm.component";
 import { ToastrComponent } from "../../common/toastr/toastr.component";
 import { ExportAsConfig, ExportAsService } from "ngx-export-as";
+import { MessageService } from "app/services/message.service";
 
 @Component({
   selector: "app-dynamic-grid",
@@ -137,7 +138,8 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     private _toastr: ToastrComponent,
     private _modalService: NgbModal,
     private _translate: TranslateService,
-    private exportAsService: ExportAsService
+    private exportAsService: ExportAsService,
+    private _messageService: MessageService
   ) {
     this._unsubscribeAll = new Subject();
     this._modalService.dismissAll();
@@ -291,6 +293,13 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
     this.initialize();
+
+    this._messageService
+      .getRefreshAfterRemoveFile()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((value) => {
+        this.getData();
+      });
   }
 
   /**
@@ -324,13 +333,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
                       });
                   }, 450);
                 } else {
-                  this._service
-                    .callApi(this.config, this._activateRouter)
-                    .subscribe((data) => {
-                      this.rows = data;
-                      this.tempData = this.rows;
-                      this.loader = false;
-                    });
+                  this.getData();
                 }
               });
           } else if (this.data) {
@@ -346,7 +349,17 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     }
   }
 
-  submitEmitter(event: any) {
+  getData() {
+    this._service
+      .callApi(this.config, this._activateRouter)
+      .subscribe((data) => {
+        this.rows = data;
+        this.tempData = this.rows;
+        this.loader = false;
+      });
+  }
+
+  submitEmitter(event: any, noCloseEditForm?: boolean) {
     if (
       (this._helpService.checkUndefinedProperty(event) &&
         event.type != "submit") ||
@@ -356,10 +369,14 @@ export class DynamicGridComponent implements CanComponentDeactivate {
         this.config.editSettingsRequest &&
         this.config.editSettingsRequest.add.type === MethodRequest.EMIT
       ) {
-        this.closeEditForm();
+        this.closeEditForm(noCloseEditForm);
         this.submit.emit(event);
       } else if (this.config.editSettingsRequest.add.type) {
-        this.callServerMethod(this.config.editSettingsRequest.add, event);
+        this.callServerMethod(
+          this.config.editSettingsRequest.add,
+          event,
+          noCloseEditForm
+        );
       }
     }
   }
@@ -373,7 +390,12 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     return event;
   }
 
-  callServerMethod(request: any, event: any, noResponseMessage?: boolean) {
+  callServerMethod(
+    request: any,
+    event: any,
+    noResponseMessage?: boolean,
+    noCloseEditForm?: boolean
+  ) {
     this.loader = true;
     this._service
       .callServerMethod(request, event, this._activateRouter)
@@ -381,12 +403,12 @@ export class DynamicGridComponent implements CanComponentDeactivate {
         if (data) {
           if (!noResponseMessage) {
             this._toastr.showSuccess();
-            this.closeEditForm();
+            this.closeEditForm(noCloseEditForm);
             this.refreshDataFromServer();
           }
         } else {
           this._toastr.showError();
-          this.closeEditForm();
+          this.closeEditForm(noCloseEditForm);
           this.loader = false;
         }
       });
@@ -415,14 +437,16 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     }
   }
 
-  closeEditForm() {
-    if (this.config.formDialog.type === "modal") {
-      if (!this.config.formDialog.closeAfterExecute) {
-        this.modalDialog.close();
-      }
-    } else {
-      if (!this.config.formDialog.closeAfterExecute) {
-        this.toggleSidebarClose("sidebar");
+  closeEditForm(noCloseEditForm?: boolean) {
+    if (!noCloseEditForm) {
+      if (this.config.formDialog.type === "modal") {
+        if (!this.config.formDialog.closeAfterExecute) {
+          this.modalDialog.close();
+        }
+      } else {
+        if (!this.config.formDialog.closeAfterExecute) {
+          this.toggleSidebarClose("sidebar");
+        }
       }
     }
   }
@@ -435,7 +459,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       }
       this._router.navigate([item.routerLink]);
     } else if (item.type) {
-      if (item.type === "edit") {
+      if (item.type === "edit" || item.type === "show") {
         this.checkConfigurationFunctionsForEditOption(item, row);
       }
 

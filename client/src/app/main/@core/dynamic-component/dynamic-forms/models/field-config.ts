@@ -49,4 +49,6 @@ export class FieldConfig {
   minuteStep: number;
   dependent?: any;
   emitRequest?: boolean;
+  disableUpload?: boolean;
+  disableRemove?: boolean;
 }

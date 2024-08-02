@@ -1,3 +1,10 @@
+@media (max-width: 992px) {
+  .container {
+    display: table !important;
+    margin: auto;
+  }
+}
+
 .container {
   width: 450px;
   height: 200px;
@@ -36,6 +43,9 @@
     font-weight: 600;
     color: #38424c;
   }
+}
+
+@media (min-width: 993px) {
 }
 
 .fileover {
@@ -135,13 +145,45 @@
 
 .saved-file {
   text-align: center;
-  border: 1px solid var(--lightgray);
+  border: 1px solid lightgray;
   border-radius: 5px;
+  padding: 4px;
 }
 
-.trash-icon {
-  position: absolute;
-  top: 4px;
-  right: 22px;
-  font-size: 21px;
+.saved-file img {
+  transition: transform 0.2s;
+  max-height: 165px;
+}
+
+.saved-file img:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+.remove-icon {
+  font-size: 17px;
+  color: red;
+  cursor: pointer;
+}
+
+.download-icon {
+  font-size: 17px;
+  color: #7b7979;
+  cursor: pointer;
+}
+
+.pdf-file,
+.file {
+  height: 165px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pdf-file img {
+  width: 65px;
+}
+
+.file span {
+  font-size: 65px;
 }

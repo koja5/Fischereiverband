@@ -278,6 +278,10 @@
         "smallLake": "Small lake"
     },
     "uploader": {
-        "savedFiles": "Saved files"
+        "dragAndDrop": "Drag and drop file here",
+        "or": "or",
+        "browseForFile": "Browse for file",
+        "savedFiles": "Saved files",
+        "noDocumentsAdded": "No documents added"
     }
 }

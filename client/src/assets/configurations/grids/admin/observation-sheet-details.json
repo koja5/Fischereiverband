@@ -35,6 +35,25 @@
     "reset": true,
     "columns": [
         {
+            "title": "commonFields.action",
+            "width": 70,
+            "template": {
+                "type": "action",
+                "actionMode": {
+                    "type": "button",
+                    "action": {
+                        "type": "show",
+                        "actionName": "general.show",
+                        "icon": "eye",
+                        "formDialog": {
+                            "type": "sidebar",
+                            "closeAfterExecute": true
+                        }
+                    }
+                }
+            }
+        },
+        {
             "title": "observationSheet.dateAndTime",
             "filterable": true,
             "hideable": true,
@@ -208,14 +227,6 @@
     ],
     "config": [
         {
-            "type": "textbox",
-            "width": "col-md-12 hidden",
-            "class": "e-outline",
-            "name": "id",
-            "title": "ID",
-            "field": "id"
-        },
-        {
             "type": "combobox",
             "width": "col-md-12",
             "class": "e-outline",
@@ -253,7 +264,8 @@
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
-            }
+            },
+            "readonly": true
         },
         {
             "type": "label",
@@ -268,7 +280,8 @@
             "title": "observationSheet.dateAndTime",
             "field": "date_time",
             "format": "dd.MM.yyyy HH:mm",
-            "timeFormat": "HH:mm"
+            "timeFormat": "HH:mm",
+            "readonly": true
         },
         {
             "type": "textbox",
@@ -276,7 +289,8 @@
             "class": "e-outline",
             "name": "district",
             "title": "observationSheet.district",
-            "field": "district"
+            "field": "district",
+            "readonly": true
         },
         {
             "type": "combobox",
@@ -298,7 +312,8 @@
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
-            }
+            },
+            "readonly": true
         },
         {
             "type": "textbox",
@@ -306,7 +321,8 @@
             "class": "e-outline",
             "name": "orientation",
             "title": "observationSheet.orientation",
-            "field": "orientation"
+            "field": "orientation",
+            "readonly": true
         },
         {
             "type": "radio",
@@ -334,7 +350,8 @@
                     "id": "fishingFarm"
                 }
             ],
-            "field": "type_of_water"
+            "field": "type_of_water",
+            "readonly": true
         },
         {
             "type": "label",
@@ -347,7 +364,8 @@
             "class": "e-outline",
             "name": "visual_observation",
             "title": "observationSheet.visualObservation",
-            "field": "visual_observation"
+            "field": "visual_observation",
+            "readonly": true
         },
         {
             "type": "radio",
@@ -365,7 +383,8 @@
                 }
             ],
             "oneLine": true,
-            "field": "find_dead"
+            "field": "find_dead",
+            "readonly": true
         },
         {
             "type": "textbox",
@@ -373,7 +392,8 @@
             "class": "e-outline",
             "name": "drove_traces",
             "title": "observationSheet.droveTraces",
-            "field": "drove_traces"
+            "field": "drove_traces",
+            "readonly": true
         },
         {
             "type": "textbox",
@@ -381,7 +401,8 @@
             "class": "e-outline",
             "name": "find_losing",
             "title": "observationSheet.findLosing",
-            "field": "find_losing"
+            "field": "find_losing",
+            "readonly": true
         },
         {
             "type": "textbox",
@@ -389,7 +410,8 @@
             "class": "e-outline",
             "name": "fish_prey",
             "title": "observationSheet.fishPrey",
-            "field": "fish_prey"
+            "field": "fish_prey",
+            "readonly": true
         },
         {
             "type": "radio",
@@ -407,7 +429,8 @@
                 }
             ],
             "oneLine": true,
-            "field": "traces_color"
+            "field": "traces_color",
+            "readonly": true
         },
         {
             "type": "textbox",
@@ -415,7 +438,8 @@
             "class": "e-outline",
             "name": "photo_trap",
             "title": "observationSheet.photoTrap",
-            "field": "photo_trap"
+            "field": "photo_trap",
+            "readonly": true
         },
         {
             "type": "textbox",
@@ -423,26 +447,18 @@
             "class": "e-outline",
             "name": "estimation_inventory",
             "title": "observationSheet.estimationInventory",
-            "field": "estimation_inventory"
+            "field": "estimation_inventory",
+            "readonly": true
         },
         {
-            "type": "textbox",
-            "multiline": true,
-            "cols": 50,
+            "type": "uploader",
             "width": "col-md-12",
             "class": "e-outline",
             "name": "documentation",
             "title": "observationSheet.documentation",
-            "field": "documentation"
-        },
-        {
-            "type": "button",
-            "width": "col-md-12",
-            "class": "btn btn-primary",
-            "name": "submit",
-            "title": "general.save",
-            "field": "submit",
-            "positionClass": "text-right mt-3 col-md-12"
+            "field": "documentation",
+            "disableUpload": true,
+            "disableRemove": true
         }
     ]
 }

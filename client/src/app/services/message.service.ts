@@ -6,6 +6,7 @@ import { Observable, Subject } from "rxjs";
 })
 export class MessageService {
   public configValue = new Subject<any>();
+  public refreshAfterRemoveFile = new Subject<any>();
 
   constructor() {}
 
@@ -15,5 +16,13 @@ export class MessageService {
 
   getConfigValueEmit(): Observable<any> {
     return this.configValue.asObservable();
+  }
+
+  sendRefreshAfterRemoveFile(value) {
+    this.refreshAfterRemoveFile.next(value);
+  }
+
+  getRefreshAfterRemoveFile(): Observable<any> {
+    return this.refreshAfterRemoveFile.asObservable();
   }
 }

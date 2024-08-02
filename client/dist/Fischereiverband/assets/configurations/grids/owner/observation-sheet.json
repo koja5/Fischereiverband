@@ -50,7 +50,7 @@
     "editSettingsRequest": {
         "add": {
             "type": "POST",
-            "api": "/api/owner/setObservationSheet",
+            "api": "/api/uploader/setObservationSheetAndUploadDocument",
             "parameters": [],
             "fields": "",
             "root": ""
@@ -271,18 +271,6 @@
             "validation": {
                 "required": true
             }
-        },
-        {
-            "title": "observationSheet.documentation",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "string",
-            "class": "text-align-right",
-            "field": "documentation",
-            "validation": {
-                "required": true
-            }
         }
     ],
     "config": [
@@ -491,7 +479,7 @@
             "field": "estimation_inventory"
         },
         {
-            "type": "textbox",
+            "type": "uploader",
             "multiline": true,
             "cols": 50,
             "width": "col-md-12",

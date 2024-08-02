@@ -1,6 +1,7 @@
-<div class="container" uploadDirective [formGroup]="group" (fileDropped)="onFileDropped($event)">
+<div *ngIf="!config.disableUpload" class="container uploader-container" uploadDirective [formGroup]="group"
+    (fileDropped)="onFileDropped($event)">
     <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event.target.files)" />
-    <svg xmlns="http://www.w3.org/2000/svg" width="63" height="64" viewBox="0 0 63 64">
+    <svg xmlns="http://www.w3.org/2000/svg" width="42" height="56" viewBox="0 0 63 64">
         <g fill="#3B454F" fill-rule="nonzero">
             <path
                 d="M42.656 15.135a1.953 1.953 0 0 1-1.391-.578L31.5 4.795l-9.765 9.762a1.97 1.97 0 1 1-2.785-2.785L30.106.616a1.97 1.97 0 0 1 2.785 0l11.157 11.156a1.97 1.97 0 0 1-1.392 3.363z" />
@@ -11,9 +12,9 @@
         </g>
     </svg>
 
-    <h3>Drag and drop file here</h3>
-    <h3>or</h3>
-    <label for="fileDropRef">Browse for file</label>
+    <h5>{{'uploader.dragAndDrop' | translate}}</h5>
+    <h4>{{'uploader.or' | translate}}</h4>
+    <label for="fileDropRef">{{'uploader.browseForFile' | translate}}</label>
 </div>
 <div class="files-list">
     <div class="single-file" *ngFor="let file of files; let i = index">
@@ -43,7 +44,7 @@
             <p class="size">
                 {{ formatBytes(file?.size) }}
             </p>
-            <app-progress [progress]="file?.progress"></app-progress>
+            <!-- <app-progress [progress]="file?.progress"></app-progress> -->
         </div>
 
         <div class="delete" (click)="deleteFile(i)">
@@ -55,14 +56,74 @@
     </div>
 </div>
 
-<div class="saved-files mt-3" *ngIf="group">
-    <h3 class="border-bottom mb-2">{{'uploader.savedFiles' | translate}}</h3>
-    <div class="row">
-        <div *ngFor="let item of packFiles(group.value)" class="col-md-3">
+<div class="saved-files mt-3">
+    <h4 class="border-bottom mb-2">{{'uploader.savedFiles' | translate}}</h4>
+    <div class="row" *ngIf="savedFiles && savedFiles.length">
+        <div *ngFor="let item of savedFiles" class="col-md-4 mb-1">
             <div class="saved-file">
-                <img src="../../../../../../../assets/file-storage/{{item}}" width="120px">
-                <span class="fa fa-trash-o trash-icon"></span>
+                <div class="text-right" *ngIf="!config.disableRemove">
+                    <span class="fa fa-trash remove-icon" (click)="dialogConfirmRemoveFileShow(item)"></span>
+                </div>
+                <div class="file" [ngSwitch]="item.split('.')[1]">
+                    <div *ngSwitchDefault>
+                        <span class="fa fa-file"></span>
+                    </div>
+                    <div
+                        *ngSwitchCase="item.split('.')[1] === 'png' || item.split('.')[1] === 'jpg' || item.split('.')[1] === 'jpeg' ? item.split('.')[1] : ''">
+                        <img src="./assets/file-storage/{{item}}" width="100%"
+                            (click)="openPreviewFileModal(item)">
+                    </div>
+                    <div class="pdf-file" *ngSwitchCase="'pdf'">
+                        <img src="./assets/images/icons/pdf-icon.png" (click)="openPDF(item)">
+                    </div>
+                    <div class="video-file"
+                        *ngSwitchCase="item.split('.')[1] === 'mkv' || item.split('.')[1] === 'mp4' ? item.split('.')[1] : ''">
+                        <video controls id="videoPlayer" width="100%">
+                            <source src="./assets/file-storage/{{item}}" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <a href="./assets/file-storage/{{item}}" download="{{item}}"><span
+                            class="fa fa-download download-icon"></span> </a>
+                </div>
             </div>
         </div>
     </div>
+    <div *ngIf="!savedFiles || !savedFiles.length">
+        {{'uploader.noDocumentsAdded' | translate}}
+    </div>
 </div>
+
+<!-- SHOW IMAGE -->
+<ng-template #previewFileModal let-modal class="modal-dialog modal-lg modal-dialog-centered display-none">
+    <div class="modal-header">
+        <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+        <div [ngSwitch]="previewFile.split('.')[1]">
+            <div>
+                <img src="./assets/file-storage/{{previewFile}}" width="100%">
+            </div>
+            <div *ngSwitchCase="'mkv'">
+                <video controls id="videoPlayer" width="100%">
+                    <source src="./assets/file-storage/{{previewFile}}" type="video/mp4" />
+                </video>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!-- END SHOW IMAGE -->
+
+<!-- DIALOG CONFIRM DELETE -->
+
+<app-dialog-confirm #dialogConfirmRemoveFile [title]="('actionMessage.dialogBackReportToOwnerTitle' | translate)"
+    [content]="('actionMessage.dialogBackReportToOwnerText' | translate)"
+    [confirmButtonText]="('generalDialog.yes' | translate)" [cancelButtonText]="('generalDialog.no' | translate)"
+    (confirm)="confirmRemoveFile()"></app-dialog-confirm>
+
+
+<!-- END DIALOG CONFIRM DELETE -->

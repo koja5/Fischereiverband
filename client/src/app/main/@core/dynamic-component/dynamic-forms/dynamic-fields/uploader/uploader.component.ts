@@ -1,7 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, ElementRef, TemplateRef, ViewChild } from "@angular/core";
 import { FieldConfig } from "../../models/field-config";
 import { FormGroup } from "@angular/forms";
 import { CallApiService } from "app/services/call-api.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { distinctUntilChanged } from "rxjs/operators";
+import { DialogConfirmComponent } from "app/main/@core/common/dialog-confirm/dialog-confirm.component";
+import { MessageService } from "app/services/message.service";
 
 @Component({
   selector: "app-uploader",
@@ -9,28 +13,46 @@ import { CallApiService } from "app/services/call-api.service";
   styleUrls: ["./uploader.component.scss"],
 })
 export class UploaderComponent {
+  @ViewChild("previewFileModal") previewFileModal: TemplateRef<any>;
+  @ViewChild("videoPlayer") videoplayer: ElementRef;
+  @ViewChild("dialogConfirmRemoveFile")
+  dialogConfirmRemoveFile: DialogConfirmComponent;
   public config: FieldConfig;
   public group: FormGroup;
   public savedFiles = [];
   files: any[] = [];
+  public modalDialog: any;
+  public previewFile!: string;
+  public savedFileList: FormGroup;
+  public selectedFile: any;
 
-  constructor(private _service: CallApiService) {
+  constructor(
+    private _service: CallApiService,
+    private _modalService: NgbModal,
+    private _messageService: MessageService
+  ) {
     this.config = new FieldConfig();
     this.group = new FormGroup({});
   }
 
   ngOnInit() {
-    console.log(this.config);
-    console.log(this.group);
+    this.savedFiles = [];
+    this.group.controls[this.config.name].valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe((value) => {
+        this.packFiles(value);
+      });
   }
 
   packFiles(documentation) {
-    if (documentation[this.config.name]) {
-      let files = documentation[this.config.name].split(";");
-      for (let i = 0; i < files.length; i++) {
-        this.savedFiles.push(files[i]);
+    if (typeof documentation === "string" || documentation === null) {
+      this.savedFiles = [];
+      if (documentation && documentation != "null") {
+        let files = documentation.split(";");
+        for (let i = 0; i < files.length; i++) {
+          this.savedFiles.push(files[i]);
+        }
       }
-      return files;
     }
   }
 
@@ -59,11 +81,7 @@ export class UploaderComponent {
   /**
    * Simulate the upload process
    */
-  uploadFilesSimulator(index: number) {
-    console.log("USAO SAM!");
-    console.log(this.files);
-    console.log(index);
-
+  uploadFiles(index: number) {
     let formData = new FormData();
 
     for (let i = 0; i < this.files.length; i++) {
@@ -102,7 +120,7 @@ export class UploaderComponent {
       item.progress = 0;
       this.files.push(item);
     }
-    this.uploadFilesSimulator(0);
+    this.uploadFiles(0);
   }
 
   /**
@@ -119,5 +137,54 @@ export class UploaderComponent {
     const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+  }
+
+  openPreviewFileModal(file: string) {
+    this.previewFile = file;
+    this.modalDialog = this._modalService.open(this.previewFileModal, {
+      centered: true,
+      windowClass: "modal modal-default",
+      size: "md",
+    });
+  }
+
+  openPDF(pdf: string) {
+    window.open(window.location.origin + "/assets/file-storage/" + pdf);
+  }
+
+  dialogConfirmRemoveFileShow(item) {
+    this.selectedFile = item;
+    this.dialogConfirmRemoveFile.showQuestionModal();
+  }
+
+  preparedRemoveFile() {
+    let newValue = this.group.controls[this.config.name].value.replace(
+      this.selectedFile,
+      ""
+    );
+    if (newValue.slice(-1) === ";") {
+      newValue = newValue.slice(0, -1);
+    } else if (newValue.slice(0, 1) === ";") {
+      newValue = newValue.slice(1);
+    } else if (newValue.indexOf(";;") != -1) {
+      newValue = newValue.replace(";;", ";");
+    }
+    this.group.controls[this.config.name].setValue(newValue);
+    this.group.value[this.config.name] = newValue;
+    this.packFiles(newValue);
+  }
+
+  confirmRemoveFile() {
+    this.preparedRemoveFile();
+    this._service
+      .callPostMethod(
+        "/api/uploader/deleteObservationSheetFile",
+        this.group.value
+      )
+      .subscribe((data) => {
+        if (data) {
+          this._messageService.sendRefreshAfterRemoveFile(this.group.value);
+        }
+      });
   }
 }

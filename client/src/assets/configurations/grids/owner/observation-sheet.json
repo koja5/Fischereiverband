@@ -50,7 +50,7 @@
     "editSettingsRequest": {
         "add": {
             "type": "POST",
-            "api": "/api/uploader/upload",
+            "api": "/api/uploader/setObservationSheetAndUploadDocument",
             "parameters": [],
             "fields": "",
             "root": ""
@@ -268,18 +268,6 @@
             "type": "string",
             "class": "text-align-right",
             "field": "estimation_inventory",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "observationSheet.documentation",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "string",
-            "class": "text-align-right",
-            "field": "documentation",
             "validation": {
                 "required": true
             }

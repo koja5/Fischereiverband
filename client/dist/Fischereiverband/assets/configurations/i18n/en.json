@@ -276,5 +276,12 @@
         "river": "River",
         "lake": "Lake",
         "smallLake": "Small lake"
+    },
+    "uploader": {
+        "dragAndDrop": "Drag and drop file here",
+        "or": "or",
+        "browseForFile": "Browse for file",
+        "savedFiles": "Saved files",
+        "noDocumentsAdded": "No documents added"
     }
 }

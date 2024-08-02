@@ -1,5 +1,5 @@
 <app-loader *ngIf="loader"></app-loader>
-<div class="content-wrapper p-0" *ngIf="!loader&&config">
+<div class="content-wrapper p-0" *ngIf="config&&!loader">
     <div class="content-body">
         <!-- User List -->
         <section class="users-list-wrapper">
@@ -78,7 +78,7 @@
                 <app-no-data *ngIf="!rows || !rows.length"></app-no-data>
 
 
-                <ngx-datatable #grid id="grid" *ngIf="rows && rows.length" [rows]="rows" [rowHeight]="50"
+                <ngx-datatable *ngIf="rows && rows.length" #grid id="grid" [rows]="rows" [rowHeight]="50"
                     class="bootstrap core-bootstrap" [limit]="selectedOption" [columnMode]="ColumnMode.force"
                     [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true" [sorts]="config.sorting.fields">
                     <!-- <ngx-datatable-column name="User" prop="fullName" [width]="200">
@@ -224,6 +224,11 @@
                                             <span [data-feather]="item.template.actionMode.icon"
                                                 [class]="'cursor-pointer'"></span>
                                         </button>
+                                        <button *ngIf="item.template.actionMode.action" type="button"
+                                            class="btn icon-btn btn-sm hide-arrow"
+                                            (click)="actionColumn(item.template.actionMode.action, value, row)"><span
+                                                [data-feather]="item.template.actionMode.action.icon"
+                                                [class]="'cursor-pointer'"></span></button>
                                     </div>
                                 </div>
                             </div>
