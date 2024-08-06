@@ -82,7 +82,7 @@ export class FishCatchComponent {
     }
 
     this._service
-      .callGetMethod("/api/owner/getFbzRegister", "")
+      .callGetMethod("/api/owner/getManagementRegistersData", "")
       .subscribe((data: ManagementRegisterModel[]) => {
         this.managementRegistersData = data;
         if (data.length) {
@@ -303,8 +303,6 @@ export class FishCatchComponent {
       this._helpService.checkUndefinedProperty(event) &&
       event.type != "submit"
     ) {
-      let body = {};
-
       this.waterCustom = {
         type_of_water: event.type_of_water,
         name: event.name,

@@ -12,6 +12,9 @@ import { TranslateModule } from "@ngx-translate/core";
 import { NgbAlert, NgbAlertModule } from "@ng-bootstrap/ng-bootstrap";
 import { FishCatchComponent } from "./components/fish-catch/fish-catch.component";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { BirdCountComponent } from "./components/bird-count/bird-count.component";
+import { BirdDamageComponent } from "./components/bird-damage/bird-damage.component";
+import { CustomFormBirdDamageComponent } from './components/bird-damage/custom-form-bird-damage/custom-form-bird-damage.component';
 
 const routes = [
   {
@@ -26,7 +29,15 @@ const routes = [
   },
   {
     path: "fish-catch",
-    component: FishCatchComponent
+    component: FishCatchComponent,
+  },
+  {
+    path: "bird-count",
+    component: BirdCountComponent,
+  },
+  {
+    path: "bird-damage",
+    component: BirdDamageComponent,
   },
 ];
 
@@ -35,6 +46,9 @@ const routes = [
     FishStockingComponent,
     ObservationSheetComponent,
     FishCatchComponent,
+    BirdCountComponent,
+    BirdDamageComponent,
+    CustomFormBirdDamageComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +59,7 @@ const routes = [
     MainCoreCommonModule,
     TranslateModule,
     NgbAlertModule,
-    NgxDatatableModule
+    NgxDatatableModule,
   ],
   providers: [],
   exports: [RouterModule],

@@ -2,7 +2,7 @@
     "template": "send_notification_to_admin_for_completed_fish_stocking_report.hjs",
     "language": {
         "en": {
-            "subject": "Completed report for #fbz from #name",
+            "subject": "Completed fish stocking report for #fbz from #name",
             "body": {
                 "greetings": "Hey 👋",
                 "message": "User #name completed report #fbz",
@@ -21,7 +21,7 @@
             }
         },
         "de": {
-            "subject": "Besatzmeldung für #fbz von #name",
+            "subject": "Ausgefüllter Fischbesatzbericht für #fbz von #name",
             "body": {
                 "greetings": "Hey 👋",
                 "message": "der Bewirtschafter #name hat seinen Besatzbericht für #fbz abgeschlossen",

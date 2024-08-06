@@ -256,7 +256,7 @@
             ],
             "request": {
                 "type": "GET",
-                "api": "/api/owner/getFbzRegister",
+                "api": "/api/owner/getManagementRegistersData",
                 "parameters": [],
                 "fields": "",
                 "root": ""

@@ -17,7 +17,7 @@
         <div class="mb-2 col-md-3">
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
                 [(ngModel)]="fishCatchFilter.managementRegisterId"
-                [placeholder]="'commonFields.chooseNameOfWater' | translate"
+                [placeholder]="'commonFields.chooseManagementRegistry' | translate"
                 (change)="onChangeManagementRegister($event)" [searchable]="true">
                 <ng-template ng-label-tmp let-item="item" let-clear="clear">
                     <span>{{item.fbz}} - {{item.year}}</span>
@@ -33,7 +33,7 @@
         </div>
         <div class="mb-2 col-md-3">
             <ng-select [items]="allWaters" bindLabel="name" bindValue="id" [(ngModel)]="fishCatchFilter.water"
-                [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChangeWater($event)"
+                [placeholder]="'commonFields.chooseNameOfWater' | translate" (change)="onChangeWater($event)"
                 [searchable]="true">
                 <ng-template ng-footer-tmp>
                     <p class="m-0 font-weight-bold cursor-pointer" (click)="openModalNewEntrie()"><span
@@ -74,7 +74,6 @@
 
 <app-loader *ngIf="loading"></app-loader>
 
-
 <ng-template #modalNewEntrie let-modal>
     <div class="modal-header">
         <h5 class="modal-title" id="myModalLabel160">{{title ? title : 'generalDialog.areYouSure' | translate}}</h5>
@@ -88,7 +87,6 @@
         </app-dynamic-forms>
     </div>
 </ng-template>
-
 
 <app-dialog-confirm #dialogConfirm [title]="('actionMessage.dialogCompleteReportQuestionTitle' | translate)"
     [content]="('actionMessage.dialogCompleteReportQuestionText' | translate)"

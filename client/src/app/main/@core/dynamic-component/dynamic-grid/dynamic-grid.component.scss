@@ -52,3 +52,17 @@
 .cursor-not-allowed {
   cursor: not-allowed;
 }
+
+.inline-editing span {
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.inline-editing button {
+  display: flex;
+  align-items: center;
+}
+
+.inline-editing button span {
+  padding-right: 5px;
+}

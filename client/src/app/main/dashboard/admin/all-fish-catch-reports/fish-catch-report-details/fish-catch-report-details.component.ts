@@ -40,8 +40,8 @@ export class FishCatchReportDetailsComponent {
   ) {}
 
   ngOnInit() {
-    this.getFishCatchReportDetails();
-    this.getFishCatchReportStatus();
+    this.getReportDetails();
+    this.getReportStatus();
     this.getWatersForSelectedManagementRegister();
   }
 
@@ -59,7 +59,7 @@ export class FishCatchReportDetailsComponent {
       });
   }
 
-  getFishCatchReportDetails() {
+  getReportDetails() {
     this.loader = true;
     this._service
       .callGetMethod(
@@ -74,7 +74,7 @@ export class FishCatchReportDetailsComponent {
       });
   }
 
-  getFishCatchDetailsForSelectedWater(id_water: number) {
+  getDetailsForSelectedWater(id_water: number) {
     this.loader = true;
     this._service
       .callGetMethod(
@@ -91,7 +91,7 @@ export class FishCatchReportDetailsComponent {
       });
   }
 
-  getFishCatchReportStatus() {
+  getReportStatus() {
     this._service
       .callGetMethod(
         "/api/admin/getFishCatchReport?fbz=" +
@@ -121,7 +121,7 @@ export class FishCatchReportDetailsComponent {
     this.dialogConfirmReminderOwner.showQuestionModal();
   }
 
-  reminderOwnerToCompleteFishCatchReport() {
+  reminderOwnerToCompleteReport() {
     this.loader = true;
     this._service
       .callPostMethod("/api/mail/reminderOwnerToCompleteFishCatchReport", {
@@ -136,7 +136,7 @@ export class FishCatchReportDetailsComponent {
       });
   }
 
-  backFishCatchReportToOwner() {
+  backReportToOwner() {
     this.loader = true;
     this._service
       .callPostMethod("/api/admin/backFishCatchReportToOwner", {
@@ -154,9 +154,9 @@ export class FishCatchReportDetailsComponent {
 
   onChangeWater(event: any) {
     if (event) {
-      this.getFishCatchDetailsForSelectedWater(event.id);
+      this.getDetailsForSelectedWater(event.id);
     } else {
-      this.getFishCatchReportDetails();
+      this.getReportDetails();
     }
   }
 }

@@ -1,0 +1,181 @@
+{
+    "pageSize": 10,
+    "request": {
+        "type": "GET",
+        "api": "/api/owner/getAllObservationSheet",
+        "parameters": [],
+        "fields": "",
+        "root": ""
+    },
+    "paging": {
+        "enable": true,
+        "settings": {
+            "pageSizes": true,
+            "pageSize": 20
+        }
+    },
+    "sorting": {
+        "enable": true
+    },
+    "grouping": {
+        "enable": true,
+        "group": []
+    },
+    "filtering": {
+        "enable": true,
+        "settings": {
+            "type": "Menu"
+        }
+    },
+    "formDialog": {
+        "type": "sidebar",
+        "closeAfterExecute": false,
+        "size": "lg"
+    },
+    "customGrouping": false,
+    "allowResizing": true,
+    "reorderable": true,
+    "selectable": true,
+    "scrollable": false,
+    "hideable": true,
+    "refresh": false,
+    "reset": true,
+    "editSettings": {
+        "allowEditing": true,
+        "allowAdding": true,
+        "allowDeleting": true,
+        "showDeleteConfirmDialog": true,
+        "mode": "Dialog"
+    },
+    "editSettingsRequest": {
+        "add": {
+            "type": "POST",
+            "formData": true,
+            "api": "/api/uploader/setObservationSheetAndUploadDocument",
+            "parameters": [],
+            "fields": "",
+            "root": ""
+        }
+    },
+    "columns": [
+        {
+            "title": "commonFields.action",
+            "template": {
+                "type": "action",
+                "actionMode": {
+                    "type": "menu",
+                    "icon": "more-vertical",
+                    "menu": [
+                        {
+                            "type": "edit",
+                            "actionName": "general.edit",
+                            "icon": "edit",
+                            "formDialog": {
+                                "type": "sidebar",
+                                "closeAfterExecute": true
+                            }
+                        },
+                        {
+                            "type": "delete",
+                            "actionName": "general.delete",
+                            "icon": "trash",
+                            "executeAction": {
+                                "request": {
+                                    "type": "POST",
+                                    "api": "/api/owner/deleteObservationSheet",
+                                    "parameters": [],
+                                    "fields": "",
+                                    "root": ""
+                                },
+                                "response": "toastr",
+                                "showQuestionBeforeExecute": true,
+                                "modalConfig": {
+                                    "modalTitle": "",
+                                    "modalText": "",
+                                    "windowClass": "modal modal-danger"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "field": "allow_online"
+        },
+        {
+            "title": "observationSheet.district",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "fbz",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "observationSheet.dateAndTime",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "date",
+            "format": "dd.MM.yyyy HH:mm",
+            "class": "text-align-right",
+            "field": "date_time",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "observationSheet.district",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "district",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "observationSheet.nameOfWater",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "water",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "observationSheet.orientation",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "orientation",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "observationSheet.typeOfWater",
+            "width": 150,
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "type_of_water",
+            "validation": {
+                "required": true
+            }
+        }
+    ],
+    "config": [
+    ]
+}

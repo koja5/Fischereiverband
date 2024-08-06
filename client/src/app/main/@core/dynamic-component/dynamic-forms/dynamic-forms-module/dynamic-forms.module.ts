@@ -29,6 +29,7 @@ import { CoreCommonModule } from "@core/common.module";
 import { MainCoreCommonModule } from "app/main/@core/common/main-core-common.module";
 import { CoreSidebarModule } from "@core/components";
 import { DynamicFormsComponent } from "../dynamic-forms.component";
+import { DynamicRowsComponent } from "../dynamic-rows/dynamic-rows.component";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { DynamicFormsComponent } from "../dynamic-forms.component";
     ColorPickerComponent,
     ExplanationMarkComponent,
     PhonePrefixComponent,
+    DynamicRowsComponent,
   ],
   exports: [
     DynamicFormsComponent,
@@ -68,6 +70,7 @@ import { DynamicFormsComponent } from "../dynamic-forms.component";
     ColorPickerComponent,
     ExplanationMarkComponent,
     PhonePrefixComponent,
+    DynamicRowsComponent,
   ],
   imports: [
     CommonModule,
@@ -99,6 +102,7 @@ import { DynamicFormsComponent } from "../dynamic-forms.component";
     DatetimepickerComponent,
     ColorPickerComponent,
     PhonePrefixComponent,
+    DynamicRowsComponent,
   ],
 })
 export class DynamicFormsModule {}

@@ -272,7 +272,7 @@ router.post("/deleteObservationSheet", auth, function (req, res) {
 
 //#region FBZ REGISTER
 
-router.get("/getFbzRegister", auth, async (req, res, next) => {
+router.get("/getManagementRegistersData", auth, async (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
       if (err) {
@@ -659,7 +659,10 @@ router.get(
           logger.log("error", err.sql + ". " + err.sqlMessage);
           res.json(err);
         } else {
-          if (req.query.id_water != "undefined" && req.query.id_water != "null") {
+          if (
+            req.query.id_water != "undefined" &&
+            req.query.id_water != "null"
+          ) {
             conn.query(
               "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.id_water = ?",
               [splitFBZ(req.query.fbz), req.query.id_water],
@@ -962,6 +965,253 @@ router.post(
       makeRequest(
         req.body,
         "mail/sendRequestToAdminForAdditionalFishCatchReportChanges",
+        res
+      );
+    });
+  }
+);
+
+//#endregion
+
+//#region BIRD COUNT
+
+router.get("/getBirdCountForSelectedWater", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        if (req.query.id_water != "undefined" && req.query.id_water != "null") {
+          conn.query(
+            "select * from bird_count_details  where fbz = ? and id_water = ?",
+            [req.query.fbz, req.query.id_water],
+            function (err, rows, fields) {
+              conn.release();
+              if (err) {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(err);
+              } else {
+                res.json(rows);
+              }
+            }
+          );
+        }
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/setBirdCount", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+
+    conn.query(
+      "INSERT INTO bird_count_details set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/completeBirdCountReport", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+
+    conn.query(
+      "select * from bird_count_reports where fbz = ? and year = ?",
+      [req.body.fbz, req.body.year],
+      function (err, rows) {
+        if (!err) {
+          if (rows.length) {
+            conn.query(
+              "UPDATE bird_count_reports set ? where id = ?",
+              [req.body, rows[0].id],
+              function (err, rows) {
+                conn.release();
+                if (!err) {
+                  req.body["firstname"] = req.user.user.firstname;
+                  req.body["lastname"] = req.user.user.lastname;
+                  makeRequest(
+                    req.body,
+                    "mail/sendNotificationToAdminForCompletedBirdCountReport",
+                    res
+                  );
+                } else {
+                  logger.log("error", err.sql + ". " + err.sqlMessage);
+                  res.json(false);
+                }
+              }
+            );
+          } else {
+            conn.query(
+              "INSERT INTO bird_count_reports set ?",
+              [req.body],
+              function (err, rows) {
+                conn.release();
+                if (!err) {
+                  req.body["firstname"] = req.user.user.firstname;
+                  req.body["lastname"] = req.user.user.lastname;
+                  makeRequest(
+                    req.body,
+                    "mail/sendNotificationToAdminForCompletedBirdCountReport",
+                    res
+                  );
+                } else {
+                  logger.log("error", err.sql + ". " + err.sqlMessage);
+                  res.json(false);
+                }
+              }
+            );
+          }
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/noHaveBirdCountEntry", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+
+    conn.query(
+      "delete from bird_count_details where fbz = ?",
+      [req.body.fbz],
+      function (err, rows) {
+        if (!err) {
+          conn.query(
+            "select * from bird_count_reports where fbz = ? and year = ?",
+            [req.body.fbz, req.body.year],
+            function (err, rows) {
+              if (!err) {
+                if (rows.length) {
+                  conn.query(
+                    "UPDATE bird_count_reports set ? where id = ?",
+                    [req.body, rows[0].id],
+                    function (err, rows) {
+                      conn.release();
+                      if (!err) {
+                        req.body["firstname"] = req.user.user.firstname;
+                        req.body["lastname"] = req.user.user.lastname;
+                        makeRequest(
+                          req.body,
+                          "mail/sendNotificationToAdminForCompletedFishCatchReport",
+                          res
+                        );
+                      } else {
+                        logger.log("error", err.sql + ". " + err.sqlMessage);
+                        res.json(false);
+                      }
+                    }
+                  );
+                } else {
+                  conn.query(
+                    "INSERT INTO bird_count_reports set ?",
+                    [req.body],
+                    function (err, rows) {
+                      conn.release();
+                      if (!err) {
+                        req.body["firstname"] = req.user.user.firstname;
+                        req.body["lastname"] = req.user.user.lastname;
+                        makeRequest(
+                          req.body,
+                          "mail/sendNotificationToAdminForCompletedFishCatchReport",
+                          res
+                        );
+                      } else {
+                        logger.log("error", err.sql + ". " + err.sqlMessage);
+                        res.json(false);
+                      }
+                    }
+                  );
+                }
+              } else {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(false);
+              }
+            }
+          );
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.get("/getBirdCountReport", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from bird_count_reports where id_owner = ? and fbz = ?",
+          [req.user.user.id, req.query.fbz],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post(
+  "/requestToAdminForAdditionalBirdCountReportChanges",
+  auth,
+  function (req, res) {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+
+      req.body["firstname"] = req.user.user.firstname;
+      req.body["lastname"] = req.user.user.lastname;
+      makeRequest(
+        req.body,
+        "mail/sendRequestToAdminForAdditionalBirdCountReportChanges",
         res
       );
     });

@@ -21,11 +21,16 @@ import { DynamicGridComponent } from "./dynamic-grid/dynamic-grid.component";
 import { MainCoreCommonModule } from "../common/main-core-common.module";
 import { ExportAsModule } from "ngx-export-as";
 import { CsvModule } from "@ctrl/ngx-csv";
-import { UploaderComponent } from './dynamic-forms/dynamic-fields/uploader/uploader.component';
-import { ProgressComponent } from './dynamic-forms/dynamic-fields/uploader/progress/progress.component';
+import { UploaderComponent } from "./dynamic-forms/dynamic-fields/uploader/uploader.component";
+import { ProgressComponent } from "./dynamic-forms/dynamic-fields/uploader/progress/progress.component";
 
 @NgModule({
-  declarations: [DynamicGridComponent, DynamicTabsComponent, UploaderComponent, ProgressComponent],
+  declarations: [
+    DynamicGridComponent,
+    DynamicTabsComponent,
+    UploaderComponent,
+    ProgressComponent,
+  ],
   imports: [
     CommonModule,
     DynamicFormsModule,

@@ -148,7 +148,8 @@ export class HelpService {
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
         userAgent
-      )
+      ) ||
+      window.innerWidth < 993
     ) {
       return true;
     } else {

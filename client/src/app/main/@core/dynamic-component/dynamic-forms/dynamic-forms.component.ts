@@ -239,8 +239,15 @@ export class DynamicFormsComponent implements OnInit, CanComponentDeactivate {
       event.preventDefault();
       event.stopPropagation();
       this.isDirty = false;
-      const formData = this.packFormData();
-      this.submit.emit(formData);
+      if (
+        this.config.editSettingsRequest &&
+        this.config.editSettingsRequest.add.formData
+      ) {
+        const formData = this.packFormData();
+        this.submit.emit(formData);
+      } else {
+        this.submit.emit(this.form.value);
+      }
     } else {
       this.form.markAsPending();
     }

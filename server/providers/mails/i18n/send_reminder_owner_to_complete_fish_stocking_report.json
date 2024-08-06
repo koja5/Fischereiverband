@@ -2,7 +2,7 @@
     "template": "send_reminder_owner_to_complete_fish_stocking_report.hjs",
     "language": {
         "en": {
-            "subject": "Please complete your report for #fbz",
+            "subject": "Please complete your fish stocking report for #fbz",
             "body": {
                 "greetings": "Hey #name 👋",
                 "message": "Your report for #fbz is not yet completed. Please complete your report.",
@@ -18,7 +18,7 @@
             }
         },
         "de": {
-            "subject": "Bitte vervollständigen Sie Ihren Bericht für #fbz",
+            "subject": "Bitte füllen Sie Ihren Fischbesatzbericht für aus #fbz",
             "body": {
                 "greetings": "Hey #name 👋",
                 "message": "Ihr Bericht für #fbz ist noch nicht abgeschlossen. Bitte vervollständigen Sie Ihren Bericht.",

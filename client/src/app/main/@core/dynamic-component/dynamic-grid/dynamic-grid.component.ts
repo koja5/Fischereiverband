@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  HostListener,
   Input,
   OnInit,
   Output,
@@ -42,8 +43,10 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   @Input() public data: any;
   @Input() externalAccounts: any;
   @Input() disabledCreateNew: boolean = false;
+  @Input() hideCreateNew: boolean = false;
   @Input() additionalData: any;
   @Input() disableCRUD: boolean = false;
+  @Input() template: TemplateRef<any>;
   @Output() submit = new EventEmitter();
   @Output() refreshParentComponent = new EventEmitter();
   @ViewChild("grid") grid: any;
@@ -66,7 +69,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   // Public
   public sidebarToggleRef = false;
   public rows;
-  public selectedOption = 10;
+  public selectedOption = 20;
   public ColumnMode = ColumnMode;
   public temp = [];
   public previousRoleFilter = "";
@@ -83,6 +86,8 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   public googleContacts: any;
   public createNewRecords = true;
   public stayOpened = false;
+  public editing = null;
+  public scrollbarH = false;
 
   public selectRole: any = [
     { name: "All", value: "" },
@@ -292,6 +297,11 @@ export class DynamicGridComponent implements CanComponentDeactivate {
    */
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
+    if (this._helpService.checkIsMobileDevices()) {
+      this.scrollbarH = true;
+    } else {
+      this.scrollbarH = false;
+    }
     this.initialize();
 
     this._messageService
@@ -300,6 +310,15 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       .subscribe((value) => {
         this.getData();
       });
+  }
+
+  @HostListener("window:resize", ["$event"])
+  onWindowResize() {
+    if (this._helpService.checkIsMobileDevices()) {
+      this.scrollbarH = true;
+    } else {
+      this.scrollbarH = false;
+    }
   }
 
   /**
@@ -616,5 +635,25 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     WindowObject.document.writeln(htmlData);
     WindowObject.document.close();
     WindowObject.focus();
+  }
+
+  updateRow(rowIndex: number) {
+    this.submitEmitter(this.rows[rowIndex]);
+    // this.callServerMethod(
+    //   this.config.editSettingsRequest.add,
+    //   this.rows[rowIndex]
+    // );
+    // console.log(this.rows[rowIndex]);
+    // this.config.editSettingsRequest.add.type = "POST";
+    // this._service
+    //   .callServerMethod(
+    //     this.config.editSettingsRequest.add,
+    //     this.rows[rowIndex],
+    //     this._activateRouter
+    //   )
+    //   .subscribe((data: any) => {
+    //     if (data) {
+    //     }
+    //   });
   }
 }

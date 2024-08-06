@@ -916,6 +916,158 @@ router.get("/getObservationSheetDetails", authAdmin, async (req, res, next) => {
 
 //#endregion
 
+//#region BIRD COUNT REPORTS
+router.get("/getAllBirdCountReports", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select bcr.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from bird_count_reports bcr join users u on bcr.id_owner = u.id_owner order by bcr.date_completed desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getBirdCountReportDetails", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select bcd.*, w.name as 'name_of_water', null as 'type_of_water' from bird_count_details bcd join waters w on bcd.id_water = w.id where bcd.fbz = ? and bcd.year = ? union select bcd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water' from bird_count_details bcd join waters_custom wc on bcd.id_water = wc.id where bcd.fbz = ? and bcd.year = ?",
+          [req.query.fbz, req.query.year, req.query.fbz, req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get(
+  "/getBirdCountDetailsForSelectedWater",
+  authAdmin,
+  async (req, res, next) => {
+    try {
+      connection.getConnection(function (err, conn) {
+        if (err) {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(err);
+        } else {
+          conn.query(
+            "select bcd.*, w.name as 'name_of_water', null as 'type_of_water' from bird_count_details bcd join waters w on bcd.id_water = w.id where bcd.fbz = ? and bcd.year = ? and bcd.id_water = ? union select bcd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water' from bird_count_details bcd join waters_custom wc on bcd.id_water = wc.id where bcd.fbz = ? and bcd.year = ? and bcd.id_water = ?",
+            [
+              req.query.fbz,
+              req.query.year,
+              req.query.id_water,
+              req.query.fbz,
+              req.query.year,
+              req.query.id_water,
+            ],
+            function (err, rows, fields) {
+              conn.release();
+              if (err) {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(err);
+              } else {
+                res.json(rows);
+              }
+            }
+          );
+        }
+      });
+    } catch (ex) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(ex);
+    }
+  }
+);
+
+router.get("/getBirdCountReport", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select bcr.*, CONCAT(u.firstname, ' ', u.lastname) as 'owner_name' from bird_count_reports bcr join users u on bcr.id_owner = u.id_owner where bcr.fbz = ? and bcr.year = ?",
+          [req.query.fbz, req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows.length ? rows[0] : rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/backBirdCountReportToOwner", authAdmin, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "update bird_count_reports set status = 1 where id = ?",
+      [req.body.report.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          makeRequest(
+            req.body,
+            "mail/sendNotificationToOwnerForBackBirdCountReport",
+            res
+          );
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
+
 //#region HELP FUNCTION
 
 function isValidSHA1(s) {

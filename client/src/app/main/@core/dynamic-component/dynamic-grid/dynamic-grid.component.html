@@ -42,7 +42,7 @@
                 <div class="p-1 d-flex align-items-center justify-content-between">
                     <div class="flex-grow-0">
                         <button
-                            *ngIf="(config.editSettingsRequest && config.editSettingsRequest.add) && (!config.actionButtons || config.actionButtons.addButton)"
+                            *ngIf="(config.editSettingsRequest && config.editSettingsRequest.add) && (!config.actionButtons || config.actionButtons.addButton) && !hideCreateNew"
                             class="btn btn-primary {{disableCRUD || disabledCreateNew ? 'cursor-not-allowed' : ''}}"
                             title="{{disableCRUD || disabledCreateNew ? ('actionMessage.actionNotAllowed' | translate) : ''}}"
                             rippleEffect
@@ -80,7 +80,7 @@
 
                 <ngx-datatable *ngIf="rows && rows.length" #grid id="grid" [rows]="rows" [rowHeight]="50"
                     class="bootstrap core-bootstrap" [limit]="selectedOption" [columnMode]="ColumnMode.force"
-                    [headerHeight]="50" [footerHeight]="50" [scrollbarH]="true" [sorts]="config.sorting.fields">
+                    [headerHeight]="50" [footerHeight]="50" [sorts]="config.sorting.fields" [scrollbarH]="scrollbarH">
                     <!-- <ngx-datatable-column name="User" prop="fullName" [width]="200">
               <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                 <div class="d-flex align-items-center">
@@ -140,8 +140,26 @@
                             <span class="{{item.class}}">{{column.name}}</span>
                         </ng-template>
 
-                        <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                        <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex"
+                            ngx-datatable-cell-template>
                             <div *ngIf="item.template">
+                                <div *ngIf="item.template.type === 'inlineEditing'" class="inline-editing d-flex">
+                                    <button *ngIf="editing != rowIndex"
+                                        class="btn-sm btn-outline-primary {{disableCRUD || disabledCreateNew ? 'cursor-not-allowed' : ''}}"
+                                        title="{{disableCRUD || disabledCreateNew ? ('actionMessage.actionNotAllowed' | translate) : ''}}"
+                                        (click)="editing = rowIndex" [disabled]="disableCRUD">
+                                        <span class="fa fa-pencil-square-o"></span>
+                                        {{'general.edit' | translate}}</button>
+                                    <button *ngIf="editing == rowIndex" class="btn-sm btn-outline-success"
+                                        (click)="updateRow(rowIndex); editing = -1">
+                                        <span class="fa fa-floppy-o"></span> {{'general.save' |translate}}
+                                    </button>
+                                    <!-- <button *ngIf="editing[rowIndex]" class="btn-sm btn-outline-danger"
+                                        (click)="editing[rowIndex] = false">
+                                        <span class="fa fa-remove"></span> {{'general.cancel' | translate}}
+                                    </button> -->
+
+                                </div>
                                 <div *ngIf="item.template.choices" class="datatable-body-cell">
                                     <div *ngFor="let item of item.template.choices">
                                         <!-- directly html code -->
@@ -237,7 +255,11 @@
                                     {{value | date: item.format}}
                                 </div>
                                 <div *ngIf="item.type === 'string'">
-                                    {{value}}
+                                    <span *ngIf="editing != rowIndex || item.noEditable">
+                                        {{value}}
+                                    </span>
+                                    <input class=" form-control" *ngIf="editing == rowIndex && !item.noEditable"
+                                        name="{{item.field}}" [(ngModel)]="rows[rowIndex][item.field]" />
                                 </div>
                             </div>
                             <!-- <div>
@@ -337,6 +359,7 @@
                             <app-dynamic-forms *ngIf="config.config && config.config.length > 0" [config]="config"
                                 [partOfGrid]="true" [data]="data" (submit)="submitEmitter($event)" #form="dynamicForm">
                             </app-dynamic-forms>
+                            <ng-template *ngIf="!config.config || !config.config.length" [ngTemplateOutlet]="template"></ng-template>
                         </div>
                     </form>
 

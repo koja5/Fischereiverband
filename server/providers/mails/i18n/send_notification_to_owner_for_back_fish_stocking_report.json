@@ -2,7 +2,7 @@
     "template": "send_notification_to_owner_for_back_fish_stocking_report.hjs",
     "language": {
         "en": {
-            "subject": "Your status for FBZ is back",
+            "subject": "Your fish stocking report status for FBZ is back",
             "body": {
                 "greetings": "Hey 👋",
                 "message": "Use this link to reset your password and login.",
@@ -18,7 +18,7 @@
             }
         },
         "de": {
-            "subject": "Besatzmeldung: Bearbeitungs-Status für #fbz wurde zurückgesetzt",
+            "subject": "Status Ihres Fischbesatzberichts für #fbz wurde zurückgesetzt",
             "body": {
                 "greetings": "Hey #name 👋",
                 "message": "der Bearbeitungs-Status für die Besatzmeldung für #fbz ist zurück gesetzt worden. Sie können Ihre Besatzmeldung wieder bearbeiten.",

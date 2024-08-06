@@ -20,6 +20,8 @@ import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule } from "@angular/forms";
 import { AllObservationSheetsComponent } from "./all-observation-sheets/all-observation-sheets.component";
 import { ObservationSheetDetailsComponent } from "./all-observation-sheets/observation-sheet-details/observation-sheet-details.component";
+import { AllBirdCountReportsComponent } from "./all-bird-count-reports/all-bird-count-reports.component";
+import { BirdCountReportDetailsComponent } from "./all-bird-count-reports/bird-count-report-details/bird-count-report-details.component";
 
 const routes = [
   {
@@ -76,6 +78,14 @@ const routes = [
     path: "observation-sheet-details",
     component: ObservationSheetDetailsComponent,
   },
+  {
+    path: "all-bird-count-reports",
+    component: AllBirdCountReportsComponent,
+  },
+  {
+    path: "bird-count-report-details",
+    component: BirdCountReportDetailsComponent,
+  },
 ];
 
 @NgModule({
@@ -92,6 +102,8 @@ const routes = [
     FishCatchReportDetailsComponent,
     AllObservationSheetsComponent,
     ObservationSheetDetailsComponent,
+    AllBirdCountReportsComponent,
+    BirdCountReportDetailsComponent,
   ],
   imports: [
     CommonModule,

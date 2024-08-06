@@ -48,10 +48,10 @@
 <app-dialog-confirm #dialogConfirmBackReport [title]="('actionMessage.dialogBackReportToOwnerTitle' | translate)"
     [content]="('actionMessage.dialogBackReportToOwnerText' | translate)"
     [confirmButtonText]="('generalDialog.yes' | translate)" [cancelButtonText]="('generalDialog.no' | translate)"
-    (confirm)="backFishCatchReportToOwner()"></app-dialog-confirm>
+    (confirm)="backReportToOwner()"></app-dialog-confirm>
 
 <app-dialog-confirm #dialogConfirmReminderOwner
     [title]="('actionMessage.dialogReminderOwnerToCompleteReportTitle' | translate)"
     [content]="('actionMessage.dialogReminderOwnerToCompleteReportText' | translate)"
     [confirmButtonText]="('generalDialog.yes' | translate)" [cancelButtonText]="('generalDialog.no' | translate)"
-    (confirm)="reminderOwnerToCompleteFishCatchReport()"></app-dialog-confirm>
+    (confirm)="reminderOwnerToCompleteReport()"></app-dialog-confirm>

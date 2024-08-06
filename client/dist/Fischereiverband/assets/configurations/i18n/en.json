@@ -172,15 +172,17 @@
         "allFishes": "Fishes",
         "allOrigins": "Origins",
         "allWaters": "Waters",
+        "allFishCatchReports": "Fish catch reports",
+        "allObservationSheets": "Observation sheets",
+        "allFishStockingReports": "Fish stocking reports",
+        "allBirdCountReports": "Bird count",
         "ageOfFishes": "Age of fishes",
         "managementRegisters": "Management registers",
-        "allFishStockingReports": "Fish stocking reports",
         "fishStocking": "Fish stocking reports",
         "reportOccupation": "Fish stocking",
         "observationSheet": "Observation sheet",
         "fishCatch": "Fish catch",
-        "allFishCatchReports": "Fish catch reports",
-        "allObservationSheets": "Observation sheets"
+        "birdCount": "Bird count"
     },
     "navBar": {
         "profile": "Profile",
@@ -283,5 +285,10 @@
         "browseForFile": "Browse for file",
         "savedFiles": "Saved files",
         "noDocumentsAdded": "No documents added"
+    },
+    "birdCount": {
+        "heron": "Heron",
+        "cormorant": "Cormorant",
+        "gooseSayer": "Goose sayer"
     }
 }

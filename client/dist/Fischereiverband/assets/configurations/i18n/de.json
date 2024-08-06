@@ -153,15 +153,17 @@
       "allFishes": "Fischarten",
       "allOrigins": "Herkunft Besatz",
       "allWaters": "Gewässer",
-      "ageOfFishes": "Alter der Fische",
       "allFishStockingReports": "Besatzmeldungen",
+      "allFishCatchReports": "Ausfang",
+      "allObservationSheets": "Fischotterschaden",
+      "allBirdCountReports": "Vogelzählung",
+      "ageOfFishes": "Alter der Fische",
       "fishStocking": "Besatzmeldungen",
       "managementRegisters": "FBZs",
       "reportOccupation": "Besatzmeldung",
       "observationSheet": "Fischotterschaden",
       "fishCatch": "Ausfang",
-      "allFishCatchReports": "Ausfang",
-      "allObservationSheets": "Fischotterschaden"
+      "birdCount": "Vogelzählung"
    },
    "navBar": {
       "profile": "Profil",
@@ -277,5 +279,10 @@
       "browseForFile": "Suchen Sie nach der Datei",
       "savedFiles": "Gespeicherte Dateien",
       "noDocumentsAdded": "Keine Dokumente hinzugefügt"
+   },
+   "birdCount": {
+      "heron": "Reiher",
+      "cormorant": "Kormoran",
+      "gooseSayer": "Ganse-sager"
    }
 }

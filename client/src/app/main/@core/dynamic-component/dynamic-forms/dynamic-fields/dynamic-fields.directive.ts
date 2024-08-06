@@ -26,6 +26,7 @@ import { ColorPickerComponent } from "./inputs/color-picker/color-picker.compone
 import { RadioComponent } from "./buttons/radio/radio.component";
 import { PhonePrefixComponent } from "./inputs/phone-prefix/phone-prefix.component";
 import { UploaderComponent } from "./uploader/uploader.component";
+import { DynamicRowsComponent } from "../dynamic-rows/dynamic-rows.component";
 
 const components: { [type: string]: Type<Field> } = {
   textbox: TextBoxComponent,
@@ -42,7 +43,8 @@ const components: { [type: string]: Type<Field> } = {
   timepicker: TimepickerComponent,
   color: ColorPickerComponent,
   phoneprefix: PhonePrefixComponent,
-  uploader: UploaderComponent
+  uploader: UploaderComponent,
+  dynamicRows: DynamicRowsComponent,
 };
 
 @Directive({

@@ -52,7 +52,7 @@
     "columns": [
         {
             "title": "commonFields.action",
-            "width": 80,
+            "width": 130,
             "template": {
                 "type": "action",
                 "actionMode": {

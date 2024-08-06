@@ -47,7 +47,7 @@ export class FishStockingComponent implements OnInit {
 
   ngOnInit() {
     this._service
-      .callGetMethod("/api/owner/getFbzRegister", "")
+      .callGetMethod("/api/owner/getManagementRegistersData", "")
       .subscribe((data: ManagementRegisterModel[]) => {
         this.managementRegistersData = data;
         if (data.length) {
