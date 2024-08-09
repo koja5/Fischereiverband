@@ -22,6 +22,9 @@ import { AllObservationSheetsComponent } from "./all-observation-sheets/all-obse
 import { ObservationSheetDetailsComponent } from "./all-observation-sheets/observation-sheet-details/observation-sheet-details.component";
 import { AllBirdCountReportsComponent } from "./all-bird-count-reports/all-bird-count-reports.component";
 import { BirdCountReportDetailsComponent } from "./all-bird-count-reports/bird-count-report-details/bird-count-report-details.component";
+import { AllBirdDamageReportsComponent } from "./all-bird-damage-reports/all-bird-damage-reports.component";
+import { BirdDamageReportDetailsComponent } from "./all-bird-damage-reports/bird-damage-report-details/bird-damage-report-details.component";
+import { TemplateModule } from "../template/template.module";
 
 const routes = [
   {
@@ -86,6 +89,14 @@ const routes = [
     path: "bird-count-report-details",
     component: BirdCountReportDetailsComponent,
   },
+  {
+    path: "all-bird-damage-reports",
+    component: AllBirdDamageReportsComponent,
+  },
+  {
+    path: "bird-damage-report-details",
+    component: BirdDamageReportDetailsComponent,
+  },
 ];
 
 @NgModule({
@@ -104,6 +115,8 @@ const routes = [
     ObservationSheetDetailsComponent,
     AllBirdCountReportsComponent,
     BirdCountReportDetailsComponent,
+    AllBirdDamageReportsComponent,
+    BirdDamageReportDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -114,6 +127,7 @@ const routes = [
     NgbAlertModule,
     MainCoreCommonModule,
     NgSelectModule,
+    TemplateModule,
   ],
 
   providers: [],

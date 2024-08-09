@@ -8,9 +8,11 @@ import { ToastrComponent } from "app/main/@core/common/toastr/toastr.component";
 import { DialogConfirmComponent } from "app/main/@core/common/dialog-confirm/dialog-confirm.component";
 import { BirdCountReportModel } from "app/main/dashboard/models/bird-count-report.model";
 import { ReportStatusEnum } from "app/main/dashboard/enums/report-status-enum";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { HelpService } from "app/services/help.service";
-import { WaterCustomModel } from "app/main/dashboard/models/water-custom-model";
+import { MessageService } from "app/services/message.service";
+import { DynamicGridComponent } from "app/main/@core/dynamic-component/dynamic-grid/dynamic-grid.component";
+import { BirdDamageModel } from "app/main/dashboard/models/bird-damage.model";
+import { BirdDamageFilterModel } from "app/main/dashboard/models/bird-damage-filter.model";
+import { BirdDamageReportModel } from "app/main/dashboard/models/bird-damage-report.model";
 
 @Component({
   selector: "app-bird-damage",
@@ -20,6 +22,8 @@ import { WaterCustomModel } from "app/main/dashboard/models/water-custom-model";
 export class BirdDamageComponent {
   public path = "grids/owner";
   public file = "bird-damage.json";
+
+  @ViewChild("grid") grid: DynamicGridComponent;
 
   @ViewChild("dialogConfirm")
   dialogConfirm: DialogConfirmComponent;
@@ -31,36 +35,33 @@ export class BirdDamageComponent {
   public modalDialog: any;
 
   public managementRegistersData: ManagementRegisterModel[];
-  public filter = new BirdCountFilterModel();
+  public filter = new BirdDamageFilterModel();
   public allWaters: any;
-  public data: BirdCountModel[] = [];
-  public report: BirdCountReportModel;
+  public data: BirdDamageModel[] = [];
+  public itemData: BirdDamageModel;
+  public report: BirdDamageReportModel;
   public reportStatusEnum = ReportStatusEnum;
   public loading = false;
-  public waterCustom = new WaterCustomModel();
 
   constructor(
     private _service: CallApiService,
     private _storageService: StorageService,
     private _toastr: ToastrComponent,
-    private _modalService: NgbModal,
-    private _helpService: HelpService
+    private _messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.getManagementRegistersData();
 
-    if (this._storageService.getValueFromLocalStorage("bird-count-filter")) {
+    if (this._storageService.getValueFromLocalStorage("bird-damage-filter")) {
       this.filter =
-        this._storageService.getValueFromLocalStorage("bird-count-filter");
-      if (this.filter.water) {
-        this.getBirdCountForSelectedWater();
-      } else {
-        this.data = [];
-      }
+        this._storageService.getValueFromLocalStorage("bird-damage-filter");
     } else {
-      this.filter = new BirdCountFilterModel();
+      this.filter = new BirdDamageFilterModel();
     }
+
+    this.getDataForGrid();
+    this.getReport();
   }
 
   getManagementRegistersData() {
@@ -68,111 +69,70 @@ export class BirdDamageComponent {
       .callGetMethod("/api/owner/getManagementRegistersData", "")
       .subscribe((data: ManagementRegisterModel[]) => {
         this.managementRegistersData = data;
-        if (data.length) {
-          if (this.filter.managementRegister) {
-            this.getWatersForSelectedManagementRegister(
-              this.filter.managementRegister.fbz
-            );
-          } else {
-            this.data = [];
-          }
-        }
       });
   }
 
-  getWatersForSelectedManagementRegister(fbz: string) {
-    this._service
-      .callGetMethod("api/owner/getAllWaters?fbz=" + fbz)
-      .subscribe((data: any) => {
-        this.allWaters = data;
-        if (data.length === 1) {
-          this.filter.water = data[0].id;
-          this.getBirdCountForSelectedWater();
-        }
-        this.getBirdCountReport();
-      });
-  }
-
-  getBirdCountForSelectedWater() {
+  getDataForGrid() {
     this.loading = true;
     this._service
       .callGetMethod(
-        "api/owner/getBirdCountForSelectedWater?fbz=" +
-          this.filter.managementRegister.fbz +
-          "&id_water=" +
-          this.filter.water
+        "api/owner/getBirdDamage?fbz=" +
+          (this.filter.managementRegister &&
+            this.filter.managementRegister.fbz) ?? null + " "
       )
-      .subscribe((data: BirdCountModel[]) => {
+      .subscribe((data: BirdDamageModel[]) => {
+        this.data = data;
         this.loading = false;
       });
   }
 
-  getBirdCountReport() {
+  getReport() {
     this._service
       .callGetMethod(
-        "/api/owner/getBirdCountReport?fbz=" +
+        "/api/owner/getBirdDamageReport?fbz=" +
           this.filter.managementRegister.fbz
       )
-      .subscribe((data: BirdCountModel) => {
+      .subscribe((data: BirdDamageReportModel) => {
         if (data) {
           this.report = data[0];
         } else {
-          this.report = new BirdCountReportModel();
+          this.report = new BirdDamageReportModel();
         }
       });
   }
 
   onChangeManagementRegister(event: ManagementRegisterModel) {
-    // empty grid
-    this.loading = true;
-    setTimeout(() => {
-      this.data = [];
-      this.loading = false;
-    }, 1);
-    //
     this.filter.managementRegister = event;
-    this.filter.water = null;
     this._storageService.setValueInLocalStorage(
-      "bird-count-filter",
+      "bird-damage-filter",
       this.filter
     );
     if (this.filter.managementRegister) {
-      this.filter.managementRegisterId = event.id;
-      this.getWatersForSelectedManagementRegister(event.fbz);
       this._storageService.setValueInLocalStorage(
-        "bird-count-filter",
+        "bird-damage-filter",
         this.filter
       );
     } else {
-      this._storageService.deleteValueFromLocalStorage("bird-count-filter");
-      this.filter = new BirdCountFilterModel();
+      this._storageService.deleteValueFromLocalStorage("bird-damage-filter");
+      this.filter = new BirdDamageFilterModel();
     }
+
+    this.getDataForGrid();
+    this.getReport();
   }
 
-  onChangeWater() {
-    this.getBirdCountForSelectedWater();
-    this._storageService.setValueInLocalStorage(
-      "bird-count-filter",
-      this.filter
-    );
-  }
-
-  submit(event: BirdCountModel) {
-    event.fbz = this.filter.managementRegister.fbz;
-    event.year = this.filter.managementRegister.year;
-    event.id_water = this.filter.water;
-
-    this._service
-      .callPostMethod("/api/owner/setBirdCount", event)
-      .subscribe((data) => {
-        if (data) {
-          this._toastr.showSuccess();
-        }
-      });
+  emitValueForCustomForm(event: BirdDamageModel) {
+    if (event) {
+      this.itemData = event;
+    } else {
+      this.itemData = new BirdDamageModel();
+    }
+    this.itemData.fbz = this.filter.managementRegister.fbz;
+    this.itemData.year = this.filter.managementRegister.year;
   }
 
   refreshGrid() {
-    this.getBirdCountForSelectedWater();
+    this.getDataForGrid();
   }
 
   completeReportsDialog() {
@@ -188,7 +148,7 @@ export class BirdDamageComponent {
       date_completed: new Date(),
     };
     this._service
-      .callPostMethod("/api/owner/completeBirdCountReport", this.report)
+      .callPostMethod("/api/owner/completeBirdDamageReport", this.report)
       .subscribe((data) => {
         if (data) {
           this._toastr.showSuccess();
@@ -210,7 +170,7 @@ export class BirdDamageComponent {
       date_completed: new Date(),
     };
     this._service
-      .callPostMethod("/api/owner/noHaveBirdCountEntry", this.report)
+      .callPostMethod("/api/owner/noHaveBirdDamageEntry", this.report)
       .subscribe((data) => {
         if (data) {
           this.refreshGrid();
@@ -234,5 +194,10 @@ export class BirdDamageComponent {
           this._toastr.showSuccess();
         }
       });
+  }
+
+  handleSubmit(event) {
+    this.grid.closeEditForm();
+    this.getDataForGrid();
   }
 }

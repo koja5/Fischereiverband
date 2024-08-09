@@ -7,7 +7,7 @@
                         {{report.date_completed | date: 'dd.MM.yyyy. HH:mm'}}</div>
                 </ngb-alert>
             </div>
-            <div *ngIf="allData && allData.length && (!report || report.status ===
+            <div *ngIf="data && data.length && (!report || report.status ===
             reportStatusEnum.draft)">
                 <ngb-alert [type]="'warning'" [dismissible]="false">
                     <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
@@ -29,21 +29,8 @@
                     <span>{{item.fbz}} - {{item.year}}</span>
                 </ng-template>
             </ng-select>
-
         </div>
-        <div class="mb-2 col-md-3">
-            <ng-select [items]="allWaters" bindLabel="name" bindValue="id" [(ngModel)]="filter.water"
-                [placeholder]="'commonFields.chooseNameOfWater' | translate" (change)="onChangeWater($event)"
-                [searchable]="true">
-                <ng-template ng-footer-tmp>
-                    <p class="m-0 font-weight-bold cursor-pointer" (click)="openModalNewEntrie()"><span
-                            class="fa fa-plus-circle"></span> {{
-                        'commonFields.createNew' | translate
-                        }} </p>
-                </ng-template>
-            </ng-select>
-        </div>
-        <div class="col-md-6" *ngIf="filter">
+        <div class="col-md-9" *ngIf="filter.managementRegister">
             <div class="d-flex justify-content-end action">
                 <button *ngIf="!report || report.status === reportStatusEnum.draft" class="btn btn-success mb-1"
                     (click)="completeReportsDialog()"><span class="fa fa-check"></span>
@@ -63,8 +50,9 @@
     </div>
 
     <app-dynamic-grid *ngIf="!loading" #grid [path]="path" [file]="file" [data]="data"
-        [disableCRUD]="(filter && filter.water ? false : true)  || (report && report.status === reportStatusEnum.completed)"
-        [template]="myTemplate" (submit)="submit($event)" (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
+        [disableCRUD]="report && report.status === reportStatusEnum.completed" [template]="customFormBirdDamage"
+        [modalDialogSize]="'modal-dialog-large'" (emitValueForCustomForm)="emitValueForCustomForm($event)"
+        (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
 
 </div>
 
@@ -84,8 +72,9 @@
     </div>
 </ng-template>
 
-<ng-template #myTemplate>
-    <app-custom-form-bird-damage></app-custom-form-bird-damage>
+<ng-template #customFormBirdDamage>
+    <app-custom-form-bird-damage *ngIf="itemData" [data]="itemData"
+        (submit)="handleSubmit($event)"></app-custom-form-bird-damage>
 </ng-template>
 
 <app-dialog-confirm #dialogConfirm [title]="('actionMessage.dialogCompleteReportQuestionTitle' | translate)"

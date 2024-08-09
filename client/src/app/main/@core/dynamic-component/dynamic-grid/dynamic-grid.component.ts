@@ -47,7 +47,10 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   @Input() additionalData: any;
   @Input() disableCRUD: boolean = false;
   @Input() template: TemplateRef<any>;
+  @Input() initializeGrid = false;
+  @Input() modalDialogSize: string;
   @Output() submit = new EventEmitter();
+  @Output() emitValueForCustomForm = new EventEmitter<any>();
   @Output() refreshParentComponent = new EventEmitter();
   @ViewChild("grid") grid: any;
   @ViewChild("modal") modal: TemplateRef<any>;
@@ -200,7 +203,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   }
 
   handlerCloseSidebar(event) {
-    if (this.form.unsavedChanges() && event) {
+    if (this.form && this.form.unsavedChanges() && event) {
       this.stayOpened = true;
       this.dialogUnsavedContentConfirm.showQuestionModal();
     }
@@ -305,7 +308,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     this.initialize();
 
     this._messageService
-      .getRefreshAfterRemoveFile()
+      .getRefreshGrid()
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((value) => {
         this.getData();
@@ -369,6 +372,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   }
 
   getData() {
+    this.loader = true;
     this._service
       .callApi(this.config, this._activateRouter)
       .subscribe((data) => {
@@ -497,6 +501,10 @@ export class DynamicGridComponent implements CanComponentDeactivate {
       this.setValue(this.config.config, row);
     }, 50);
 
+    if (!item.config || !item.config.length) {
+      this.emitValueForCustomForm.emit(row);
+    }
+
     if (item.formDialog.type === "sidebar") {
       this.toggleSidebar("sidebar");
     } else {
@@ -511,6 +519,10 @@ export class DynamicGridComponent implements CanComponentDeactivate {
         this.config.config[i].value ? this.config.config[i].value : null,
         this.config.config[i]["type"]
       );
+    }
+
+    if (!this.config || !this.config.length) {
+      this.emitValueForCustomForm.emit(null);
     }
   }
 

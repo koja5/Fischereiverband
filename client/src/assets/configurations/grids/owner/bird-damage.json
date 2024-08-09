@@ -1,12 +1,5 @@
 {
     "pageSize": 10,
-    "request": {
-        "type": "GET",
-        "api": "/api/owner/getAllObservationSheet",
-        "parameters": [],
-        "fields": "",
-        "root": ""
-    },
     "paging": {
         "enable": true,
         "settings": {
@@ -82,7 +75,7 @@
                             "executeAction": {
                                 "request": {
                                     "type": "POST",
-                                    "api": "/api/owner/deleteObservationSheet",
+                                    "api": "/api/owner/deleteBirdDamage",
                                     "parameters": [],
                                     "fields": "",
                                     "root": ""
@@ -102,80 +95,77 @@
             "field": "allow_online"
         },
         {
-            "title": "observationSheet.district",
+            "title": "birdDamage.sectionOneNumber",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "fbz",
+            "field": "heron_number",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "observationSheet.dateAndTime",
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "date",
-            "format": "dd.MM.yyyy HH:mm",
-            "class": "text-align-right",
-            "field": "date_time",
-            "validation": {
-                "required": true
-            }
-        },
-        {
-            "title": "observationSheet.district",
+            "title": "birdDamage.sectionOneDailyFood",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "district",
+            "field": "heron_daily_food",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "observationSheet.nameOfWater",
+            "title": "birdDamage.sectionOneQuantityRemoved",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "water",
+            "field": "heron_damage_in_euro_per_kg",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "observationSheet.orientation",
+            "title": "birdDamage.sectionOneNumber",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "orientation",
+            "field": "komorantage_number",
             "validation": {
                 "required": true
             }
         },
         {
-            "title": "observationSheet.typeOfWater",
-            "width": 150,
+            "title": "birdDamage.sectionOneDailyFood",
             "filterable": true,
             "hideable": true,
             "filter": "date",
             "type": "string",
             "class": "text-align-right",
-            "field": "type_of_water",
+            "field": "komorantage_daily_food",
+            "validation": {
+                "required": true
+            }
+        },
+        {
+            "title": "birdDamage.sectionOneQuantityRemoved",
+            "filterable": true,
+            "hideable": true,
+            "filter": "date",
+            "type": "string",
+            "class": "text-align-right",
+            "field": "komorantage_damage_in_euro_per_kg",
             "validation": {
                 "required": true
             }
         }
     ],
-    "config": [
-    ]
+    "config": []
 }

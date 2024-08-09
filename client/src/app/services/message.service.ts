@@ -18,11 +18,11 @@ export class MessageService {
     return this.configValue.asObservable();
   }
 
-  sendRefreshAfterRemoveFile(value) {
+  sendRefreshGrid(value?: any) {
     this.refreshAfterRemoveFile.next(value);
   }
 
-  getRefreshAfterRemoveFile(): Observable<any> {
+  getRefreshGrid(): Observable<any> {
     return this.refreshAfterRemoveFile.asObservable();
   }
 }

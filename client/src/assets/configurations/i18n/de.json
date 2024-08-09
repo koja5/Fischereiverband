@@ -20,6 +20,7 @@
       "noInformation": "Keine Information",
       "ok": "OK",
       "noData": "Es sind keine Informationen zum Anzeigen vorhanden",
+      "pleaseSelectValueFirst": "Bitte wählen Sie den Wert aus der Dropdown-Liste aus, um die Ergebnisse zu erhalten.",
       "here": "hier",
       "discardChangesTitle": "Änderungen verwerfen?",
       "discardChangesText": "Sie haben nicht gespeicherte Änderungen. Sind Sie sicher, dass Sie sie verwerfen möchten?",
@@ -157,6 +158,7 @@
       "allFishCatchReports": "Ausfang",
       "allObservationSheets": "Fischotterschaden",
       "allBirdCountReports": "Vogelzählung",
+      "allBirdDamageReports": "Vogelschäden",
       "ageOfFishes": "Alter der Fische",
       "fishStocking": "Besatzmeldungen",
       "managementRegisters": "FBZs",
@@ -286,8 +288,12 @@
       "cormorant": "Kormoran",
       "gooseSayer": "Ganse-sager"
    },
+   "birdDamagePrice": {
+      "pricePerKg": 14.00,
+      "pricePerItem": 0.80
+   },
    "birdDamage": {
-      "addNewRow": "Add new row",
+      "addNewRow": "Neue Zeile hinzufügen",
       "sectionOneTitle": "Schaden durch fischfressende Vögel",
       "sectionOneHeron": "Reihertage",
       "sectionOneNumber": "Anzahi",

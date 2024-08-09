@@ -1,0 +1,15 @@
+.remove {
+  font-size: 20px;
+  color: red;
+  cursor: pointer;
+}
+
+.price-variable {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+#disableInput {
+  pointer-events: none;
+}

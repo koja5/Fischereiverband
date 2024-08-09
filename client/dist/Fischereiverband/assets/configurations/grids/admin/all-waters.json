@@ -102,19 +102,6 @@
             "field": "allow_online"
         },
         {
-            "title": "water.idWater",
-            "width": 120,
-            "filterable": true,
-            "hideable": true,
-            "filter": "date",
-            "type": "string",
-            "class": "text-align-right",
-            "field": "id_water",
-            "validation": {
-                "required": true
-            }
-        },
-        {
             "title": "water.idWaterBook",
             "width": 120,
             "filterable": true,
@@ -203,16 +190,7 @@
         },
         {
             "type": "textbox",
-            "width": "col-md-6",
-            "class": "e-outline",
-            "name": "id_water",
-            "title": "water.idWater",
-            "field": "id_water",
-            "required": true
-        },
-        {
-            "type": "textbox",
-            "width": "col-md-6",
+            "width": "col-md-12",
             "class": "e-outline",
             "name": "id_water_book",
             "title": "water.idWaterBook",

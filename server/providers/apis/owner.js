@@ -31,10 +31,10 @@ router.get("/getAllFishStocking", auth, async (req, res, next) => {
           "select fsd.*, w.name as 'name_of_water', null as 'type_of_water', CONCAT(quantity, ' ', unit) as 'quantity_with_unit' from fish_stocking_details fsd join waters w on fsd.id_water = w.id where fsd.id_owner = ? and fsd.fbz like ? and fsd.year = ? union select fsd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water', CONCAT(quantity, ' ', unit) as 'quantity_with_unit' from fish_stocking_details fsd join waters_custom wc on fsd.id_water = wc.id where fsd.id_owner = ? and fsd.fbz like ? and fsd.year = ?",
           [
             req.user.user.id,
-            splitFBZ(req.query.fbz),
+            req.query.fbz,
             req.query.year,
             req.user.user.id,
-            splitFBZ(req.query.fbz),
+            req.query.fbz,
             req.query.year,
           ],
           function (err, rows, fields) {
@@ -67,7 +67,6 @@ router.post("/setFishStocking", auth, function (req, res, next) {
     }
 
     req.body.id_owner = req.user.user.id;
-    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query(
       "INSERT INTO fish_stocking_details set ? ON DUPLICATE KEY UPDATE ?",
@@ -116,16 +115,15 @@ router.post("/noHaveFishStockingEntry", auth, function (req, res, next) {
     }
 
     req.body.id_owner = req.user.user.id;
-    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query(
       "delete from fish_stocking_details where fbz = ?",
-      [splitFBZ(req.body.fbz)],
+      [req.body.fbz],
       function (err, rows) {
         if (!err) {
           conn.query(
             "select * from fish_stocking_reports where fbz = ? and year = ?",
-            [splitFBZ(req.body.fbz), req.body.year],
+            [req.body.fbz, req.body.year],
             function (err, rows) {
               if (!err) {
                 if (rows.length) {
@@ -313,7 +311,7 @@ router.get("/getFishStockingReport", auth, async (req, res, next) => {
       } else {
         conn.query(
           "select * from fish_stocking_reports where id_owner = ? and fbz = ?",
-          [req.user.user.id, splitFBZ(req.query.fbz)],
+          [req.user.user.id, req.query.fbz],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -340,11 +338,10 @@ router.post("/completeFishStockingReport", auth, function (req, res, next) {
     }
 
     req.body.id_owner = req.user.user.id;
-    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query(
       "select * from fish_stocking_reports where fbz = ? and year = ?",
-      [splitFBZ(req.body.fbz), req.body.year],
+      [req.body.fbz, req.body.year],
       function (err, rows) {
         if (!err) {
           if (rows.length) {
@@ -665,7 +662,7 @@ router.get(
           ) {
             conn.query(
               "select fcd.* from fish_catch_details fcd where fcd.fbz = ? and fcd.id_water = ?",
-              [splitFBZ(req.query.fbz), req.query.id_water],
+              [req.query.fbz, req.query.id_water],
               function (err, rows, fields) {
                 conn.release();
                 if (err) {
@@ -679,7 +676,7 @@ router.get(
           } else {
             conn.query(
               "select fcd.* from fish_catch_details fcd where fcd.fbz = ?",
-              [splitFBZ(req.query.fbz)],
+              [req.query.fbz],
               function (err, rows, fields) {
                 conn.release();
                 if (err) {
@@ -731,7 +728,6 @@ router.post("/setFishCatch", auth, function (req, res, next) {
     }
 
     req.body.id_owner = req.user.user.id;
-    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query(
       "INSERT INTO fish_catch_details set ? ON DUPLICATE KEY UPDATE ?",
@@ -758,7 +754,7 @@ router.get("/getFishCatchReport", auth, async (req, res, next) => {
       } else {
         conn.query(
           "select * from fish_catch_reports where id_owner = ? and fbz = ?",
-          [req.user.user.id, splitFBZ(req.query.fbz)],
+          [req.user.user.id, req.query.fbz],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -789,7 +785,7 @@ router.get(
         } else {
           conn.query(
             "select fcd.* from fish_catch_details fcd where fcd.fbz = ?",
-            [splitFBZ(req.query.fbz)],
+            [req.query.fbz],
             function (err, rows, fields) {
               conn.release();
               if (err) {
@@ -817,11 +813,10 @@ router.post("/completeFishCatchReport", auth, function (req, res, next) {
     }
 
     req.body.id_owner = req.user.user.id;
-    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query(
       "select * from fish_catch_reports where fbz = ? and year = ?",
-      [splitFBZ(req.body.fbz), req.body.year],
+      [req.body.fbz, req.body.year],
       function (err, rows) {
         if (!err) {
           if (rows.length) {
@@ -882,16 +877,15 @@ router.post("/noHaveFishCatchEntry", auth, function (req, res, next) {
     }
 
     req.body.id_owner = req.user.user.id;
-    req.body.fbz = splitFBZ(req.body.fbz);
 
     conn.query(
       "delete from fish_catch_details where fbz = ?",
-      [splitFBZ(req.body.fbz)],
+      [req.body.fbz],
       function (err, rows) {
         if (!err) {
           conn.query(
             "select * from fish_catch_reports where fbz = ? and year = ?",
-            [splitFBZ(req.body.fbz), req.body.year],
+            [req.body.fbz, req.body.year],
             function (err, rows) {
               if (!err) {
                 if (rows.length) {
@@ -1220,10 +1214,303 @@ router.post(
 
 //#endregion
 
+//#region BIRD DAMAGE
+
+router.get("/getBirdDamage", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        let sqlQuery = "select * from bird_damage_details where id_owner = ?";
+        if (req.query.fbz != "undefined") {
+          sqlQuery += " and fbz = '" + req.query.fbz + "'";
+        }
+        console.log(sqlQuery);
+        conn.query(
+          sqlQuery,
+          [req.user.user.id, req.query.fbz],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              for (let i = 0; i < rows.length; i++) {
+                rows[i].nest_and_sleeping = convertStringToArray(
+                  rows[i].nest_and_sleeping
+                );
+                rows[i].requested_for_next_year = convertStringToArray(
+                  rows[i].requested_for_next_year
+                );
+              }
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/setBirdDamage", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+
+    req.body.nest_and_sleeping = JSON.stringify(req.body.nest_and_sleeping);
+    req.body.requested_for_next_year = JSON.stringify(
+      req.body.requested_for_next_year
+    );
+
+    conn.query(
+      "INSERT INTO bird_damage_details set ? ON DUPLICATE KEY UPDATE ?",
+      [req.body, req.body],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/deleteBirdDamage", auth, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "delete from bird_damage_details where id = ?",
+      [req.body.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(true);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.get("/getBirdDamageReport", auth, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select * from bird_damage_reports where id_owner = ? and fbz = ?",
+          [req.user.user.id, req.query.fbz],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/completeBirdDamageReport", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+
+    conn.query(
+      "select * from bird_damage_reports where fbz = ? and year = ?",
+      [req.body.fbz, req.body.year],
+      function (err, rows) {
+        if (!err) {
+          if (rows.length) {
+            conn.query(
+              "UPDATE bird_damage_reports set ? where id = ?",
+              [req.body, rows[0].id],
+              function (err, rows) {
+                conn.release();
+                if (!err) {
+                  req.body["firstname"] = req.user.user.firstname;
+                  req.body["lastname"] = req.user.user.lastname;
+                  makeRequest(
+                    req.body,
+                    "mail/sendNotificationToOwnerForBackBirdDamageReport",
+                    res
+                  );
+                } else {
+                  logger.log("error", err.sql + ". " + err.sqlMessage);
+                  res.json(false);
+                }
+              }
+            );
+          } else {
+            conn.query(
+              "INSERT INTO bird_damage_reports set ?",
+              [req.body],
+              function (err, rows) {
+                conn.release();
+                if (!err) {
+                  req.body["firstname"] = req.user.user.firstname;
+                  req.body["lastname"] = req.user.user.lastname;
+                  makeRequest(
+                    req.body,
+                    "mail/sendNotificationToAdminForCompletedBirdDamageReport",
+                    res
+                  );
+                } else {
+                  logger.log("error", err.sql + ". " + err.sqlMessage);
+                  res.json(false);
+                }
+              }
+            );
+          }
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post("/noHaveBirdDamageEntry", auth, function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    req.body.id_owner = req.user.user.id;
+
+    conn.query(
+      "delete from bird_damage_details where fbz = ?",
+      [req.body.fbz],
+      function (err, rows) {
+        if (!err) {
+          conn.query(
+            "select * from bird_damage_reports where fbz = ? and year = ?",
+            [req.body.fbz, req.body.year],
+            function (err, rows) {
+              if (!err) {
+                if (rows.length) {
+                  conn.query(
+                    "UPDATE bird_damage_reports set ? where id = ?",
+                    [req.body, rows[0].id],
+                    function (err, rows) {
+                      conn.release();
+                      if (!err) {
+                        req.body["firstname"] = req.user.user.firstname;
+                        req.body["lastname"] = req.user.user.lastname;
+                        makeRequest(
+                          req.body,
+                          "mail/sendNotificationToAdminForCompletedBirdDamageReport",
+                          res
+                        );
+                      } else {
+                        logger.log("error", err.sql + ". " + err.sqlMessage);
+                        res.json(false);
+                      }
+                    }
+                  );
+                } else {
+                  conn.query(
+                    "INSERT INTO bird_damage_reports set ?",
+                    [req.body],
+                    function (err, rows) {
+                      conn.release();
+                      if (!err) {
+                        req.body["firstname"] = req.user.user.firstname;
+                        req.body["lastname"] = req.user.user.lastname;
+                        makeRequest(
+                          req.body,
+                          "mail/sendNotificationToAdminForCompletedBirdDamageReport",
+                          res
+                        );
+                      } else {
+                        logger.log("error", err.sql + ". " + err.sqlMessage);
+                        res.json(false);
+                      }
+                    }
+                  );
+                }
+              } else {
+                logger.log("error", err.sql + ". " + err.sqlMessage);
+                res.json(false);
+              }
+            }
+          );
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+router.post(
+  "/requestToAdminForAdditionalBirdDamageReportChanges",
+  auth,
+  function (req, res) {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      }
+
+      req.body["firstname"] = req.user.user.firstname;
+      req.body["lastname"] = req.user.user.lastname;
+      makeRequest(
+        req.body,
+        "mail/sendRequestToAdminForAdditionalBirdDamageReportChanges",
+        res
+      );
+    });
+  }
+);
+
+//#endregion
+
 //#region HELPFUL FUNCTION
 
 function splitFBZ(fbz) {
   return fbz ? (fbz.indexOf(".") != -1 ? fbz.split(".")[0] : fbz) : null;
+}
+
+function convertStringToArray(data) {
+  if (data) {
+    return JSON.parse(data);
+  }
+  return [];
 }
 
 //#endregion

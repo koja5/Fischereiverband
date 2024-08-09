@@ -614,12 +614,7 @@ router.get(
         } else {
           conn.query(
             "select fsd.*, w.name as 'name_of_water', null as 'type_of_water', CONCAT(u.firstname, ' ', u.lastname) as 'name', CONCAT(fsd.quantity, ' ', fsd.unit) as 'quantity' from fish_stocking_details fsd join users u on fsd.id_owner = u.id_owner join waters w on fsd.id_water = w.id where fsd.fbz = ? and fsd.year = ? union select fsd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water', CONCAT(u.firstname, ' ', u.lastname) as 'name', CONCAT(fsd.quantity, ' ', fsd.unit) as 'quantity' from fish_stocking_details fsd join users u on fsd.id_owner = u.id_owner join waters_custom wc on fsd.id_water = wc.id where fsd.fbz = ? and fsd.year = ?",
-            [
-              splitFBZ(req.query.fbz),
-              req.query.year,
-              splitFBZ(req.query.fbz),
-              req.query.year,
-            ],
+            [req.query.fbz, req.query.year, req.query.fbz, req.query.year],
             function (err, rows, fields) {
               conn.release();
               if (err) {
@@ -648,7 +643,7 @@ router.get("/getFishStockingReport", authAdmin, async (req, res, next) => {
       } else {
         conn.query(
           "select fsr.*, CONCAT(u.firstname, ' ', u.lastname) as 'owner_name' from fish_stocking_reports fsr join users u on fsr.id_owner = u.id_owner where fsr.fbz = ? and fsr.year = ?",
-          [splitFBZ(req.query.fbz), req.query.year],
+          [req.query.fbz, req.query.year],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -738,7 +733,7 @@ router.get("/getFishCatchReport", authAdmin, async (req, res, next) => {
       } else {
         conn.query(
           "select fcr.*, CONCAT(u.firstname, ' ', u.lastname) as 'owner_name' from fish_catch_reports fcr join users u on fcr.id_owner = u.id_owner where fcr.fbz = ? and fcr.year = ?",
-          [splitFBZ(req.query.fbz), req.query.year],
+          [req.query.fbz, req.query.year],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -766,12 +761,7 @@ router.get("/getFishCatchReportDetails", authAdmin, async (req, res, next) => {
       } else {
         conn.query(
           "select fcd.*, w.name as 'name_of_water', null as 'type_of_water' from fish_catch_details fcd join waters w on fcd.id_water = w.id where fcd.fbz = ? and fcd.year = ? union select fcd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water' from fish_catch_details fcd join waters_custom wc on fcd.id_water = wc.id where fcd.fbz = ? and fcd.year = ?",
-          [
-            splitFBZ(req.query.fbz),
-            req.query.year,
-            splitFBZ(req.query.fbz),
-            req.query.year,
-          ],
+          [req.query.fbz, req.query.year, req.query.fbz, req.query.year],
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -830,10 +820,10 @@ router.get(
           conn.query(
             "select fcd.*, w.name as 'name_of_water', null as 'type_of_water' from fish_catch_details fcd join waters w on fcd.id_water = w.id where fcd.fbz = ? and fcd.year = ? and fcd.id_water = ? union select fcd.*, wc.name as 'name_of_water', wc.type_of_water as 'type_of_water' from fish_catch_details fcd join waters_custom wc on fcd.id_water = wc.id where fcd.fbz = ? and fcd.year = ? and fcd.id_water = ?",
             [
-              splitFBZ(req.query.fbz),
+              req.query.fbz,
               req.query.year,
               req.query.id_water,
-              splitFBZ(req.query.fbz),
+              req.query.fbz,
               req.query.year,
               req.query.id_water,
             ],
@@ -1068,6 +1058,128 @@ router.post("/backBirdCountReportToOwner", authAdmin, function (req, res) {
 
 //#endregion
 
+//#region BIRD DAMAGE
+
+router.get("/getAllBirdDamageReports", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select bdr.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from bird_damage_reports bdr join users u on bdr.id_owner = u.id_owner order by bdr.date_completed desc",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getBirdDamageReportDetails", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select bdd.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from bird_damage_details bdd join users u on bdd.id_owner = u.id_owner where bdd.fbz = ? and bdd.year = ? union select bdd.*, CONCAT(u.firstname, ' ', u.lastname) as 'name' from bird_damage_details bdd join users u on bdd.id_owner = u.id_owner where bdd.fbz = ? and bdd.year = ?",
+          [req.query.fbz, req.query.year, req.query.fbz, req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              for (let i = 0; i < rows.length; i++) {
+                rows[i].nest_and_sleeping = convertStringToArray(
+                  rows[i].nest_and_sleeping
+                );
+                rows[i].requested_for_next_year = convertStringToArray(
+                  rows[i].requested_for_next_year
+                );
+              }
+              res.json(rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.get("/getBirdDamageReport", authAdmin, async (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        logger.log("error", err.sql + ". " + err.sqlMessage);
+        res.json(err);
+      } else {
+        conn.query(
+          "select bdd.*, CONCAT(u.firstname, ' ', u.lastname) as 'owner_name' from bird_damage_reports bdd join users u on bdd.id_owner = u.id_owner where bdd.fbz = ? and bdd.year = ?",
+          [req.query.fbz, req.query.year],
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              logger.log("error", err.sql + ". " + err.sqlMessage);
+              res.json(err);
+            } else {
+              res.json(rows.length ? rows[0] : rows);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    logger.log("error", err.sql + ". " + err.sqlMessage);
+    res.json(ex);
+  }
+});
+
+router.post("/backBirdDamageReportToOwner", authAdmin, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    conn.query(
+      "update bird_damage_reports set status = 1 where id = ?",
+      [req.body.report.id],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          makeRequest(
+            req.body,
+            "mail/sendNotificationToOwnerForBackBirdCountReport",
+            res
+          );
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
+//#endregion
+
 //#region HELP FUNCTION
 
 function isValidSHA1(s) {
@@ -1076,6 +1188,13 @@ function isValidSHA1(s) {
 
 function splitFBZ(fbz) {
   return fbz ? (fbz.indexOf(".") != -1 ? fbz.split(".")[0] : fbz) : null;
+}
+
+function convertStringToArray(data) {
+  if (data) {
+    return JSON.parse(data);
+  }
+  return [];
 }
 
 //#endregion

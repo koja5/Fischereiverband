@@ -41,7 +41,16 @@
     </div>
 </div>
 <app-loader *ngIf="loader"></app-loader>
-<app-dynamic-grid #grid *ngIf="!loader" [path]="path" [file]="file" [data]="data"></app-dynamic-grid>
+
+<app-dynamic-grid #grid *ngIf="!loader&&data.length" [path]="path" [file]="file" [data]="data"></app-dynamic-grid>
+
+<!-- INFO TO SELECT FIRST DROPDOWN TO GET DATA -->
+
+<app-no-data *ngIf="!data || !data.length" [text]="('general.pleaseSelectValueFirst' | translate)"
+    [image]="'../../../assets/images/icons/filter.png'"></app-no-data>
+
+
+<!--  -->
 
 <app-dialog-confirm #dialogConfirmBackReport [title]="('actionMessage.dialogBackReportToOwnerTitle' | translate)"
     [content]="('actionMessage.dialogBackReportToOwnerText' | translate)"

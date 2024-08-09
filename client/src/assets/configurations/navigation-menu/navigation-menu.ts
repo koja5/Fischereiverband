@@ -90,6 +90,15 @@ export const menu = [
     users: ["admin"],
   },
   {
+    id: "all-bird-damage-reports",
+    title: "allBirdDamageReports",
+    translate: "navigations.allBirdDamageReports",
+    type: "item",
+    icon: "file-text",
+    url: "dashboard/admin/all-bird-damage-reports",
+    users: ["admin"],
+  },
+  {
     id: "fish-stocking",
     title: "fishStocking",
     translate: "navigations.fishStocking",

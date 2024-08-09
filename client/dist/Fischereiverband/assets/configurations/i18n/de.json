@@ -20,6 +20,7 @@
       "noInformation": "Keine Information",
       "ok": "OK",
       "noData": "Es sind keine Informationen zum Anzeigen vorhanden",
+      "pleaseSelectValueFirst": "Bitte wählen Sie den Wert aus der Dropdown-Liste aus, um die Ergebnisse zu erhalten.",
       "here": "hier",
       "discardChangesTitle": "Änderungen verwerfen?",
       "discardChangesText": "Sie haben nicht gespeicherte Änderungen. Sind Sie sicher, dass Sie sie verwerfen möchten?",
@@ -157,13 +158,15 @@
       "allFishCatchReports": "Ausfang",
       "allObservationSheets": "Fischotterschaden",
       "allBirdCountReports": "Vogelzählung",
+      "allBirdDamageReports": "Vogelschäden",
       "ageOfFishes": "Alter der Fische",
       "fishStocking": "Besatzmeldungen",
       "managementRegisters": "FBZs",
       "reportOccupation": "Besatzmeldung",
       "observationSheet": "Fischotterschaden",
       "fishCatch": "Ausfang",
-      "birdCount": "Vogelzählung"
+      "birdCount": "Vogelzählung",
+      "birdDamage": "Vogelschaden"
    },
    "navBar": {
       "profile": "Profil",
@@ -284,5 +287,37 @@
       "heron": "Reiher",
       "cormorant": "Kormoran",
       "gooseSayer": "Ganse-sager"
+   },
+   "birdDamagePrice": {
+      "pricePerKg": 14.00,
+      "pricePerItem": 0.80
+   },
+   "birdDamage": {
+      "addNewRow": "Neue Zeile hinzufügen",
+      "sectionOneTitle": "Schaden durch fischfressende Vögel",
+      "sectionOneHeron": "Reihertage",
+      "sectionOneNumber": "Anzahi",
+      "sectionOneDailyFood": "tägl. Nahrung je Vogel",
+      "sectionOneQuantityRemoved": "entnommene Menge in kg",
+      "sectionOneDamageInEuroPerKg": "Schaden in € je kg € 14,00",
+      "sectionOneKomorantage": "Komorantage",
+      "sectionTwoTitle": "Schaden im Aufzuchtgewässer durch Minderausfang",
+      "sectionTwoNumberOfSeedlings": "Anzahl der Setzlinge à € 0,80 = Schaden in €",
+      "sectionTwoNumber": "Anzahi",
+      "sectionTwoAt80Cent": "à € 0,80",
+      "sectionTwoDamageInEuro": "Schaden in €",
+      "sectionTwoAmountInInjured": "Menge der aufgefundenen verletzten od. toten Fische in kg",
+      "sectionTwoKg": "kg",
+      "sectionTwo14EuroPerKg": "€ 14,00 pro kg",
+      "sectionThreeTitle": "Horst- und Schlafplatzmeldung",
+      "sectionThreeColumnOne": "Gewässer (genaue Ortsbeschreibung)",
+      "sectionThreeColumnTwo": "Horste (Reiher)",
+      "sectionThreeColumnThree": "Schlafplätze (Kormoran)",
+      "sectionFourTitle": "Für das Jahr #year werden an Abschüssen beantragt:",
+      "sectionFourColumnOne": "Gewässer",
+      "sectionFourColumnTwo": "FBZ",
+      "sectionFourColumnThree": "Wildregion",
+      "sectionFourColumnFour": "Reiher",
+      "sectionFourColumnFive": "Kormoran"
    }
 }

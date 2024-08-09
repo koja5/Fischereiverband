@@ -213,11 +213,10 @@
                                 <div *ngIf="item.template.type === 'action'" ngbDropdown container="body">
                                     <div *ngIf="item.template.actionMode.type === 'menu'">
                                         <button ngbDropdownToggle type="button"
-                                            class="btn icon-btn btn-sm hide-arrow {{disableCRUD ? 'cursor-not-allowed' : ''}}"
+                                            class="btn icon-btn btn-sm hide-arrow {{disableCRUD ? 'cursor-not-allowed' : 'cursor-pointer'}}"
                                             title="{{disableCRUD ? ('actionMessage.actionNotAllowed' | translate) : ''}}"
                                             [disabled]="disableCRUD" rippleEffect>
-                                            <span [data-feather]="item.template.actionMode.icon"
-                                                [class]="disableCRUD ? 'cursor-not-allowed' : 'cursor-pointer'"></span>
+                                            <span [data-feather]="item.template.actionMode.icon"></span>
                                         </button>
                                         <div ngbDropdownMenu>
 
@@ -344,7 +343,7 @@
         overlayClass="modal-backdrop">
         <div class="slideout-content">
             <div class="modalsd modal-slide-in sdfade new-user-modal" id="modals-slide-in">
-                <div class="modal-dialog">
+                <div class="modal-dialog {{modalDialogSize}}">
                     <form class="add-new-user modal-content pt-0" (ngSubmit)="(newUserForm.form.valid)"
                         #newUserForm="ngForm">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"
@@ -359,7 +358,8 @@
                             <app-dynamic-forms *ngIf="config.config && config.config.length > 0" [config]="config"
                                 [partOfGrid]="true" [data]="data" (submit)="submitEmitter($event)" #form="dynamicForm">
                             </app-dynamic-forms>
-                            <ng-template *ngIf="!config.config || !config.config.length" [ngTemplateOutlet]="template"></ng-template>
+                            <ng-template #form *ngIf="!config.config || !config.config.length"
+                                [ngTemplateOutlet]="template" [ngTemplateOutletContext]="data"></ng-template>
                         </div>
                     </form>
 

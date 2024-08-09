@@ -14,7 +14,7 @@ import { FishCatchComponent } from "./components/fish-catch/fish-catch.component
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { BirdCountComponent } from "./components/bird-count/bird-count.component";
 import { BirdDamageComponent } from "./components/bird-damage/bird-damage.component";
-import { CustomFormBirdDamageComponent } from './components/bird-damage/custom-form-bird-damage/custom-form-bird-damage.component';
+import { TemplateModule } from "../template/template.module";
 
 const routes = [
   {
@@ -48,7 +48,6 @@ const routes = [
     FishCatchComponent,
     BirdCountComponent,
     BirdDamageComponent,
-    CustomFormBirdDamageComponent,
   ],
   imports: [
     CommonModule,
@@ -60,6 +59,7 @@ const routes = [
     TranslateModule,
     NgbAlertModule,
     NgxDatatableModule,
+    TemplateModule,
   ],
   providers: [],
   exports: [RouterModule],

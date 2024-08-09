@@ -1,7 +1,8 @@
 export class BirdDamageModel {
-  id?: number;
-  id_owner?: number;
-  fbz?: string;
+  id: number;
+  id_owner: number;
+  fbz: string;
+  year: number;
   heron_number: number;
   heron_daily_food: number;
   heron_damage_in_euro_per_kg: number;
@@ -14,8 +15,10 @@ export class BirdDamageModel {
   damage_of_seedlings: number;
   amount_of_injured_kg: number;
   damage_amount_of_injured: number;
-  nest_and_sleeping: NestAndSleepingModule[];
-  requested_for_next_year: RequestedForNextYear[];
+  nest_and_sleeping: NestAndSleepingModule[] = [new NestAndSleepingModule()];
+  requested_for_next_year: RequestedForNextYear[] = [
+    new RequestedForNextYear(),
+  ];
 }
 
 export class NestAndSleepingModule {
