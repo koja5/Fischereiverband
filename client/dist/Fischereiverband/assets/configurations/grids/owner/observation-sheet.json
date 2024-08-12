@@ -191,6 +191,7 @@
             "class": "e-outline",
             "name": "fbz",
             "title": "commonFields.fbz",
+            "explanation": "explanation.fbz",
             "field": {
                 "text": "fbz",
                 "value": "fbz"
@@ -236,6 +237,7 @@
             "class": "e-outline",
             "name": "date_time",
             "title": "observationSheet.dateAndTime",
+            "explanation": "explanation.dateAndTime",
             "field": "date_time",
             "format": "dd.MM.yyyy HH:mm",
             "timeFormat": "HH:mm"
@@ -246,6 +248,7 @@
             "class": "e-outline",
             "name": "district",
             "title": "observationSheet.district",
+            "explanation": "explanation.district",
             "field": "district"
         },
         {
@@ -254,6 +257,7 @@
             "class": "e-outline",
             "name": "water",
             "title": "observationSheet.nameOfWater",
+            "explanation": "explanation.nameOfWater",
             "field": "water"
         },
         {
@@ -262,6 +266,7 @@
             "class": "e-outline",
             "name": "orientation",
             "title": "observationSheet.orientation",
+            "explanation": "explanation.orientation",
             "field": "orientation"
         },
         {
@@ -269,6 +274,7 @@
             "width": "col-md-12",
             "name": "type_of_water",
             "title": "observationSheet.typeOfWater",
+            "explanation": "explanation.typeOfWater",
             "dataArray": [
                 {
                     "title": "observationSheet.rivers",
@@ -303,6 +309,7 @@
             "class": "e-outline",
             "name": "visual_observation",
             "title": "observationSheet.visualObservation",
+            "explanation": "explanation.visualObservation",
             "field": "visual_observation"
         },
         {
@@ -310,6 +317,7 @@
             "width": "col-md-12",
             "name": "find_dead",
             "title": "observationSheet.findDead",
+            "explanation": "explanation.findDead",
             "dataArray": [
                 {
                     "title": "observationSheet.inTerrain",
@@ -329,6 +337,7 @@
             "class": "e-outline",
             "name": "drove_traces",
             "title": "observationSheet.droveTraces",
+            "explanation": "explanation.droveTraces",
             "field": "drove_traces"
         },
         {
@@ -337,6 +346,7 @@
             "class": "e-outline",
             "name": "find_losing",
             "title": "observationSheet.findLosing",
+            "explanation": "explanation.findLosing",
             "field": "find_losing"
         },
         {
@@ -345,6 +355,7 @@
             "class": "e-outline",
             "name": "fish_prey",
             "title": "observationSheet.fishPrey",
+            "explanation": "explanation.fishPrey",
             "field": "fish_prey"
         },
         {
@@ -352,6 +363,7 @@
             "width": "col-md-12",
             "name": "traces_color",
             "title": "observationSheet.tracesColor",
+            "explanation": "explanation.tracesColor",
             "dataArray": [
                 {
                     "title": "observationSheet.tracesIsolated",
@@ -371,6 +383,7 @@
             "class": "e-outline",
             "name": "photo_trap",
             "title": "observationSheet.photoTrap",
+            "explanation": "explanation.photoTrap",
             "field": "photo_trap"
         },
         {
@@ -379,6 +392,7 @@
             "class": "e-outline",
             "name": "estimation_inventory",
             "title": "observationSheet.estimationInventory",
+            "explanation": "explanation.estimationInventory",
             "field": "estimation_inventory"
         },
         {
@@ -389,6 +403,7 @@
             "class": "e-outline",
             "name": "documentation",
             "title": "observationSheet.documentation",
+            "explanation": "explanation.documentation",
             "field": "documentation"
         },
         {

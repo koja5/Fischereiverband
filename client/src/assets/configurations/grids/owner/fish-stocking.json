@@ -52,7 +52,6 @@
     "columns": [
         {
             "title": "commonFields.action",
-            "width": 130,
             "template": {
                 "type": "action",
                 "actionMode": {
@@ -96,7 +95,6 @@
         },
         {
             "title": "commonFields.date",
-            "width": 120,
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -198,6 +196,7 @@
             "class": "e-outline",
             "name": "date",
             "title": "commonFields.date",
+            "explanation": "explanation.date",
             "field": "date",
             "format": "dd.MM.yyyy",
             "required": true
@@ -208,6 +207,7 @@
             "class": "e-outline",
             "name": "id_water",
             "title": "commonFields.nameOfWater",
+            "explanation": "explanation.nameOfWater",
             "field": {
                 "text": "name",
                 "value": "id"
@@ -274,6 +274,7 @@
             "class": "e-outline",
             "name": "fish",
             "title": "commonFields.nameOfFish",
+            "explanation": "explanation.nameOfFish",
             "field": {
                 "text": "name",
                 "value": "name"
@@ -336,6 +337,7 @@
             "class": "e-outline",
             "name": "age_of_fish",
             "title": "commonFields.ageOfFish",
+            "explanation": "explanation.ageOfFish",
             "field": {
                 "text": "name",
                 "value": "name"
@@ -359,6 +361,7 @@
             "class": "e-outline",
             "name": "origin",
             "title": "commonFields.origin",
+            "explanation": "explanation.origin",
             "field": {
                 "text": "name",
                 "value": "name"
@@ -422,6 +425,7 @@
             "class": "e-outline",
             "name": "quantity",
             "title": "commonFields.quantity",
+            "explanation": "explanation.quantity",
             "field": "quantity",
             "required": true
         },
@@ -431,6 +435,7 @@
             "class": "e-outline",
             "name": "unit",
             "title": "commonFields.unit",
+            "explanation": "explanation.unit",
             "field": {
                 "text": "name",
                 "value": "value"
@@ -459,6 +464,7 @@
             "class": "e-outline",
             "name": "costs",
             "title": "commonFields.cost",
+            "explanation": "explanation.cost",
             "field": "costs",
             "required": true
         },

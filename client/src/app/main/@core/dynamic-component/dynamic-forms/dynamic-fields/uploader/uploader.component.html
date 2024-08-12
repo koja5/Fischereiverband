@@ -1,5 +1,8 @@
 <div *ngIf="!config.disableUpload" class="container uploader-container" uploadDirective [formGroup]="group"
     (fileDropped)="onFileDropped($event)">
+    <div class="explanation-mark">
+        <app-explanation-mark *ngIf="config.explanation" [explanation]="config.explanation"></app-explanation-mark>
+    </div>
     <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event.target.files)" />
     <svg xmlns="http://www.w3.org/2000/svg" width="42" height="56" viewBox="0 0 63 64">
         <g fill="#3B454F" fill-rule="nonzero">
@@ -70,8 +73,7 @@
                     </div>
                     <div
                         *ngSwitchCase="item.split('.')[1] === 'png' || item.split('.')[1] === 'jpg' || item.split('.')[1] === 'jpeg' ? item.split('.')[1] : ''">
-                        <img src="./assets/file-storage/{{item}}" width="100%"
-                            (click)="openPreviewFileModal(item)">
+                        <img src="./assets/file-storage/{{item}}" width="100%" (click)="openPreviewFileModal(item)">
                     </div>
                     <div class="pdf-file" *ngSwitchCase="'pdf'">
                         <img src="./assets/images/icons/pdf-icon.png" (click)="openPDF(item)">

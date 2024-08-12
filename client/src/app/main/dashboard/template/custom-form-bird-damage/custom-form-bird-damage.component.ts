@@ -78,6 +78,17 @@ export class CustomFormBirdDamageComponent {
 
   removeRowFromNestAndSleeping(index) {
     this.data.nest_and_sleeping.splice(index, 1);
+
+    if (index < this.data.nest_and_sleeping.length) {
+      for (let i = index; i < this.data.nest_and_sleeping.length; i++) {
+        this.data.nest_and_sleeping[i]["name_of_water_" + i] =
+          this.data.nest_and_sleeping[i]["name_of_water_" + (i + 1)];
+        this.data.nest_and_sleeping[i]["horste_" + i] =
+          this.data.nest_and_sleeping[i]["horste_" + (i + 1)];
+        this.data.nest_and_sleeping[i]["kormoran_" + i] =
+          this.data.nest_and_sleeping[i]["kormoran_" + (i + 1)];
+      }
+    }
   }
 
   addNewRowForRequestedForNextYear() {
@@ -86,6 +97,26 @@ export class CustomFormBirdDamageComponent {
 
   removeRowFromRequestedForNextYear(index) {
     this.data.requested_for_next_year.splice(index, 1);
+
+    //prepacked properties - after delete property need to have index - 1
+    if (index < this.data.requested_for_next_year.length) {
+      for (let i = index; i < this.data.requested_for_next_year.length; i++) {
+        this.data.requested_for_next_year[i]["name_of_water_for_request_" + i] =
+          this.data.requested_for_next_year[i][
+            "name_of_water_for_request_" + (i + 1)
+          ];
+        this.data.requested_for_next_year[i]["fbz_" + i] =
+          this.data.requested_for_next_year[i]["fbz_" + (i + 1)];
+        this.data.requested_for_next_year[i]["wild_region_" + i] =
+          this.data.requested_for_next_year[i]["wild_region_" + (i + 1)];
+        this.data.requested_for_next_year[i]["heron_for_request_" + i] =
+          this.data.requested_for_next_year[i]["heron_for_request_" + (i + 1)];
+        this.data.requested_for_next_year[i]["kormoran_for_request_" + i] =
+          this.data.requested_for_next_year[i][
+            "kormoran_for_request_" + (i + 1)
+          ];
+      }
+    }
   }
 
   save() {

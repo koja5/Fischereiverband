@@ -187,3 +187,10 @@
 .file span {
   font-size: 65px;
 }
+
+.explanation-mark {
+  position: absolute;
+  right: 5px;
+  top: 2px;
+  z-index: 10;
+}

@@ -64,9 +64,14 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   @ViewChild(DynamicFormsComponent) form!: DynamicFormsComponent;
   @ViewChild("form") form1: DynamicFormsComponent;
 
-  exportAsConfig: ExportAsConfig = {
-    type: "png", // the type you want to download
-    elementIdOrContent: "grid",
+  exportAsConfigToPdf: ExportAsConfig = {
+    type: "pdf",
+    elementIdOrContent: "export-grid",
+  };
+
+  exportAsConfigToCsv: ExportAsConfig = {
+    type: "csv",
+    elementIdOrContent: "export-grid",
   };
 
   // Public
@@ -91,6 +96,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   public stayOpened = false;
   public editing = null;
   public scrollbarH = false;
+  public showExportGrid = false;
 
   public selectRole: any = [
     { name: "All", value: "" },
@@ -300,11 +306,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
    */
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
-    if (this._helpService.checkIsMobileDevices()) {
-      this.scrollbarH = true;
-    } else {
-      this.scrollbarH = false;
-    }
+
     this.initialize();
 
     this._messageService
@@ -317,7 +319,14 @@ export class DynamicGridComponent implements CanComponentDeactivate {
 
   @HostListener("window:resize", ["$event"])
   onWindowResize() {
-    if (this._helpService.checkIsMobileDevices()) {
+    this.checkScrollbarHVisibility();
+  }
+
+  checkScrollbarHVisibility() {
+    if (
+      this._helpService.checkIsMobileDevices() ||
+      this.config.columns.length > 6
+    ) {
       this.scrollbarH = true;
     } else {
       this.scrollbarH = false;
@@ -340,6 +349,8 @@ export class DynamicGridComponent implements CanComponentDeactivate {
         .getConfiguration(this.path, this.file)
         .subscribe((data) => {
           this.config = data;
+          this.checkScrollbarHVisibility();
+
           if (this.config.request) {
             this._coreConfigService.config
               .pipe(takeUntil(this._unsubscribeAll))
@@ -630,23 +641,73 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   }
 
   exportToPdf() {
-    this.exportAsService.save(this.exportAsConfig, "data").subscribe(() => {
-      // save started
-    });
+    this.showExportGrid = true;
+    setTimeout(() => {
+      this.showExportGrid = false;
+    }, 1);
+    this.exportAsService
+      .save(this.exportAsConfigToPdf, "data")
+      .subscribe(() => {});
   }
 
-  print() {
-    const printContents = document.getElementById("grid1").innerHTML;
-    const WindowObject = window.open(
-      "",
-      "PrintWindow",
-      "width=750,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes"
-    );
-    const htmlData = `<html><body>${printContents}</body></html>`;
+  exportToCsv() {
+    this.exportAsService
+      .save(this.exportAsConfigToCsv, "data")
+      .subscribe(() => {
+        // save started
+      });
+  }
 
-    WindowObject.document.writeln(htmlData);
-    WindowObject.document.close();
-    WindowObject.focus();
+  // print() {
+  //   const printContents = document.getElementById("grid1").innerHTML;
+  //   const WindowObject = window.open(
+  //     "",
+  //     "PrintWindow",
+  //     "width=750,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes"
+  //   );
+  //   const htmlData = `<html><body>${printContents}</body></html>`;
+
+  //   WindowObject.document.writeln(htmlData);
+  //   WindowObject.document.close();
+  //   WindowObject.focus();
+  // }
+
+  print(): void {
+    // const printContent = document.getElementById("export-grid")?.innerHTML;
+    // const printWindow = window.open("", "", "height=400,width=800");
+    // if (printWindow) {
+    //   printWindow.document.write("<html><head><title>Print Receipt</title>");
+    //   printWindow.document.write("<style>");
+    //   printWindow.document.write(
+    //     "body { font-family: Arial, sans-serif; width: 80mm; margin: 0; padding: 0; }"
+    //   );
+    //   printWindow.document.write(".receipt-container { width: 80mm; }");
+    //   printWindow.document.write("</style></head><body >");
+    //   printWindow.document.write(printContent || "");
+    //   printWindow.document.write("</body></html>");
+    //   printWindow.document.close();
+    //   printWindow.print();
+    // }
+
+    var printWindow = window.open("", "");
+    printWindow.document.write("<html><head><title>Fischereiverband</title>");
+
+    //Print the Table CSS.
+    var table_style = document.getElementById("table_style").innerHTML;
+    printWindow.document.write('<style type = "text/css">');
+    printWindow.document.write(table_style);
+    printWindow.document.write("</style>");
+    printWindow.document.write("</head>");
+
+    //Print the DIV contents i.e. the HTML Table.
+    printWindow.document.write("<body>");
+    var divContents = document.getElementById("export-grid").innerHTML;
+    printWindow.document.write(divContents);
+    printWindow.document.write("</body>");
+
+    printWindow.document.write("</html>");
+    printWindow.document.close();
+    printWindow.print();
   }
 
   updateRow(rowIndex: number) {

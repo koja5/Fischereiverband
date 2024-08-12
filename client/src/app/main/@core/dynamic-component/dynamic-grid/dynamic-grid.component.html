@@ -61,16 +61,17 @@
                         <span *ngIf="config.options" class="fa fa-cog cursor-pointer options"
                             (click)="showModalOptionsDialog()"></span>
                     </div>
-                    <div *ngIf="rows && rows.length" class="flex-grow-0">
+                    <div *ngIf="rows && rows.length" class="flex-grow-0 mr-1">
                         <span class="fa fa-file-pdf-o cursor-pointer options pdf-icon"
-                            title="{{'actionMessage.exportToPng' | translate}}" (click)="exportToPdf()"></span>
+                            title="{{'actionMessage.exportToPng' | translate}}"
+                            (click)="exportToPdf()"></span>
                     </div>
-                    <!-- <div class="flex-grow-0">
-                        <span class="fa fa-file-pdf-o cursor-pointer options pdf-icon"  (click)="print()"></span>
-                    </div> -->
-                    <div *ngIf="rows && rows.length" class="flex-grow-0 ml-1">
-                        <a csvLink [data]="rows" title="{{'actionMessage.exportToCsv' | translate}}"> <span
-                                class="fa fa-file-excel-o cursor-pointer options excel-icon"></span></a>
+                    <div *ngIf="rows && rows.length" class="flex-grow-0 mr-1">
+                        <span class="fa fa-file-excel-o cursor-pointer options excel-icon"
+                            title="{{'actionMessage.exportToCsv' | translate}}" (click)="exportToCsv()"></span>
+                    </div>
+                    <div class="flex-grow-0">
+                        <span class="fa fa-print cursor-pointer options print-icon" (click)="print()"></span>
                     </div>
                 </div>
 
@@ -423,117 +424,19 @@
 
     <!-- EXPORT  -->
 
-    <!-- <table id="grid1" class="table table-sm">
-        <thead>
+    <div *ngIf="config && rows" id="export-grid" class="{{showExportGrid ? 'd-block' : 'd-none'}}">
+        <table cellspacing="0" rules="all" border="1">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
+                <div *ngFor="let item of config.columns" class="d-contents">
+                    <th *ngIf="!item.template">{{item.title | translate}}</th>
+                </div>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>Test</td>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
+            <tr *ngFor="let value of rows">
+                <div *ngFor="let item of config.columns" class="d-contents">
+                    <td *ngIf="!item.template">{{value[item.field]}}</td>
+                </div>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>Test</td>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>Test</td>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-                <th scope="col">Handle</th>
-            </tr>
-        </tbody>
-    </table> -->
-
-    <!-- END EXPORT -->
+        </table>
+    </div>
 
 </div>

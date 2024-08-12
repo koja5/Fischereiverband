@@ -106,7 +106,7 @@
             }
         },
         {
-            "title": "commonFields.quantity",
+            "title": "commonFields.totalQuantity",
             "filterable": true,
             "hideable": true,
             "filter": "date",
@@ -157,6 +157,7 @@
             "class": "e-outline",
             "name": "fish",
             "title": "commonFields.nameOfFish",
+            "explanation": "explanation.nameOfFish",
             "field": {
                 "text": "name",
                 "value": "name"
@@ -219,7 +220,8 @@
             "width": "col-md-12",
             "class": "e-outline",
             "name": "quantity",
-            "title": "commonFields.quantity",
+            "title": "commonFields.totalQuantity",
+            "explanation": "explanation.totalQuantity",
             "field": "quantity",
             "required": true
         },
@@ -229,6 +231,7 @@
             "class": "e-outline",
             "name": "edible_fish_quantity",
             "title": "commonFields.edibleFishQuantity",
+            "explanation": "explanation.edibleFishQuantity",
             "field": "edible_fish_quantity",
             "required": true
         },
@@ -238,6 +241,7 @@
             "class": "e-outline",
             "name": "stocked_fish_quantity",
             "title": "commonFields.stockedFishQuantity",
+            "explanation": "explanation.stockedFishQuantity",
             "field": "stocked_fish_quantity",
             "readonly": true
         },
