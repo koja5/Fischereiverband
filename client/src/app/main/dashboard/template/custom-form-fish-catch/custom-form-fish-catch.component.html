@@ -1,0 +1,39 @@
+<form>
+    <div class="col-md-12 mb-1">
+        <label>{{'commonFields.nameOfFish' | translate }}</label>
+        <ng-select *ngIf="allFishes" [items]="allFishes" [bindLabel]="'name'" [bindValue]="'name'" name="fish"
+            [(ngModel)]="data.fish">
+        </ng-select>
+    </div>
+    <div class="col-md-12 mb-1">
+        <label>
+            {{'commonFields.totalQuantity' | translate }}
+            <app-explanation-mark [explanation]="('explanation.totalQuantity' | translate)">
+            </app-explanation-mark>
+        </label>
+        <input class="form-control" name="quantity" [(ngModel)]="data.quantity">
+    </div>
+    <div class="col-md-12 mb-1">
+        <label>
+            {{'commonFields.edibleFishQuantity' | translate }}
+            <app-explanation-mark [explanation]="('explanation.edibleFishQuantity' | translate)">
+            </app-explanation-mark>
+        </label>
+        <input class="form-control" name="edible_fish_quantity" [(ngModel)]="data.edible_fish_quantity">
+        <p *ngIf="checkValues()" class="color-red">{{'actionMessage.valueNeedToBeLess' |
+            translate}}</p>
+    </div>
+    <div class="col-md-12 mb-1">
+        <label>
+            {{'commonFields.stockedFishQuantity' | translate }}
+            <app-explanation-mark [explanation]="('explanation.stockedFishQuantity' | translate)">
+            </app-explanation-mark>
+        </label>
+        <input class="form-control" name="stocked_fish_quantity" [value]="calculateStockedFishQuantity()"
+            [disabled]="true">
+    </div>
+    <div class="text-right mt-4">
+        <button class="btn btn-primary" (click)="save()" [disabled]="checkValues()">{{'general.save' |
+            translate}}</button>
+    </div>
+</form>

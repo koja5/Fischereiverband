@@ -7,9 +7,14 @@
 .price-variable {
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 40px;
 }
 
 #disableInput {
   pointer-events: none;
+}
+
+.management-register-data {
+  width: 120px;
 }

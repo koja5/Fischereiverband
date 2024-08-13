@@ -5,11 +5,13 @@ import { RouterModule } from "@angular/router";
 import { CustomFormBirdDamageComponent } from "./custom-form-bird-damage/custom-form-bird-damage.component";
 import { TranslateModule } from "@ngx-translate/core";
 import { DynamicFormsModule } from "../../@core/dynamic-component/dynamic-forms/dynamic-forms-module/dynamic-forms.module";
+import { CustomFormFishCatchComponent } from './custom-form-fish-catch/custom-form-fish-catch.component';
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
-  declarations: [CustomFormBirdDamageComponent],
-  imports: [CommonModule, FormsModule, TranslateModule, DynamicFormsModule],
+  declarations: [CustomFormBirdDamageComponent, CustomFormFishCatchComponent],
+  imports: [CommonModule, FormsModule, TranslateModule, DynamicFormsModule, NgSelectModule],
   providers: [],
-  exports: [CustomFormBirdDamageComponent],
+  exports: [CustomFormBirdDamageComponent, CustomFormFishCatchComponent],
 })
 export class TemplateModule {}

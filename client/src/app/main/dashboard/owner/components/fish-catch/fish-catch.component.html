@@ -15,6 +15,7 @@
             </div>
         </div>
         <div class="mb-2 col-md-3">
+            <label>{{'commonFields.fbz' | translate}}</label>
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
                 [(ngModel)]="fishCatchFilter.managementRegisterId"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate"
@@ -32,6 +33,7 @@
 
         </div>
         <div class="mb-2 col-md-3">
+            <label>{{'commonFields.nameOfWater' | translate}}</label>
             <ng-select [items]="allWaters" bindLabel="name" bindValue="id" [(ngModel)]="fishCatchFilter.water"
                 [placeholder]="'commonFields.chooseNameOfWater' | translate" (change)="onChangeWater($event)"
                 [searchable]="true">
@@ -68,7 +70,8 @@
     <div *ngIf="!loading">
         <app-dynamic-grid #grid [path]="path" [file]="file" [data]="data"
             [disableCRUD]="(fishCatchFilter && fishCatchFilter.water ? false : true) || (fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed)"
-            (submit)="submit($event)" (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
+            [template]="customForm" (submit)="submit($event)" (refreshParentComponent)="refreshGrid()"
+            (emitValueForCustomForm)="emitValueForCustomForm($event)"></app-dynamic-grid>
     </div>
 </div>
 
@@ -86,6 +89,11 @@
             (submit)="submitNewEntriesEmitter($event)" #form="dynamicForm">
         </app-dynamic-forms>
     </div>
+</ng-template>
+
+<ng-template #customForm>
+    <app-custom-form-fish-catch *ngIf="itemData" [data]="itemData"
+        (submit)="handleSubmit($event)"></app-custom-form-fish-catch>
 </ng-template>
 
 <app-dialog-confirm #dialogConfirm [title]="('actionMessage.dialogCompleteReportQuestionTitle' | translate)"

@@ -28,7 +28,6 @@ export class NestAndSleepingModule {
 }
 
 export class RequestedForNextYear {
-  name_of_water: string;
   fbz: string;
   wild_region: string;
   heron: string;

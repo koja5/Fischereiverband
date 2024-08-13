@@ -15,6 +15,7 @@
             </div>
         </div>
         <div class="mb-2 col-md-3">
+            <label>{{'commonFields.fbz' | translate}}</label>
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
                 [(ngModel)]="selectedManagementRegistryId"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChange($event)"

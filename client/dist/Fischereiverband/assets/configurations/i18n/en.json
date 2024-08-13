@@ -55,8 +55,9 @@
         "dialogNoHaveReportsText": "Do you want to send  empty report? If you current have some entries this entries will be deleted!",
         "exportToPng": "Export to PNG",
         "exportToCsv": "Export to CSV",
-        "goBack": "Go back"
-    },
+        "goBack": "Go back",
+        "valueNeedToBeLess": "This value must be less than or equal to the previous value"
+   },
     "commonFields": {
         "name": "Name",
         "firstname": "Firstname",

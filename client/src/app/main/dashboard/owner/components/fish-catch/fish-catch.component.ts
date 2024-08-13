@@ -52,6 +52,7 @@ export class FishCatchComponent {
   public fishCatchReportEnum = FishCatchReportEnum;
   public allWaters: any;
   public waterCustom = new WaterCustomModel();
+  public itemData: FishCatchModel;
 
   constructor(
     private _service: CallApiService,
@@ -318,5 +319,21 @@ export class FishCatchComponent {
           this.fishCatchFilter.water = entryId;
         });
     }
+  }
+
+  emitValueForCustomForm(event: FishCatchModel) {
+    if (event) {
+      this.itemData = event;
+    } else {
+      this.itemData = new FishCatchModel();
+    }
+    this.itemData.fbz = this.fishCatchFilter.managementRegister.fbz;
+    this.itemData.year = this.fishCatchFilter.managementRegister.year;
+    this.itemData.id_water = this.fishCatchFilter.water;
+  }
+
+  handleSubmit(event: any) {
+    this.grid.closeEditForm();
+    this.refreshGrid();
   }
 }

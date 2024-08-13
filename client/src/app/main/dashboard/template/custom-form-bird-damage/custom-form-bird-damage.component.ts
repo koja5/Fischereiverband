@@ -40,6 +40,12 @@ export class CustomFormBirdDamageComponent {
     this.sectionFourTitle = this._translate
       .instant("birdDamage.sectionFourTitle")
       .replace("#year", this.year);
+
+    this._service
+      .callGetMethod("/api/owner/getManagementRegistersData")
+      .subscribe((data) => {
+        this.managementRegistersData = data;
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -101,10 +107,6 @@ export class CustomFormBirdDamageComponent {
     //prepacked properties - after delete property need to have index - 1
     if (index < this.data.requested_for_next_year.length) {
       for (let i = index; i < this.data.requested_for_next_year.length; i++) {
-        this.data.requested_for_next_year[i]["name_of_water_for_request_" + i] =
-          this.data.requested_for_next_year[i][
-            "name_of_water_for_request_" + (i + 1)
-          ];
         this.data.requested_for_next_year[i]["fbz_" + i] =
           this.data.requested_for_next_year[i]["fbz_" + (i + 1)];
         this.data.requested_for_next_year[i]["wild_region_" + i] =

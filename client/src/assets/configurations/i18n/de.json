@@ -56,8 +56,9 @@
       "dialogNoHaveReportsText": "Möchten Sie einen leeren Bericht senden? Wenn Sie derzeit über einige Einträge verfügen, werden diese Einträge gelöscht!",
       "exportToPng": "Nach PNG exportieren",
       "exportToCsv": "Als CSV exportieren",
-      "goBack": "Geh zurück"
-   },
+      "goBack": "Geh zurück",
+      "valueNeedToBeLess": "Dieser Wert muss kleiner oder gleich dem vorherigen Wert sein"
+  },
    "commonFields": {
       "name": "Name",
       "firstname": "Vorname",
