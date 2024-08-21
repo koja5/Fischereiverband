@@ -128,6 +128,33 @@ router.post("/deleteUser", authAdmin, function (req, res) {
   });
 });
 
+router.post("/generateNewPassword", authAdmin, function (req, res) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      logger.log("error", err.sql + ". " + err.sqlMessage);
+      res.json(err);
+    }
+
+    const newPassword = Math.random().toString(36).slice(-8);
+
+    conn.query(
+      "update users set password = ? where id_owner = ?",
+      [sha1(newPassword), req.body.id_owner],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          req.body.password = newPassword;
+          
+          makeRequest(req.body, "mail/sendNewGeneratedPassword", res);
+        } else {
+          logger.log("error", err.sql + ". " + err.sqlMessage);
+          res.json(false);
+        }
+      }
+    );
+  });
+});
+
 //#endregion ALL USERS
 
 //#region ALL FISHES

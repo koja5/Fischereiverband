@@ -29,9 +29,15 @@
     font-size: 32px;
   }
 
-  .ngx-datatable.scroll-horz .datatable-body {
-    height: calc(100vh - 55vh) !important;
-  }
+  // .ngx-datatable.scroll-horz .datatable-body {
+  //   height: calc(100vh - 35vh) !important;
+  // }
+
+  // .ngx-datatable.material .datatable-body {
+  //   min-height: calc(100vh - 35vh) !important;
+  //   height: calc(100vh - 35vh) !important;
+  //   overflow: auto;
+  // }
 }
 
 @media (max-width: 991px) {
@@ -60,13 +66,17 @@
     width: 100%;
   }
 
-  .ngx-datatable.scroll-horz .datatable-body {
-    height: calc(100vh - 55vh) !important;
-  }
+  // .ngx-datatable.scroll-horz .datatable-body {
+  //   height: calc(100vh - 38vh) !important;
+  // }
 
   .action button {
     padding: 0px;
   }
+}
+
+.ngx-datatable {
+  height: 100%;
 }
 
 .e-schedule.e-device .e-vertical-view .e-time-cells-wrap table td {
@@ -76,6 +86,14 @@
 .e-schedule .e-vertical-view .e-work-cells.e-disable-dates {
   pointer-events: none;
   background: rgba(0, 0, 0, 0.08) !important;
+}
+
+// .e-datetimepicker[readOnly]:has(.e-valid-input) {
+//   background: #efefef !important;
+// }
+
+.e-datetimepicker[ng-reflect-readonly] span {
+  background: #efefef !important;
 }
 
 .dark-layout .e-schedule .e-schedule-toolbar .e-toolbar-items.e-tbar-pos,

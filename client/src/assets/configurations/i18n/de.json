@@ -57,8 +57,12 @@
       "exportToPng": "Nach PNG exportieren",
       "exportToCsv": "Als CSV exportieren",
       "goBack": "Geh zurück",
-      "valueNeedToBeLess": "Dieser Wert muss kleiner oder gleich dem vorherigen Wert sein"
-  },
+      "valueNeedToBeLess": "Dieser Wert muss kleiner oder gleich dem vorherigen Wert sein",
+      "dialogGenerateNewPasswordTitle": "Sind Sie sicher?",
+      "dialogGenerateNewPasswordText": "Möchten Sie für diesen Benutzer ein neues Passwort generieren? Das neue Passwort wird per E-Mail an den Benutzer gesendet.",
+      "dialogGenerateNewPasswordYes": "Ja, neues Passwort generieren",
+      "dialogGenerateNewPasswordNo": "NEIN"
+   },
    "commonFields": {
       "name": "Name",
       "firstname": "Vorname",
@@ -118,7 +122,8 @@
       "chooseManagementRegistry": "Wählen Sie die Verwaltungsregistrierung",
       "edibleFishQuantity": "Essbare Menge",
       "stockedFishQuantity": "Lagermenge",
-      "unit": "Einheit"
+      "unit": "Einheit",
+      "generateNewPassword": "Neues Passwort generieren"
    },
    "userTypes": {
       "superadmin": "Superadmin",

@@ -56,9 +56,13 @@
         "exportToPng": "Export to PNG",
         "exportToCsv": "Export to CSV",
         "goBack": "Go back",
-        "valueNeedToBeLess": "This value must be less than or equal to the previous value"
-   },
-    "commonFields": {
+        "valueNeedToBeLess": "This value must be less than or equal to the previous value",
+        "dialogGenerateNewPasswordTitle": "Are you sure?",
+        "dialogGenerateNewPasswordText": "Do you want to generate new password for this user? New password will be send on user email.",
+        "dialogGenerateNewPasswordYes": "Yes, generate new password",
+        "dialogGenerateNewPasswordNo": "No"
+    },
+   "commonFields": {
         "name": "Name",
         "firstname": "Firstname",
         "lastname": "Lastname",
@@ -116,8 +120,9 @@
         "chooseManagementRegistry": "Choose management registry",
         "edibleFishQuantity": "Edible quantity",
         "stockedFishQuantity": "Stocked quantity",
-        "unit": "Unit"
-    },
+        "unit": "Unit",
+        "generateNewPassword": "Generate new password"
+   },
     "userTypes": {
         "superadmin": "Superadmin",
         "admin": "Admin",

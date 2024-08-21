@@ -37,7 +37,7 @@
     </div>
 </div>
 <app-loader *ngIf="loader"></app-loader>
-<app-dynamic-grid #grid *ngIf="data" [path]="path" [file]="file" [data]="data"></app-dynamic-grid>
+<app-dynamic-grid #grid *ngIf="data" [path]="path" [file]="file" [data]="data" [height]="'calc(100vh - 41vh)'"></app-dynamic-grid>
 
 <app-dialog-confirm #dialogConfirmBackReport [title]="('actionMessage.dialogBackReportToOwnerTitle' | translate)"
     [content]="('actionMessage.dialogBackReportToOwnerText' | translate)"

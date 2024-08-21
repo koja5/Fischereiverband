@@ -55,7 +55,8 @@
     </div>
     <div *ngIf="selectedManagementRegistry">
         <app-dynamic-grid #grid *ngIf="!loading" [path]="path" [file]="file" [data]="data"
-            [additionalData]="selectedRegistry" (submit)="submit($event)" (refreshParentComponent)="refreshGrid()"
+            [additionalData]="selectedRegistry" [height]="'calc(100vh - 32vh)'" (submit)="submit($event)"
+            (refreshParentComponent)="refreshGrid()"
             [disableCRUD]="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed"></app-dynamic-grid>
     </div>
     <app-no-data

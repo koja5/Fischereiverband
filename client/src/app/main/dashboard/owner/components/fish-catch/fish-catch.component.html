@@ -70,7 +70,8 @@
     <div *ngIf="!loading">
         <app-dynamic-grid #grid [path]="path" [file]="file" [data]="data"
             [disableCRUD]="(fishCatchFilter && fishCatchFilter.water ? false : true) || (fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed)"
-            [template]="customForm" (submit)="submit($event)" (refreshParentComponent)="refreshGrid()"
+            [template]="customForm" [height]="'calc(100vh - 32vh)'" (submit)="submit($event)"
+            (refreshParentComponent)="refreshGrid()"
             (emitValueForCustomForm)="emitValueForCustomForm($event)"></app-dynamic-grid>
     </div>
 </div>

@@ -38,7 +38,7 @@
             </div>
             <!-- users filter end -->
 
-            <div class="card">
+            <div class="card" [ngStyle]="{'height': height ? height : '85vh'}">
                 <div class="p-1 d-flex align-items-center justify-content-between">
                     <div class="flex-grow-0">
                         <button
@@ -63,8 +63,7 @@
                     </div>
                     <div *ngIf="rows && rows.length" class="flex-grow-0 mr-1">
                         <span class="fa fa-file-pdf-o cursor-pointer options pdf-icon"
-                            title="{{'actionMessage.exportToPng' | translate}}"
-                            (click)="exportToPdf()"></span>
+                            title="{{'actionMessage.exportToPng' | translate}}" (click)="exportToPdf()"></span>
                     </div>
                     <div *ngIf="rows && rows.length" class="flex-grow-0 mr-1">
                         <span class="fa fa-file-excel-o cursor-pointer options excel-icon"
@@ -80,8 +79,8 @@
 
 
                 <ngx-datatable *ngIf="rows && rows.length" #grid id="grid" [rows]="rows" [rowHeight]="50"
-                    class="bootstrap core-bootstrap" [limit]="selectedOption" [columnMode]="ColumnMode.force"
-                    [headerHeight]="50" [footerHeight]="50" [sorts]="config.sorting.fields" [scrollbarH]="scrollbarH">
+                    class="material fullscreen" [limit]="selectedOption" [columnMode]="ColumnMode.force"
+                    [headerHeight]="50" [footerHeight]="50" [sorts]="config.sorting.fields" [scrollbarH]="scrollbarH" [scrollbarV]="true">
                     <!-- <ngx-datatable-column name="User" prop="fullName" [width]="200">
               <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                 <div class="d-flex align-items-center">
@@ -134,7 +133,7 @@
                         [prop]="item.field" [width]="item.width ? item.width : auto" [flexGrow]="item.flexGrow"
                         [height]="innerWidth > 992 ? '75vh' : '80vh'"
                         [columnMode]="innerWidth > 1250 ? 'flex' : 'force'" class="{{item.class}}"
-                        [className]="item.className" [headerClass]="item.className" [cellClass]="item.className"
+                        [className]="item.className" [headerClass]="item.className" [cellClass]="'item.className'"
                         [rowHeight]="'auto'">
 
                         <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>

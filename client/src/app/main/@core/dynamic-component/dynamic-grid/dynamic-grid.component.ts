@@ -1,5 +1,8 @@
 import {
+  ChangeDetectorRef,
   Component,
+  ContentChild,
+  ElementRef,
   EventEmitter,
   HostListener,
   Input,
@@ -49,6 +52,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   @Input() template: TemplateRef<any>;
   @Input() initializeGrid = false;
   @Input() modalDialogSize: string;
+  @Input() height: string;
   @Output() submit = new EventEmitter();
   @Output() emitValueForCustomForm = new EventEmitter<any>();
   @Output() refreshParentComponent = new EventEmitter();
@@ -153,7 +157,9 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     private _modalService: NgbModal,
     private _translate: TranslateService,
     private exportAsService: ExportAsService,
-    private _messageService: MessageService
+    private _messageService: MessageService,
+    private element: ElementRef,
+    private cdr: ChangeDetectorRef
   ) {
     this._unsubscribeAll = new Subject();
     this._modalService.dismissAll();
@@ -363,6 +369,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
                         this.rows = data;
                         this.tempData = this.rows;
                         this.loader = false;
+                        this.changeHeight();
                       });
                   }, 450);
                 } else {
@@ -373,12 +380,14 @@ export class DynamicGridComponent implements CanComponentDeactivate {
             this.rows = this.data;
             this.tempData = this.rows;
             this.loader = false;
+            this.changeHeight();
           }
         });
     } else if (this.data) {
       this.rows = this.data;
       this.tempData = this.rows;
       this.loader = false;
+      this.changeHeight();
     }
   }
 
@@ -390,6 +399,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
         this.rows = data;
         this.tempData = this.rows;
         this.loader = false;
+        this.changeHeight();
       });
   }
 
@@ -728,5 +738,13 @@ export class DynamicGridComponent implements CanComponentDeactivate {
     //     if (data) {
     //     }
     //   });
+  }
+
+  /** the data table 'body' element */
+  private body: any;
+
+  changeHeight() {
+      // this.body = this.element.nativeElement.querySelector(".datatable-body");
+      // this.body.style.height = "calc(" + this.height + " - 18vh)";
   }
 }

@@ -52,7 +52,8 @@
 
     <app-dynamic-grid *ngIf="!loading" #grid [path]="path" [file]="file" [data]="data"
         [disableCRUD]="report && report.status === reportStatusEnum.completed" [template]="customFormBirdDamage"
-        [modalDialogSize]="'modal-dialog-large'" (emitValueForCustomForm)="emitValueForCustomForm($event)"
+        [modalDialogSize]="'modal-dialog-large'" [height]="'calc(100vh - 32vh)'"
+        (emitValueForCustomForm)="emitValueForCustomForm($event)"
         (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
 
 </div>

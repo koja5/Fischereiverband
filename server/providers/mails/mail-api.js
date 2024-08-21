@@ -245,6 +245,26 @@ router.post(
   }
 );
 
+router.post("/sendNewGeneratedPassword", function (req, res, next) {
+  var configuration = JSON.parse(
+    fs.readFileSync(
+      "./providers/mails/i18n/send_new_generated_password.json",
+      "utf-8"
+    )
+  );
+
+  let subject = configuration.language.de.subject;
+  let body = configuration.language.de.body;
+
+  body.greetings = body.greetings.replaceAll("#name", req.body.firstname);
+
+  body["loginLinkNow"] = process.env.link_client + "auth/login";
+
+  body["password"] = req.body.password;
+
+  sendMail(req.body.email, subject, body, configuration.template, res);
+});
+
 //#endregion
 
 //#region AUTH
