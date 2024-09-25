@@ -1,6 +1,6 @@
-<div *ngIf="managementRegistersData">
+<div *ngIf="managementRegistersData && managementRegistersData.length">
     <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="alert-message col-md-12 text-center">
             <div *ngIf="report && report.status === reportStatusEnum.completed">
                 <ngb-alert [type]="'success'" [dismissible]="false">
                     <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
@@ -13,9 +13,14 @@
                     <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
                 </ngb-alert>
             </div>
+
+            <div class="explanation">
+                <app-explanation-mark [mainExplanation]="'birdCount.mainExplanation'"></app-explanation-mark>
+            </div>
         </div>
         <div class="mb-2 col-md-3">
-            <label>{{'commonFields.fbz' | translate}}</label>
+            <label>{{'commonFields.fbz' | translate}} <app-explanation-mark
+                    [explanation]="'birdCount.explanation'"></app-explanation-mark></label>
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
                 [(ngModel)]="filter.managementRegisterId"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate"
@@ -33,11 +38,12 @@
 
         </div>
         <div class="mb-2 col-md-3">
-            <label>{{'commonFields.nameOfWater' | translate}}</label>
+            <label>{{'commonFields.nameOfWater' | translate}} <app-explanation-mark
+                    [explanation]="'birdCount.explanationSecond'"></app-explanation-mark></label>
             <ng-select [items]="allWaters" bindLabel="name" bindValue="id" [(ngModel)]="filter.water"
                 [placeholder]="'commonFields.chooseNameOfWater' | translate" (change)="onChangeWater($event)"
                 [searchable]="true">
-                <ng-template ng-footer-tmp>
+                <ng-template ng-footer-tmp *ngIf="filter.managementRegisterId">
                     <p class="m-0 font-weight-bold cursor-pointer" (click)="openModalNewEntrie()"><span
                             class="fa fa-plus-circle"></span> {{
                         'commonFields.createNew' | translate
@@ -64,14 +70,23 @@
         </div>
     </div>
 
-    <app-dynamic-grid *ngIf="!loading" #grid [path]="path" [file]="file" [data]="data"
+    <app-dynamic-grid *ngIf="!loading&&data&&(filter && filter.water)" #grid [path]="path" [file]="file" [data]="data"
         [disableCRUD]="(filter && filter.water ? false : true)  || (report && report.status === reportStatusEnum.completed)"
         [hideCreateNew]="true" [height]="'calc(100vh - 25vh)'" (submit)="submit($event)"
         (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
 
+    <app-no-data *ngIf="!filter || !filter.water" [text]="('general.pleaseSelectNameOfWater' | translate)"
+        [image]="'../../../assets/images/icons/filter.png'"></app-no-data>
+
 </div>
 
 <app-loader *ngIf="loading"></app-loader>
+
+
+<app-no-data *ngIf="(!managementRegistersData || !managementRegistersData.length) && !loading"
+    [text]="('general.noManagementRegisterForYou' | translate)"
+    [image]="'../../../assets/images/icons/no-data-for-user.png'"></app-no-data>
+
 
 <ng-template #modalNewEntrie let-modal>
     <div class="modal-header">

@@ -1,6 +1,6 @@
-<div *ngIf="managementRegistersData">
+<div *ngIf="managementRegistersData && managementRegistersData.length">
     <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="alert-message col-md-12 text-center" *ngIf="selectedManagementRegistryId">
             <div *ngIf="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed">
                 <ngb-alert [type]="'success'" [dismissible]="false">
                     <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
@@ -13,9 +13,13 @@
                     <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
                 </ngb-alert>
             </div>
+            <div class="explanation">
+                <app-explanation-mark [mainExplanation]="'fishStocking.mainExplanation'"></app-explanation-mark>
+            </div>
         </div>
         <div class="mb-2 col-md-3">
-            <label>{{'commonFields.fbz' | translate}}</label>
+            <label>{{'commonFields.fbz' | translate}} <app-explanation-mark
+                    [explanation]="'fishStocking.explanation'"></app-explanation-mark></label>
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
                 [(ngModel)]="selectedManagementRegistryId"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate" (change)="onChange($event)"
@@ -30,6 +34,7 @@
                     <span>{{item.fbz}} - {{item.year}}</span>
                 </ng-template>
             </ng-select>
+
         </div>
         <div class="col-md-9" *ngIf="selectedManagementRegistryId && !loading">
             <div class="d-flex justify-content-end action">
@@ -53,17 +58,23 @@
             </div>
         </div>
     </div>
+
+    <app-no-data *ngIf="!selectedManagementRegistry" [text]="('general.selectFbzToGetData' | translate)"
+        [image]="'../../../assets/images/icons/filter.png'"></app-no-data>
+
     <div *ngIf="selectedManagementRegistry">
         <app-dynamic-grid #grid *ngIf="!loading" [path]="path" [file]="file" [data]="data"
             [additionalData]="selectedRegistry" [height]="'calc(100vh - 32vh)'" (submit)="submit($event)"
             (refreshParentComponent)="refreshGrid()"
             [disableCRUD]="fishStockingReport && fishStockingReport.status === fishStockingReportEnum.completed"></app-dynamic-grid>
     </div>
-    <app-no-data
-        *ngIf="!managementRegistersData || !managementRegistersData.length || !selectedManagementRegistry"></app-no-data>
 </div>
 
 <app-loader *ngIf="loading"></app-loader>
+
+<app-no-data *ngIf="(!managementRegistersData || !managementRegistersData.length) && !loading"
+    [text]="('general.noManagementRegisterForYou' | translate)"
+    [image]="'../../../assets/images/icons/no-data-for-user.png'"></app-no-data>
 
 <app-dialog-confirm #dialogConfirm [title]="('actionMessage.dialogCompleteReportQuestionTitle' | translate)"
     [content]="('actionMessage.dialogCompleteReportQuestionText' | translate)"

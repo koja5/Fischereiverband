@@ -562,8 +562,6 @@ router.post("/createNewOriginNameEntry", auth, function (req, res, next) {
 
     req.body.fbz = splitFBZ(req.body.fbz);
 
-    console.log(req.body);
-
     conn.query(
       "INSERT INTO origins_custom set ?",
       [req.body],
@@ -990,6 +988,8 @@ router.get("/getBirdCountForSelectedWater", auth, async (req, res, next) => {
               }
             }
           );
+        } else {
+          res.json([]);
         }
       }
     });
@@ -1227,7 +1227,6 @@ router.get("/getBirdDamage", auth, async (req, res, next) => {
         if (req.query.fbz != "undefined") {
           sqlQuery += " and fbz = '" + req.query.fbz + "'";
         }
-        console.log(sqlQuery);
         conn.query(
           sqlQuery,
           [req.user.user.id, req.query.fbz],

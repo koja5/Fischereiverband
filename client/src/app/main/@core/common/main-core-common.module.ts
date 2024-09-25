@@ -7,7 +7,8 @@ import { CommonModule } from "@angular/common";
 import { DialogConfirmTemplateComponent } from "./discard-changes-template/discard-changes-template.component";
 import { LoaderComponent } from "./loader/loader.component";
 import { NoDataComponent } from "./no-data/no-data.component";
-import { GoBackComponent } from './go-back/go-back.component';
+import { GoBackComponent } from "./go-back/go-back.component";
+import { NeedToChoiceComponent } from "./need-to-choice/need-to-choice.component";
 
 const appRoutes: Routes = [];
 
@@ -18,7 +19,8 @@ const appRoutes: Routes = [];
     DialogConfirmTemplateComponent,
     LoaderComponent,
     NoDataComponent,
-    GoBackComponent
+    GoBackComponent,
+    NeedToChoiceComponent,
   ],
   imports: [CommonModule, TranslateModule],
   providers: [],
@@ -29,7 +31,8 @@ const appRoutes: Routes = [];
     DialogConfirmTemplateComponent,
     LoaderComponent,
     NoDataComponent,
-    GoBackComponent
+    GoBackComponent,
+    NeedToChoiceComponent,
   ],
 })
 export class MainCoreCommonModule {}

@@ -64,6 +64,8 @@ export class FishStockingComponent implements OnInit {
           this.selectedManagementRegistryId =
             this.selectedManagementRegistry.id;
           this.initializeFishStocking();
+        } else {
+          this.loading = false;
         }
       });
   }

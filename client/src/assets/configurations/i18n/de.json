@@ -20,19 +20,22 @@
       "noInformation": "Keine Information",
       "ok": "OK",
       "noData": "Es sind keine Informationen zum Anzeigen vorhanden",
+      "selectFbzToGetData": "Bitte wählen Sie das entsprechende FBZ aus, um die Daten anzuzeigen",
       "pleaseSelectValueFirst": "Bitte wählen Sie den Wert aus der Dropdown-Liste aus, um die Ergebnisse zu erhalten.",
+      "pleaseSelectNameOfWater": "Bitte wählen Sie den Namen des Wassers aus, um den Wert zu erhalten",
       "here": "hier",
       "discardChangesTitle": "Änderungen verwerfen?",
       "discardChangesText": "Sie haben nicht gespeicherte Änderungen. Sind Sie sicher, dass Sie sie verwerfen möchten?",
       "discardChangesConfirm": "Änderungen verwerfen",
-      "discardChangesCancel": "Abbrechen"
+      "discardChangesCancel": "Abbrechen",
+      "noManagementRegisterForYou": "Kein FBZ für Sie gefunden!"
    },
    "action": {
       "completeReport": "Meldung absenden",
       "backReportToOwner": "Besatzmeldung wieder zum ändern freigeben",
-      "noHaveEntry": "Kein Eintrag vorhanden",
+      "noHaveEntry": "Leermeldung absenden",
       "reminderOwnerToCompleteReport": "Bewirtschafter  Erinnerung",
-      "requestAdminToChangeStatus": "Anfrage zum ändern stellen"
+      "requestAdminToChangeStatus": "Bereits gesendete Meldung wieder Aktivieren"
    },
    "actionMessage": {
       "successExecuteActionTitleDefault": "Erfolgreich geändert!",
@@ -87,7 +90,7 @@
       "position": "Position",
       "company": "Firma",
       "street": "Straße",
-      "location": "Standord",
+      "location": "Standort",
       "biography": "Beschreibung",
       "oldPassword": "Altes Passwort",
       "newPassword": "Neues Passwort",
@@ -97,14 +100,14 @@
       "noDataFoundFor": "Keine Daten gefunden für",
       "doYouWantToCreateNew": "Möchten Sie etwas Neues erstellen?",
       "date": "Besatzdatum",
-      "nameOfWater": "Name Gewässer",
-      "typeOfWater": "Art des Wassers",
-      "nameOfFish": "Fischart, Krebsart",
+      "nameOfWater": "Name des Gewässers",
+      "typeOfWater": "Art des Gewässers",
+      "nameOfFish": "Fischart / Krebsart",
       "ageOfFish": "Alter der Fische",
       "origin": "Herkunft (Händler, Fischzucht)",
       "quantity": "Menge",
-      "totalQuantity": "Gesamtmenge",
-      "cost": "Kosten",
+      "totalQuantity": "Gesamtmenge in kg",
+      "cost": "Kosten des Besatzes",
       "fbz": "FBZ",
       "ownerName": "Besitzername",
       "deputyName": "Stellvertretername",
@@ -118,10 +121,10 @@
       "otterStatus": "Otter-Status",
       "status": "Status",
       "preview": "Vorschau",
-      "chooseNameOfWater": "Wählen Sie den Namen des Wassers",
+      "chooseNameOfWater": "Wählen Sie den Namen des Gewässers",
       "chooseManagementRegistry": "Wählen Sie die Verwaltungsregistrierung",
-      "edibleFishQuantity": "Essbare Menge",
-      "stockedFishQuantity": "Lagermenge",
+      "edibleFishQuantity": "als Speisefisch",
+      "stockedFishQuantity": "als Besatzfisch",
       "unit": "Einheit",
       "generateNewPassword": "Neues Passwort generieren"
    },
@@ -162,16 +165,16 @@
       "allOrigins": "Herkunft Besatz",
       "allWaters": "Gewässer",
       "allFishStockingReports": "Besatzmeldungen",
-      "allFishCatchReports": "Ausfang",
-      "allObservationSheets": "Fischotterschaden",
+      "allFishCatchReports": "AusfangMeldungen",
+      "allObservationSheets": "Fischottermeldungen",
       "allBirdCountReports": "Vogelzählung",
       "allBirdDamageReports": "Vogelschäden",
       "ageOfFishes": "Alter der Fische",
       "fishStocking": "Besatzmeldungen",
       "managementRegisters": "FBZs",
-      "reportOccupation": "Besatzmeldung",
-      "observationSheet": "Fischotterschaden",
-      "fishCatch": "Ausfang",
+      "reportOccupation": "Besatzmeldungen",
+      "observationSheet": "Fischottermeldungen",
+      "fishCatch": "Ausfangmeldungen",
       "birdCount": "Vogelzählung",
       "birdDamage": "Vogelschaden"
    },
@@ -187,6 +190,7 @@
    },
    "form": {
       "mustFillThisField": "Bitte dieses Feld ausfüllen!",
+      "dateRangeNeedToBeInThisYear": "Das Datum muss im aktuellen Jahr liegen.",
       "fieldIsRequired": "Eingabe ist erforderlich",
       "emailIsRequired": "EMail ist erforderlich",
       "emailMustBeValid": "Die Email-Adresse muss gültig sein",
@@ -254,34 +258,34 @@
       "email": "Email",
       "secondSection": "Datum, Zeit und Ort der Beobachtung",
       "dateAndTime": "Datum und Uhrzeit",
-      "district": "Bezirk",
+      "district": "Bezirk / Gemeinde",
       "nameOfWater": "Name des Gewässers",
-      "orientation": "Orientierung",
+      "orientation": "Orientierungspunkt (Brücke, Mündungsbereich, GPS)",
       "typeOfWater": "Art des Wassers",
       "rivers": "Fließgewässer",
       "lake": "See",
-      "see": "Sehen",
+      "see": "See",
       "pond": "Teich",
       "fishingFarm": "Fischzuchtanlage",
       "thirdSection": "Art der Beobachtung",
-      "visualObservation": "Visuelle Beobachtung",
-      "findDead": "Tot auffinden",
+      "visualObservation": "Sichtbeobachtung (Anzahl der Otter, Entfernung, Dauer, mit Fernglas, …)",
+      "findDead": "Totfund",
       "inTerrain": "im Gelände",
-      "roadTrafic": "Straßenverkehr",
-      "droveTraces": "Spuren gefahren",
-      "findLosing": "Finde das Verlieren",
-      "fishPrey": "Fischbeute",
+      "roadTrafic": "im Straßenverkehr",
+      "droveTraces": "Fährte / Spuren (Anzahl und Verlauf der Spuren, …)",
+      "findLosing": "Fund der Losung (Fundort der Losung, Sammlung, Übermittlung an LFV)",
+      "fishPrey": "Fischbeute, Fraßspuren (Fischart, Alter/Länge des Fisches, Wertungsgrad (nur Organe gefressen), Schalenreste von Krebsen)",
       "tracesColor": "Spurenfarbe",
       "tracesIsolated": "Fraßspuren vereinzelt",
       "tracesNumerous": "Fraßspuren zahlreich",
-      "photoTrap": "Fotofalle",
-      "estimationInventory": "Schätzungsinventar",
+      "photoTrap": "Fotofalle, Bilder (Anzahl der Fotos, Übermittlungsformat…)",
+      "estimationInventory": "Schätzung des Bestandes (basierend auf den o.a. Beobachtungen)",
       "documentation": "Dokumentation"
    },
    "typeOfWater": {
-      "river": "Fluss",
+      "river": "Fluss/Bach",
       "lake": "See",
-      "smallLake": "Kleiner See"
+      "smallLake": "Teich"
    },
    "uploader": {
       "dragAndDrop": "Ziehen Sie die Datei hierher und legen Sie sie dort ab",
@@ -290,16 +294,37 @@
       "savedFiles": "Gespeicherte Dateien",
       "noDocumentsAdded": "Keine Dokumente hinzugefügt"
    },
+   "fishStocking": {
+      "explanation": "Bitte wählen sie eine Fischereibuchzahl aus und legen Sie dann mit ‘Neu’ Besatzdaten an",
+      "mainExplanation": {
+         "link": "https://google.rs"
+      }
+   },
+   "fishCatch": {
+      "explanation": "Bitte wählen sie eine Fischereibuchzahl und ein Gewässer aus und legen Sie dann mit ‘Neu’ Ausfangdaten für dieses Gewässer an.",
+      "explanationSecond": "Bitte wählen sie eine Fischereibuchzahl und ein Gewässer aus und legen Sie dann mit ‘Neu’ Ausfangdaten für dieses Gewässer an.",
+      "mainExplanation": {
+         "link": "https://google.rs"
+      }
+   },
    "birdCount": {
+      "explanation": "Bitte wählen sie eine Fischereibuchzahl und ein Gewässer aus und legen Sie dann mit ‘Neu’ Ausfangdaten für dieses Gewässer an.",
+      "explanationSecond": "Bitte wählen sie eine Fischereibuchzahl und ein Gewässer aus und legen Sie dann mit ‘Neu’ Ausfangdaten für dieses Gewässer an.",
       "heron": "Reiher",
       "cormorant": "Kormoran",
-      "gooseSayer": "Ganse-sager"
+      "gooseSayer": "Gänsesäger",
+      "mainExplanation": {
+         "link": "https://google.rs"
+      }
    },
    "birdDamagePrice": {
+      "heronForKg": 0.3,
       "pricePerKg": 14.00,
-      "pricePerItem": 0.80
+      "pricePerItem": 0.80,
+      "komorantageForKg": 0.5
    },
    "birdDamage": {
+      "explanation": "Bitte wählen sie eine Fischereibuchzahl und ein Gewässer aus und legen Sie dann mit ‘Neu’ Ausfangdaten für dieses Gewässer an.",
       "addNewRow": "Neue Zeile hinzufügen",
       "sectionOneTitle": "Schaden durch fischfressende Vögel",
       "sectionOneHeron": "Reihertage",
@@ -315,6 +340,8 @@
       "sectionTwoDamageInEuro": "Schaden in €",
       "sectionTwoAmountInInjured": "Menge der aufgefundenen verletzten od. toten Fische in kg",
       "sectionTwoKg": "kg",
+      "sectionTwoEuro": "€ =",
+      "sectionTwoX": "x",
       "sectionTwo14EuroPerKg": "€ 14,00 pro kg",
       "sectionThreeTitle": "Horst- und Schlafplatzmeldung",
       "sectionThreeColumnOne": "Gewässer (genaue Ortsbeschreibung)",
@@ -325,20 +352,23 @@
       "sectionFourColumnTwo": "FBZ",
       "sectionFourColumnThree": "Wildregion",
       "sectionFourColumnFour": "Reiher",
-      "sectionFourColumnFive": "Kormoran"
+      "sectionFourColumnFive": "Kormoran",
+      "mainExplanation": {
+         "link": "https://google.rs"
+      }
    },
    "explanation": {
-      "date": "Besatzmeldungen.Besatzdatum",
-      "nameOfWater": "Besatzmeldungen.Name Gewässer",
-      "nameOfFish": "Besatzmeldungen.Fischart, Krebsart",
-      "ageOfFish": "Besatzmeldungen.Alter der Fische",
-      "origin": "Besatzmeldungen.Herkunft (Händler, Fischzucht)",
-      "quantity": "Besatzmeldungen.Menge",
-      "unit": "Besatzmeldungen.Einheit",
-      "cost": "Besatzmeldungen.Kosten",
-      "totalQuantity": "Ausfang.Gesamtmenge",
-      "edibleFishQuantity": "Ausfang.Essbare Menge",
-      "stockedFishQuantity": "Ausfang.Lagermenge",
+      "date": "Geben Sie bitte das Datum des Besatzes ein - z.B. 23.04.2024",
+      "nameOfWater": "Wählen Sie bitte ein Gewässer aus in das die Fische besetzt wurden. Wird ein gewünschtes Gewässer nicht angeführt oder gefunden, können Sie auch beim Aufklappmenü auf 'Eintrag hinzufügen' klicken und ein neues Gewässer mit Ihrer Bezeichnung anlegen.",
+      "nameOfFish": "Bitte wählen Sie die Fisch-/Krebsart aus welche Sie besetzt haben. Wird ein besetzte Fisch-/Krebsart nicht angeführt oder gefunden, können Sie auch beim Aufklappmenü auf 'Eintrag hinzufügen' klicken und eine neue Fischart anlegen mit Ihrer Bezeichnung anlegen.",
+      "ageOfFish": "Bitte geben Sie das Alter der besetzten Wassertiere an.",
+      "origin": "Geben Sie die Herkunft der besetzten Fische/Krebse an bzw. wenn die Wassertiere aus Eigenproduktion stammen so geben sie 'Eigenzucht' oder 'Eigenproduktion' an. Wird eine gewünschte Herkunft nicht angeführt oder gefunden, können Sie auch beim Aufklappmenü auf 'Eintrag hinzufügen' klicken und eine neue Herkunft bzw. neuer Zuchtbetrieb mit Ihrer Bezeichnung anlegen.",
+      "quantity": "Geben Sie die Menge des Besatzes an.",
+      "unit": "Geben Sie die Einheiten der Besatzmenge an: Entweder Gewicht in Kilogramm (kg) oder Liter (l) oder Anzahl von Fischen (Stück).",
+      "cost": "Geben Sie die Kosten des Besatzes in EURO an.",
+      "totalQuantity": "Geben Sie hier die Gesamtmenge des Ausfanges der oben ausgewählten Fischart an. ",
+      "edibleFishQuantity": "Geben Sie bitte zusätzlich an wieviel des Ausfangs den Sie oben angegeben haben als Speisefisch verwendet wurde.  Geben Sie hier 0 ein wenn der gesammte Ausfang als Besatzfische weiterverwendet wurde. Sollten Sie den Ausfang sowohl für Speisefische als auch für Besatzfische so geben Sie die Menge als Speisefische an - der verbleibende Anteil wird automatisch als Besatzfisch vermerkt. ",
+      "stockedFishQuantity": "Hier sehen Sie die Menge an Ausfang die für den Besatz verwendet wurden.",
       "fbz": "Fischotterschaden.FBZ",
       "dateAndTime": "Fischotterschaden.Datum und Uhrzeit",
       "district": "Fischotterschaden.Bezirk",

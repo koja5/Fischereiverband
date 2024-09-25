@@ -224,7 +224,8 @@
             "fieldConfig": {
                 "ignoreAccent": false,
                 "filter": true
-            }
+            },
+            "required": true
         },
         {
             "type": "label",

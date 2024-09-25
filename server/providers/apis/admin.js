@@ -144,7 +144,7 @@ router.post("/generateNewPassword", authAdmin, function (req, res) {
         conn.release();
         if (!err) {
           req.body.password = newPassword;
-          
+
           makeRequest(req.body, "mail/sendNewGeneratedPassword", res);
         } else {
           logger.log("error", err.sql + ". " + err.sqlMessage);

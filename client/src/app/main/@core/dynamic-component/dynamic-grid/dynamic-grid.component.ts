@@ -93,7 +93,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   public modalOptionsDialog: any;
   public modalGoogleContactsDialog: any;
   public innerWidth: any;
-  public loader = false;
+  public loader = true;
   public loaderContent = false;
   public googleContacts: any;
   public createNewRecords = true;
@@ -381,6 +381,8 @@ export class DynamicGridComponent implements CanComponentDeactivate {
             this.tempData = this.rows;
             this.loader = false;
             this.changeHeight();
+          } else {
+            this.loader = false;
           }
         });
     } else if (this.data) {
@@ -744,7 +746,7 @@ export class DynamicGridComponent implements CanComponentDeactivate {
   private body: any;
 
   changeHeight() {
-      // this.body = this.element.nativeElement.querySelector(".datatable-body");
-      // this.body.style.height = "calc(" + this.height + " - 18vh)";
+    // this.body = this.element.nativeElement.querySelector(".datatable-body");
+    // this.body.style.height = "calc(" + this.height + " - 18vh)";
   }
 }

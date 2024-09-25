@@ -302,3 +302,31 @@
 .e-date-wrapper .error {
   border-color: red !important;
 }
+
+#date_input {
+  pointer-events: none !important;
+}
+
+.alert-message {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.alert-message div {
+  width: 100%;
+}
+
+.explanation {
+  padding-top: 7px;
+  padding-left: 10px;
+}
+
+.explanation span {
+  font-size: 24px !important;
+  color: var(--primary);
+}
+
+.alert-message .explanation {
+  width: auto !important;
+}

@@ -102,6 +102,9 @@
             "format": "dd.MM.yyyy",
             "class": "text-align-right",
             "field": "date",
+            "minDate": "",
+            "maxDate": "",
+            "dateRange": "CURRENT_YEAR",
             "validation": {
                 "required": true
             }
@@ -199,6 +202,7 @@
             "explanation": "explanation.date",
             "field": "date",
             "format": "dd.MM.yyyy",
+            "dateRange": "CURRENT_YEAR",
             "required": true
         },
         {

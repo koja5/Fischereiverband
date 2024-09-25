@@ -30,7 +30,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_notification_to_admin_for_completed_fish_stocking_report.json",
+        __dirname +
+          "/i18n/send_notification_to_admin_for_completed_fish_stocking_report.json",
         "utf-8"
       )
     );
@@ -72,7 +73,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_request_to_admin_for_additional_fish_stocking_report_changes.json",
+        __dirname +
+          "/i18n/send_request_to_admin_for_additional_fish_stocking_report_changes.json",
         "utf-8"
       )
     );
@@ -118,7 +120,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_notification_to_owner_for_back_fish_stocking_report.json",
+        __dirname +
+          "/i18n/send_notification_to_owner_for_back_fish_stocking_report.json",
         "utf-8"
       )
     );
@@ -151,7 +154,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_reminder_owner_to_complete_fish_stocking_report.json",
+        __dirname +
+          "/i18n/send_reminder_owner_to_complete_fish_stocking_report.json",
         "utf-8"
       )
     );
@@ -184,7 +188,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_notification_to_owner_for_back_fish_catch_report.json",
+        __dirname +
+          "/i18n/send_notification_to_owner_for_back_fish_catch_report.json",
         "utf-8"
       )
     );
@@ -217,7 +222,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_reminder_owner_to_complete_fish_catch_report.json",
+        __dirname +
+          "/i18n/send_reminder_owner_to_complete_fish_catch_report.json",
         "utf-8"
       )
     );
@@ -248,7 +254,7 @@ router.post(
 router.post("/sendNewGeneratedPassword", function (req, res, next) {
   var configuration = JSON.parse(
     fs.readFileSync(
-      "./providers/mails/i18n/send_new_generated_password.json",
+      __dirname + "/i18n/send_new_generated_password.json",
       "utf-8"
     )
   );
@@ -271,7 +277,7 @@ router.post("/sendNewGeneratedPassword", function (req, res, next) {
 
 router.post("/resetPasswordLink", function (req, res, next) {
   var configuration = JSON.parse(
-    fs.readFileSync("./providers/mails/i18n/forgot_password.json", "utf-8")
+    fs.readFileSync(__dirname + "/i18n/forgot_password.json", "utf-8")
   );
 
   body = getMessage(configuration, req.body.lang);
@@ -298,7 +304,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_notification_to_admin_for_completed_fish_catch_report.json",
+        __dirname +
+          "/i18n/send_notification_to_admin_for_completed_fish_catch_report.json",
         "utf-8"
       )
     );
@@ -342,7 +349,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_request_to_admin_for_additional_fish_catch_report_changes.json",
+        __dirname +
+          "/i18n/send_request_to_admin_for_additional_fish_catch_report_changes.json",
         "utf-8"
       )
     );
@@ -387,7 +395,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_notification_to_admin_for_completed_bird_count_report.json",
+        __dirname +
+          "/i18n/send_notification_to_admin_for_completed_bird_count_report.json",
         "utf-8"
       )
     );
@@ -429,7 +438,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_request_to_admin_for_additional_bird_count_report_changes.json",
+        __dirname +
+          "/i18n/send_request_to_admin_for_additional_bird_count_report_changes.json",
         "utf-8"
       )
     );
@@ -471,7 +481,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_reminder_owner_to_complete_bird_count_report.json",
+        __dirname +
+          "/i18n/send_reminder_owner_to_complete_bird_count_report.json",
         "utf-8"
       )
     );
@@ -501,7 +512,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_notification_to_owner_for_back_bird_count_report.json",
+        __dirname +
+          "/i18n/send_notification_to_owner_for_back_bird_count_report.json",
         "utf-8"
       )
     );
@@ -534,7 +546,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_notification_to_admin_for_completed_bird_damage_report.json",
+        __dirname +
+          "/i18n/send_notification_to_admin_for_completed_bird_damage_report.json",
         "utf-8"
       )
     );
@@ -576,7 +589,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_request_to_admin_for_additional_bird_damage_report_changes.json",
+        __dirname +
+          "/i18n/send_request_to_admin_for_additional_bird_damage_report_changes.json",
         "utf-8"
       )
     );
@@ -618,7 +632,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_reminder_owner_to_complete_bird_damage_report.json",
+        __dirname +
+          "/i18n/send_reminder_owner_to_complete_bird_damage_report.json",
         "utf-8"
       )
     );
@@ -651,7 +666,8 @@ router.post(
   function (req, res, next) {
     var configuration = JSON.parse(
       fs.readFileSync(
-        "./providers/mails/i18n/send_notification_to_owner_for_back_bird_damage_report.json",
+        __dirname +
+          "/i18n/send_notification_to_owner_for_back_bird_damage_report.json",
         "utf-8"
       )
     );

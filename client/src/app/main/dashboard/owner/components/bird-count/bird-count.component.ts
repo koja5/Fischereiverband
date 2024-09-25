@@ -12,6 +12,7 @@ import { ReportStatusEnum } from "app/main/dashboard/enums/report-status-enum";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { HelpService } from "app/services/help.service";
 import { WaterCustomModel } from "app/main/dashboard/models/water-custom-model";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-bird-count",
@@ -45,7 +46,8 @@ export class BirdCountComponent {
     private _storageService: StorageService,
     private _toastr: ToastrComponent,
     private _modalService: NgbModal,
-    private _helpService: HelpService
+    private _helpService: HelpService,
+    public _translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -148,6 +150,7 @@ export class BirdCountComponent {
       );
     } else {
       this._storageService.deleteValueFromLocalStorage("bird-count-filter");
+      this.allWaters = null;
       this.filter = new BirdCountFilterModel();
     }
   }
@@ -191,6 +194,7 @@ export class BirdCountComponent {
       .callPostMethod("/api/owner/setBirdCount", event)
       .subscribe((data) => {
         if (data) {
+          this.getBirdCountForSelectedWater();
           this._toastr.showSuccess();
         }
       });

@@ -51,4 +51,8 @@ export class FieldConfig {
   emitRequest?: boolean;
   disableUpload?: boolean;
   disableRemove?: boolean;
+  minDate: string;
+  maxDate: string;
+  dateRange: string;
+  valueInvalid: boolean;
 }

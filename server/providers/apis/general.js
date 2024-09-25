@@ -89,7 +89,6 @@ router.post("/changePassword", auth, function (req, res, next) {
         if (err) {
           res.json(true);
         } else {
-          console.log(rows.length);
           if (rows.length) {
             conn.query(
               "update users set password = ? where email = ?",

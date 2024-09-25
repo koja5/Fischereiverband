@@ -48,7 +48,7 @@ export class FishCatchComponent {
   public selectedManagementRegistryId: number;
   public selectNameOfWaterId: number;
   public fishCatchFilter = new FishCatchFilterModel();
-  public loading = false;
+  public loading = true;
   public fishCatchReportEnum = FishCatchReportEnum;
   public allWaters: any;
   public waterCustom = new WaterCustomModel();
@@ -94,6 +94,8 @@ export class FishCatchComponent {
           } else {
             this.data = [];
           }
+        } else {
+          this.loading = false;
         }
       });
   }
@@ -114,14 +116,16 @@ export class FishCatchComponent {
   }
 
   getFishCatchDetailsForManagementRegister() {
-    this._service
-      .callGetMethod(
-        "/api/owner/getFishCatchDetailsForManagementRegister?fbz=" +
-          this.fishCatchFilter.managementRegister.fbz
-      )
-      .subscribe((data: FishCatchModel[]) => {
-        this.allData = data;
-      });
+    if (this.fishCatchFilter && this.fishCatchFilter.managementRegister) {
+      this._service
+        .callGetMethod(
+          "/api/owner/getFishCatchDetailsForManagementRegister?fbz=" +
+            this.fishCatchFilter.managementRegister.fbz
+        )
+        .subscribe((data: FishCatchModel[]) => {
+          this.allData = data;
+        });
+    }
   }
 
   checkCompletedStatusReport() {
@@ -148,6 +152,7 @@ export class FishCatchComponent {
     } else {
       this._storageService.deleteValueFromLocalStorage("fish-catch-filter");
       this.fishCatchFilter = new FishCatchFilterModel();
+      this.allWaters = null;
       this.refreshGrid();
     }
   }
@@ -215,8 +220,9 @@ export class FishCatchComponent {
       .subscribe((data) => {
         if (data) {
           this._toastr.showSuccess();
-          this.getFishCatchDetailsForSelectedWater();
-          this.getFishCatchDetailsForManagementRegister();
+          setTimeout(() => {
+            this.refreshGrid();
+          }, 20);
         }
       });
   }
@@ -334,6 +340,8 @@ export class FishCatchComponent {
 
   handleSubmit(event: any) {
     this.grid.closeEditForm();
-    this.refreshGrid();
+    setTimeout(() => {
+      this.refreshGrid();
+    }, 20);
   }
 }

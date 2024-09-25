@@ -42,7 +42,7 @@
                 <div class="p-1 d-flex align-items-center justify-content-between">
                     <div class="flex-grow-0">
                         <button
-                            *ngIf="(config.editSettingsRequest && config.editSettingsRequest.add) && (!config.actionButtons || config.actionButtons.addButton) && !hideCreateNew"
+                            *ngIf="(config.editSettingsRequest && config.editSettingsRequest.add) && (!config.actionButtons || config.actionButtons.addButton) && !hideCreateNew && !config.disableCreateNewRow"
                             class="btn btn-primary {{disableCRUD || disabledCreateNew ? 'cursor-not-allowed' : ''}}"
                             title="{{disableCRUD || disabledCreateNew ? ('actionMessage.actionNotAllowed' | translate) : ''}}"
                             rippleEffect
@@ -69,18 +69,19 @@
                         <span class="fa fa-file-excel-o cursor-pointer options excel-icon"
                             title="{{'actionMessage.exportToCsv' | translate}}" (click)="exportToCsv()"></span>
                     </div>
-                    <div class="flex-grow-0">
+                    <div *ngIf="rows && rows.length" class="flex-grow-0">
                         <span class="fa fa-print cursor-pointer options print-icon" (click)="print()"></span>
                     </div>
                 </div>
 
 
-                <app-no-data *ngIf="!rows || !rows.length"></app-no-data>
+                <app-no-data *ngIf="!tempData.length"></app-no-data>
 
 
                 <ngx-datatable *ngIf="rows && rows.length" #grid id="grid" [rows]="rows" [rowHeight]="50"
                     class="material fullscreen" [limit]="selectedOption" [columnMode]="ColumnMode.force"
-                    [headerHeight]="50" [footerHeight]="50" [sorts]="config.sorting.fields" [scrollbarH]="scrollbarH" [scrollbarV]="true">
+                    [headerHeight]="50" [footerHeight]="50" [sorts]="config.sorting.fields" [scrollbarH]="scrollbarH"
+                    [scrollbarV]="true">
                     <!-- <ngx-datatable-column name="User" prop="fullName" [width]="200">
               <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                 <div class="d-flex align-items-center">
@@ -257,7 +258,7 @@
                                     <span *ngIf="editing != rowIndex || item.noEditable">
                                         {{value}}
                                     </span>
-                                    <input class=" form-control" *ngIf="editing == rowIndex && !item.noEditable"
+                                    <input class="form-control" *ngIf="editing == rowIndex && !item.noEditable"
                                         name="{{item.field}}" [(ngModel)]="rows[rowIndex][item.field]" />
                                 </div>
                             </div>
@@ -432,7 +433,8 @@
             </tr>
             <tr *ngFor="let value of rows">
                 <div *ngFor="let item of config.columns" class="d-contents">
-                    <td *ngIf="!item.template">{{value[item.field]}}</td>
+                    <td *ngIf="item.type === 'date'">{{value[item.field] | date: item.format}}</td>
+                    <td *ngIf="!item.template && item.type != 'date'">{{value[item.field]}}</td>
                 </div>
             </tr>
         </table>

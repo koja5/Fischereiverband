@@ -1,7 +1,7 @@
-<div *ngIf="managementRegistersData">
+<div *ngIf="managementRegistersData && managementRegistersData.length">
     <div class="row">
-        <div class="col-md-12 text-center">
-            <div *ngIf="fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed">
+        <div class="alert-message col-md-12 text-center" *ngIf="fishCatchFilter.managementRegisterId">
+            <div *ngIf=" fishCatchReport && fishCatchReport.status===fishCatchReportEnum.completed">
                 <ngb-alert [type]="'success'" [dismissible]="false">
                     <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
                         {{fishCatchReport.date_completed | date: 'dd.MM.yyyy. HH:mm'}}</div>
@@ -13,9 +13,14 @@
                     <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
                 </ngb-alert>
             </div>
+
+            <div class="explanation">
+                <app-explanation-mark [mainExplanation]="'fishCatch.mainExplanation'"></app-explanation-mark>
+            </div>
         </div>
         <div class="mb-2 col-md-3">
-            <label>{{'commonFields.fbz' | translate}}</label>
+            <label>{{'commonFields.fbz' | translate}} <app-explanation-mark
+                    [explanation]="'fishCatch.explanation'"></app-explanation-mark></label>
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
                 [(ngModel)]="fishCatchFilter.managementRegisterId"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate"
@@ -33,11 +38,12 @@
 
         </div>
         <div class="mb-2 col-md-3">
-            <label>{{'commonFields.nameOfWater' | translate}}</label>
+            <label>{{'commonFields.nameOfWater' | translate}} <app-explanation-mark
+                    [explanation]="'fishCatch.explanationSecond'"></app-explanation-mark></label>
             <ng-select [items]="allWaters" bindLabel="name" bindValue="id" [(ngModel)]="fishCatchFilter.water"
                 [placeholder]="'commonFields.chooseNameOfWater' | translate" (change)="onChangeWater($event)"
                 [searchable]="true">
-                <ng-template ng-footer-tmp>
+                <ng-template ng-footer-tmp *ngIf="fishCatchFilter.managementRegisterId">
                     <p class="m-0 font-weight-bold cursor-pointer" (click)="openModalNewEntrie()"><span
                             class="fa fa-plus-circle"></span> {{
                         'commonFields.createNew' | translate
@@ -67,7 +73,13 @@
         </div>
     </div>
 
-    <div *ngIf="!loading">
+
+    <app-no-data *ngIf="!fishCatchFilter.managementRegisterId" [text]="('general.selectFbzToGetData' | translate)"
+        [image]="'../../../assets/images/icons/filter.png'"></app-no-data>
+
+
+
+    <div *ngIf="!loading&&fishCatchFilter.managementRegisterId">
         <app-dynamic-grid #grid [path]="path" [file]="file" [data]="data"
             [disableCRUD]="(fishCatchFilter && fishCatchFilter.water ? false : true) || (fishCatchReport && fishCatchReport.status === fishCatchReportEnum.completed)"
             [template]="customForm" [height]="'calc(100vh - 32vh)'" (submit)="submit($event)"
@@ -76,7 +88,11 @@
     </div>
 </div>
 
-<app-loader *ngIf="loading"></app-loader>
+
+<app-no-data *ngIf="(!managementRegistersData || !managementRegistersData.length) && !loading"
+    [text]="('general.noManagementRegisterForYou' | translate)"
+    [image]="'../../../assets/images/icons/no-data-for-user.png'"></app-no-data>
+
 
 <ng-template #modalNewEntrie let-modal>
     <div class="modal-header">
@@ -93,8 +109,8 @@
 </ng-template>
 
 <ng-template #customForm>
-    <app-custom-form-fish-catch *ngIf="itemData" [data]="itemData"
-        (submit)="handleSubmit($event)"></app-custom-form-fish-catch>
+    <app-custom-form-fish-catch *ngIf="itemData" [data]="itemData" [config]="config"
+        [fishCatchFilter]="this.fishCatchFilter" (submit)=" handleSubmit($event)"></app-custom-form-fish-catch>
 </ng-template>
 
 <app-dialog-confirm #dialogConfirm [title]="('actionMessage.dialogCompleteReportQuestionTitle' | translate)"

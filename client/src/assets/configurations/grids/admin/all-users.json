@@ -47,6 +47,7 @@
         "showDeleteConfirmDialog": true,
         "mode": "Dialog"
     },
+    "disableCreateNewRow": true,
     "editSettingsRequest": {
         "add": {
             "type": "POST",

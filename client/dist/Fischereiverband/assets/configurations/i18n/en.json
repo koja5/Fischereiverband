@@ -20,12 +20,15 @@
         "noInformation": "No information",
         "ok": "OK",
         "noData": "There is no information to display",
+        "selectFbzToGetData": "Please select the relevant FBZ to view the data",
         "pleaseSelectValueFirst": "Please select the value from the drop-down list to get the results.",
+        "pleaseSelectNameOfWater": "Please select name of water to get value",
         "here": "here",
         "discardChangesTitle": "Discard changes?",
         "discardChangesText": "You have unsaved changes. Are you sure you want to discard them?",
         "discardChangesConfirm": "Discard changes",
-        "discardChangesCancel": "Cancel"
+        "discardChangesCancel": "Cancel",
+        "noManagementRegisterForYou": "No FBZ found for you!"
     },
     "action": {
         "completeReport": "Complete report",
@@ -62,7 +65,7 @@
         "dialogGenerateNewPasswordYes": "Yes, generate new password",
         "dialogGenerateNewPasswordNo": "No"
     },
-   "commonFields": {
+    "commonFields": {
         "name": "Name",
         "firstname": "Firstname",
         "lastname": "Lastname",
@@ -122,7 +125,7 @@
         "stockedFishQuantity": "Stocked quantity",
         "unit": "Unit",
         "generateNewPassword": "Generate new password"
-   },
+    },
     "userTypes": {
         "superadmin": "Superadmin",
         "admin": "Admin",
@@ -205,6 +208,7 @@
     },
     "form": {
         "mustFillThisField": "Please fill this field!",
+        "dateRangeNeedToBeInThisYear": "The date must be in the current year.",
         "fieldIsRequired": "Data is required",
         "emailIsRequired": "Email is required",
         "emailMustBeValid": "Email must be a valid email address",
@@ -252,6 +256,30 @@
         "data2": "Data 2",
         "data3": "Data 3"
     },
+    "typeOfWater": {
+        "river": "River",
+        "lake": "Lake",
+        "smallLake": "Small lake"
+    },
+    "uploader": {
+        "dragAndDrop": "Drag and drop file here",
+        "or": "or",
+        "browseForFile": "Browse for file",
+        "savedFiles": "Saved files",
+        "noDocumentsAdded": "No documents added"
+    },
+    "fishStocking": {
+        "explanation": "Bitte wählen sie eine Fischereibuchzahl aus und legen Sie dann mit ‘Neu’ Besatzdaten an",
+        "mainExplanation": {
+            "link": "https://google.rs"
+        }
+    },
+    "fishCatch": {
+        "explanation": "Bitte wählen sie eine Fischereibuchzahl und ein Gewässer aus und legen Sie dann mit ‘Neu’ Ausfangdaten für dieses Gewässer an.",
+        "mainExplanation": {
+            "link": "https://google.rs"
+        }
+    },
     "observationSheet": {
         "firstSection": "Observer / informant",
         "name": "Name",
@@ -283,21 +311,17 @@
         "estimationInventory": "Estimation inventory",
         "documentation": "Documentation"
     },
-    "typeOfWater": {
-        "river": "River",
-        "lake": "Lake",
-        "smallLake": "Small lake"
-    },
-    "uploader": {
-        "dragAndDrop": "Drag and drop file here",
-        "or": "or",
-        "browseForFile": "Browse for file",
-        "savedFiles": "Saved files",
-        "noDocumentsAdded": "No documents added"
-    },
     "birdCount": {
         "heron": "Heron",
         "cormorant": "Cormorant",
-        "gooseSayer": "Goose sayer"
+        "gooseSayer": "Goose sayer",
+        "mainExplanation": {
+            "link": "https://google.rs"
+        }
+    },
+    "birdDamage": {
+        "mainExplanation": {
+            "link": "https://google.rs"
+        }
     }
 }

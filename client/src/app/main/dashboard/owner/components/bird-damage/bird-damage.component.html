@@ -1,6 +1,6 @@
-<div *ngIf="managementRegistersData">
+<div *ngIf="managementRegistersData && managementRegistersData.length">
     <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="alert-message col-md-12 text-center">
             <div *ngIf="report && report.status === reportStatusEnum.completed">
                 <ngb-alert [type]="'success'" [dismissible]="false">
                     <div class="alert-body">{{'actionMessage.reportCompleted' | translate}}
@@ -13,9 +13,14 @@
                     <div class="alert-body">{{'actionMessage.reportCompletedNotYet' | translate}}</div>
                 </ngb-alert>
             </div>
+
+            <div class="explanation">
+                <app-explanation-mark [mainExplanation]="'birdDamage.mainExplanation'"></app-explanation-mark>
+            </div>
         </div>
         <div class="mb-2 col-md-3">
-            <label>{{'commonFields.fbz' | translate}}</label>
+            <label>{{'commonFields.fbz' | translate}} <app-explanation-mark
+                    [explanation]="'birdDamage.explanation'"></app-explanation-mark></label>
             <ng-select [items]="managementRegistersData" bindLabel="fbz" bindValue="id"
                 [(ngModel)]="filter.managementRegisterId"
                 [placeholder]="'commonFields.chooseManagementRegistry' | translate"
@@ -51,14 +56,19 @@
     </div>
 
     <app-dynamic-grid *ngIf="!loading" #grid [path]="path" [file]="file" [data]="data"
-        [disableCRUD]="report && report.status === reportStatusEnum.completed" [template]="customFormBirdDamage"
-        [modalDialogSize]="'modal-dialog-large'" [height]="'calc(100vh - 32vh)'"
+        [disableCRUD]="(filter && filter.managementRegisterId ? false : true) || (report && report.status === reportStatusEnum.completed)"
+        [template]="customFormBirdDamage" [modalDialogSize]="'modal-dialog-large'" [height]="'calc(100vh - 32vh)'"
         (emitValueForCustomForm)="emitValueForCustomForm($event)"
         (refreshParentComponent)="refreshGrid()"></app-dynamic-grid>
 
 </div>
 
 <app-loader *ngIf="loading"></app-loader>
+
+<app-no-data *ngIf="(!managementRegistersData || !managementRegistersData.length) && !loading"
+    [text]="('general.noManagementRegisterForYou' | translate)"
+    [image]="'../../../assets/images/icons/no-data-for-user.png'"></app-no-data>
+
 
 <ng-template #modalNewEntrie let-modal>
     <div class="modal-header">

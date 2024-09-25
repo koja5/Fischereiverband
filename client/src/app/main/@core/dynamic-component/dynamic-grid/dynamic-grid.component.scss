@@ -94,3 +94,28 @@
 //     height: 75vh;
 //   }
 // }
+
+.ngx-datatable.fixed-row
+  .datatable-scroll
+  .datatable-body-row
+  .datatable-body-cell,
+.ngx-datatable.fixed-row
+  .datatable-scroll
+  .datatable-body-row
+  .datatable-body-group-cell {
+  display: flex;
+  align-items: center;
+}
+
+// .ngx-datatable.fixed-row
+//   .datatable-scroll
+//   .datatable-body-row
+//   .datatable-body-cell,
+// .ngx-datatable.fixed-row
+//   .datatable-scroll
+//   .datatable-body-row
+//   .datatable-body-group-cell {
+//   margin: auto;
+//   text-align: center;
+//   display: block;
+// }

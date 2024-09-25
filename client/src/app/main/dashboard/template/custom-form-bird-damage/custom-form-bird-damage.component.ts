@@ -135,21 +135,23 @@ export class CustomFormBirdDamageComponent {
   }
 
   calculatePriceForKomorantage() {
-    if (this.data.komorantage_damage_in_euro_per_kg) {
-      return (
-        this.data.komorantage_damage_in_euro_per_kg *
-        this._translate.instant("birdDamagePrice.pricePerKg")
-      );
+    if (this.data.komorantage_number) {
+      this.data.komorantage_sum_price =
+        this.data.komorantage_number *
+        this._translate.instant("birdDamagePrice.komorantageForKg") *
+        this._translate.instant("birdDamagePrice.pricePerKg");
+      return this.data.komorantage_sum_price;
     }
     return "";
   }
 
   calculatePriceForHeronDemage() {
-    if (this.data.heron_damage_in_euro_per_kg) {
-      return (
-        this.data.heron_damage_in_euro_per_kg *
-        this._translate.instant("birdDamagePrice.pricePerKg")
-      );
+    if (this.data.heron_number) {
+      this.data.heron_sum_price =
+        this.data.heron_number *
+        this._translate.instant("birdDamagePrice.heronForKg") *
+        this._translate.instant("birdDamagePrice.pricePerKg");
+      return this.data.heron_sum_price;
     }
     return "";
   }
